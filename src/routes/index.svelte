@@ -2,7 +2,7 @@
 </script>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>CalPal</title>
 </svelte:head>
 
 <h1>Great success!</h1>
