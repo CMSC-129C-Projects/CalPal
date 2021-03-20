@@ -1,6 +1,7 @@
 <script>
   // JS here
   import { Col, Container, Row } from "sveltestrap/src";
+  import NavBar from "./NavBar.svelte";
 </script>
 
 <!-- HTML here -->
