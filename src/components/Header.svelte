@@ -8,7 +8,7 @@
 <div class="parent">
   <Row class="header">
     <Col class="col1" xs="4">
-      <p>
+      <p class="overflow">
         <img src="CalPal_Logo.png" alt="CalPal_Logo.png" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
@@ -43,6 +43,10 @@
   img {
     width: 70px;
     height: 70px;
+  }
+
+  .overflow {
+    white-space: nowrap;
   }
 
   .calpal {

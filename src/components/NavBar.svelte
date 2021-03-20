@@ -31,9 +31,10 @@
     text-align: right;
   }
   .parent :global(.calendar:hover) {
-    color: blue;
+    color: #f58f29;
   }
+
   .parent :global(.plus:hover) {
-    color: blue;
+    color: #f58f29;
   }
 </style>
