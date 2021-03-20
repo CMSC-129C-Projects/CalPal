@@ -14,9 +14,9 @@
         <span class="calpal pal">Pal</span>
       </p>
     </Col>
-    <Col class="col2" xs="4"></Col>
+    <Col class="col2" xs="4" />
     <!-- <Col lg="8"></Col> -->
-    <Col class="col3" xs="4"><NavBar /></Col>
+    <Col class="col3" xs="4"><h1><NavBar /></h1></Col>
   </Row>
 </div>
 
