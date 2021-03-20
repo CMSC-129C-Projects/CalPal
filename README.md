@@ -13,4 +13,4 @@ Set up the repo with `git lfs install`.
 
 Run `npm install`, then run with `npm run dev`.
 
-### :D
+
