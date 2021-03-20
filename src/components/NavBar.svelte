@@ -12,7 +12,7 @@
 <style>
   .parent {
     /*padding-left: 8em;*/
-    padding-top: 0.15em;
+    padding-top: 0.5em;
     font-size: 10;
     text-align: right;
   }
@@ -31,9 +31,10 @@
     text-align: right;
   }
   .parent :global(.calendar:hover) {
-    color: blue;
+    color: #f58f29;
   }
+
   .parent :global(.plus:hover) {
-    color: blue;
+    color: #f58f29;
   }
 </style>
