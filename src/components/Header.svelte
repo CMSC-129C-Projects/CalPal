@@ -7,11 +7,11 @@
 <div class="parent">
   <Row class="header">
     <Col class="col1" xs="4">
-      <img src="CalPal_Logo.png" alt="CalPal_Logo.png" />
-      <span class="calpal">
-        <span class="cal">Cal</span>
-        <span class="pal">Pal</span>
-      </span>
+      <p>
+        <img src="CalPal_Logo.png" alt="CalPal_Logo.png" />
+        <span class="calpal cal">Cal</span>
+        <span class="calpal pal">Pal</span>
+      </p>
     </Col>
     <Col class="col2" xs="4"><h1>BLANK</h1></Col>
     <!-- <Col lg="8"></Col> -->
@@ -23,6 +23,8 @@
   /* CSS here */
   .parent :global(.header) {
     background-color: #78c0e0;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
   }
 
   .parent :global(.col1) {
@@ -40,15 +42,14 @@
   img {
     width: 70px;
     height: 70px;
-    margin-top: -1.3em;
   }
 
   .calpal {
     font-size: 3em;
     font-family: "Nunito", sans-serif;
     position: relative;
-    top: 10px;
-    left: -7px;
+    top: 0.4em;
+    left: -0.1em;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
       1px 1px 0 white;
   }
@@ -59,6 +60,5 @@
 
   .pal {
     color: #f58f29;
-    margin-left: -10px;
   }
 </style>
