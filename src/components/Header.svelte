@@ -6,16 +6,16 @@
 <!-- HTML here -->
 <div class="parent">
     <Row class="header">
-        <Col class="col1" lg='4'>
+        <Col class="col1" xs='4'>
                 <img src="CalPal_Logo.png" alt="CalPal_Logo.png"/> 
                 <span class="calpal">
                     <span class="cal">Cal</span>
                     <span class="pal">Pal</span>
                 </span>
         </Col>
-        <Col class="col2" lg='4'><h1>BLANK</h1></Col>
+        <Col class="col2" xs='4'><h1>BLANK</h1></Col>
         <!-- <Col lg="8"></Col> -->
-        <Col class="col3" lg='4'><h1>NavBar</h1></Col>
+        <Col class="col3" xs='4'><h1>NavBar</h1></Col>
     </Row>
 </div>
 
