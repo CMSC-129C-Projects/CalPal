@@ -3,20 +3,24 @@ const MongoClient = require("mongodb").MongoClient;
 
 const uri = "mongodb://127.0.0.1:27017";
 
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-export async function getCardsOfUser(user_id) {
+export async function getCardsOfUser(userId) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   try {
     await client.connect();
 
     const database = client.db("calpal");
     const cards = database.collection("cards");
 
-    // let userCards = await cards.findOne({ user_id: user_id });
-    let userCards = await cards.find().toArray();
+    // TODO: Figure out why `userId` acts as `null` when passed to
+    //       cards.findOne(). For the sake of leaving the code in
+    //       a working state, we simply get all the documents in
+    //       the `cards` collection.
+    const userCards = await cards.find().toArray();
+    // const userCards = await cards.findOne({ user_id: userId });
+
     console.debug("*** userCards START ***");
     console.debug(userCards);
     console.debug("*** userCards END ***");
@@ -28,5 +32,3 @@ export async function getCardsOfUser(user_id) {
     await client.close();
   }
 }
-
-// console.debug(getCardsOfUser(1));

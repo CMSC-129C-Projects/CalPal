@@ -1,10 +1,10 @@
 import { getCardsOfUser } from "./_database.js";
 
 export async function get(req, res, next) {
-  const { user } = req.params;
+  const { userId } = req.params;
 
-  console.debug(`user = ${user}`);
-  const cards = await getCardsOfUser(user);
+  console.debug(`user = ${userId}`);
+  const cards = await getCardsOfUser(userId);
   console.debug("*** cards START ***");
   console.debug(cards);
   console.debug("*** cards END ***");
@@ -14,6 +14,6 @@ export async function get(req, res, next) {
     res.end(JSON.stringify(cards));
   } else {
     console.error("Could not get cards");
-    next();
+    // next();
   }
 }
