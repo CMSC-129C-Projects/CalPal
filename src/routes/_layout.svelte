@@ -1,22 +1,25 @@
 <script>
-	import Nav from '../components/Nav.svelte';
-
-	export let segment;
+  import Header from "../components/Header.svelte";
+  export let segment;
 </script>
 
-<style>
-	main {
-		position: relative;
-		max-width: 56em;
-		background-color: white;
-		padding: 2em;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-</style>
-
-<Nav {segment}/>
-
 <main>
-	<slot></slot>
+  <Header />
+  <slot />
 </main>
+
+<style>
+  main {
+    position: relative;
+    max-width: 100%;
+    background-color: white;
+    /* padding: 2em; */
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  slot {
+    max-width: 56em;
+    padding: 2em;
+  }
+</style>

@@ -1,50 +1,62 @@
-<script>
-	import successkid from 'images/successkid.jpg';
+<script context="module">
+  export async function preload() {
+    const res = await this.fetch(`cards/1.json`);
+    const data = await res.json();
+
+    if (res.status === 200) {
+      return { userCards: data };
+    } else {
+      this.error(res.status, data.message);
+    }
+  }
 </script>
 
-<style>
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
-
-	h1 {
-		font-size: 2.8em;
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
-
-	figure {
-		margin: 0 0 1em 0;
-	}
-
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
-</style>
+<script>
+  export let userCards;
+</script>
 
 <svelte:head>
-	<title>Sapper project template</title>
+  <title>CalPal</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+{#if userCards}
+  <code>{JSON.stringify(userCards)}</code>
+{:else}
+  <p>Could not get cards.</p>
+{/if}
 
-<figure>
-	<img alt="Success Kid" src="{successkid}">
-	<figcaption>Have fun with Sapper!</figcaption>
-</figure>
+<style>
+  h1,
+  figure,
+  p {
+    text-align: center;
+    margin: 0 auto;
+  }
 
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+  h1 {
+    font-size: 2.8em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 0.5em 0;
+  }
+
+  figure {
+    margin: 0 0 1em 0;
+  }
+
+  img {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 0 1em 0;
+  }
+
+  p {
+    margin: 1em auto;
+  }
+
+  @media (min-width: 480px) {
+    h1 {
+      font-size: 4em;
+    }
+  }
+</style>
