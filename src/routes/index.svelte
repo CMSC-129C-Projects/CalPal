@@ -1,21 +1,29 @@
+<script context="module">
+  export async function preload() {
+    const res = await this.fetch(`cards/1.json`);
+    const data = await res.json();
+
+    if (res.status === 200) {
+      return { userCards: data };
+    } else {
+      this.error(res.status, data.message);
+    }
+  }
+</script>
+
 <script>
+  export let userCards;
 </script>
 
 <svelte:head>
   <title>CalPal</title>
 </svelte:head>
 
-<h1>Great success!</h1>
-
-<figure>
-  <figcaption>Have fun with Sapper!</figcaption>
-</figure>
-
-<p>
-  <strong
-    >Try editing this file (src/routes/index.svelte) to test live reloading.</strong
-  >
-</p>
+{#if userCards}
+  <code>{JSON.stringify(userCards)}</code>
+{:else}
+  <p>Could not get cards.</p>
+{/if}
 
 <style>
   h1,
