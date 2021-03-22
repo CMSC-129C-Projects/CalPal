@@ -2,9 +2,6 @@
   export async function preload() {
     const res = await this.fetch(`cards/1.json`);
     const data = await res.json();
-    console.debug("*** data START ***");
-    console.debug(`data = ${data}`);
-    console.debug("*** data END ***");
 
     if (res.status === 200) {
       return { userCards: data };
@@ -16,14 +13,17 @@
 
 <script>
   export let userCards;
-  console.debug(`userCards = ${userCards}`);
 </script>
 
 <svelte:head>
   <title>CalPal</title>
 </svelte:head>
 
-<code>{JSON.stringify(userCards)}</code>
+{#if userCards}
+  <code>{JSON.stringify(userCards)}</code>
+{:else}
+  <p>Could not get cards.</p>
+{/if}
 
 <style>
   h1,
