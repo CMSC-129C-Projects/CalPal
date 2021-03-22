@@ -16,25 +16,40 @@
     font-size: 10;
     text-align: right;
   }
+
   .switchView {
     background-color: transparent;
+    color: #40415a;
     border: none;
     outline: none;
     font-size: 30px;
     text-align: right;
+    /* transition: transform 0.1s; */
   }
+
   .addCalendar {
     background-color: transparent;
+    color: #40415a;
     border: none;
     outline: none;
     font-size: 30px;
     text-align: right;
+    /* transition: transform 0.1s; */
   }
-  .parent :global(.calendar:hover) {
+
+  .switchView:hover {
+    transform: scale(1.1);
+  }
+
+  .addCalendar:hover {
+    transform: scale(1.1);
+  }
+
+  .parent :global(.calendar:active) {
     color: #f58f29;
   }
 
-  .parent :global(.plus:hover) {
+  .parent :global(.plus:active) {
     color: #f58f29;
   }
 </style>
