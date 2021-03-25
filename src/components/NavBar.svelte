@@ -24,7 +24,7 @@
     outline: none;
     font-size: 30px;
     text-align: right;
-    /* transition: transform 0.1s; */
+    transition: transform 0.05s;
   }
 
   .addCalendar {
@@ -34,7 +34,7 @@
     outline: none;
     font-size: 30px;
     text-align: right;
-    /* transition: transform 0.1s; */
+    transition: transform 0.05s;
   }
 
   .switchView:hover {
