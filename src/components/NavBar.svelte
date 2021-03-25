@@ -3,18 +3,22 @@
 </script>
 
 <div class="parent">
-  <button class="switchView"><Icon class="calendar" name="calendar3" /></button>
-  <button class="addCalendar"
+  <button class="scaleOnHover switchView"
+    ><Icon class="calendar" name="calendar3" /></button
+  >
+  <button class="scaleOnHover addCalendar"
     ><Icon class="plus" name="plus-square-dotted" /></button
   >
 </div>
 
 <style>
   .parent {
-    /*padding-left: 8em;*/
-    padding-top: 0.5em;
     font-size: 10;
-    text-align: right;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: -0.3em;
   }
 
   .switchView {
@@ -23,8 +27,8 @@
     border: none;
     outline: none;
     font-size: 30px;
-    text-align: right;
     transition: transform 0.05s;
+    transform-origin: center center;
   }
 
   .addCalendar {
@@ -33,15 +37,11 @@
     border: none;
     outline: none;
     font-size: 30px;
-    text-align: right;
     transition: transform 0.05s;
+    transform-origin: center center;
   }
 
-  .switchView:hover {
-    transform: scale(1.1);
-  }
-
-  .addCalendar:hover {
+  .scaleOnHover:hover {
     transform: scale(1.1);
   }
 
