@@ -16,7 +16,7 @@
     </Col>
     <Col class="col2" xs="4" />
     <!-- <Col lg="8"></Col> -->
-    <Col class="col3" xs="4"><h1><NavBar /></h1></Col>
+    <Col class="col3" xs="4"><NavBar /></Col>
   </Row>
 </div>
 
@@ -26,6 +26,7 @@
     background-color: #78c0e0;
     padding-left: 1.5em;
     padding-right: 1.5em;
+    height: 100%;
   }
 
   .parent :global(.col1) {
