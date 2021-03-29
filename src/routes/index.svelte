@@ -12,6 +12,7 @@
 </script>
 
 <script>
+  import Board from "../components/Board.svelte";
   export let userCards;
 </script>
 
@@ -20,7 +21,7 @@
 </svelte:head>
 
 {#if userCards}
-  <code>{JSON.stringify(userCards)}</code>
+  <Board />
 {:else}
   <p>Could not get cards.</p>
 {/if}
