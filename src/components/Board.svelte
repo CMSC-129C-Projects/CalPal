@@ -22,9 +22,8 @@
     display: flex;
     background-color: lightpink;
     flex-direction: row;
-    flex-wrap: nowrap;
-    height: 100%;
-    width: 100%;
     overflow-x: auto;
+    margin: 8px;
+    gap: 8px;
   }
 </style>
