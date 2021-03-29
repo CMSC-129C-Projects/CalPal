@@ -13,7 +13,7 @@ export async function getCardsOfUser(userId) {
     const database = client.db("calpal");
     const cards = database.collection("cards");
 
-    const userCards = await cards.findOne({ user_id: Number(userId) });
+    const userCards = await cards.findOne({ user_id: userId });
 
     return userCards;
   } catch (e) {
