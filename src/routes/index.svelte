@@ -20,13 +20,20 @@
   <title>CalPal</title>
 </svelte:head>
 
-{#if userCards}
-  <Board />
-{:else}
-  <p>Could not get cards.</p>
-{/if}
+<div class="parent">
+  {#if userCards}
+    <Board />
+  {:else}
+    <p>Could not get cards.</p>
+  {/if}
+</div>
 
 <style>
+  .parent {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+  }
+
   h1,
   figure,
   p {
