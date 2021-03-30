@@ -20,10 +20,10 @@
 <style>
   .flexBoxContainer {
     display: flex;
-    background-color: lightpink;
     flex-direction: row;
     overflow-x: auto;
-    margin: 8px;
+    padding: 8px;
     gap: 8px;
+    height: 100%;
   }
 </style>
