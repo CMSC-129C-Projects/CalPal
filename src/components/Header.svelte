@@ -1,6 +1,6 @@
 <script>
   // JS here
-  import { Col, Container, Row } from "sveltestrap/src";
+  import { Col, Row } from "sveltestrap/src";
   import NavBar from "./NavBar.svelte";
 </script>
 
@@ -24,6 +24,7 @@
   .parent {
     background-color: #78c0e0;
   }
+
   .parent :global(.header) {
     margin-left: 1.5em;
     margin-right: 1.5em;
