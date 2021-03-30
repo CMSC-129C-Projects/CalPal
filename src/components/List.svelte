@@ -53,7 +53,7 @@
   }
 
   .parent {
-    margin: 10px 10px 10px 10px;
+    /* margin: 10px 10px 10px 10px; */
   }
 
   .parent :global(.container) {
