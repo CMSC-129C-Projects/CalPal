@@ -15,7 +15,7 @@
 
 <style>
   .parent :global(.addList) {
-    height: 55px;
+    height: 56px;
     width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
