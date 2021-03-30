@@ -1,10 +1,12 @@
 <script>
   import { Button, Icon } from "sveltestrap/src";
+
+  export let onClick;
 </script>
 
 <div class="parent">
   <span>
-    <Button class="addList" color="light">
+    <Button class="addList" color="light" on:click={() => onClick()}>
       Add List
       <Icon class="plusIcon" name="plus" />
     </Button>
@@ -13,7 +15,7 @@
 
 <style>
   .parent :global(.addList) {
-    height: 55px;
+    height: 56px;
     width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;

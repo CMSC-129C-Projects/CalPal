@@ -1,13 +1,25 @@
 <script>
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
+
+  export let lists = [0];
+
+  function createNewList() {
+    console.debug("Here");
+    const last = lists[-1];
+    lists = lists.concat([last + 1]);
+  }
 </script>
 
 <div class="flexBoxContainer">
-  <List />
-  <List />
-  <List />
-  <AddListButton />
+  {#each lists as list}
+    <List />
+  {/each}
+  <AddListButton
+    onClick={() => {
+      createNewList();
+    }}
+  />
 </div>
 
 <style>
