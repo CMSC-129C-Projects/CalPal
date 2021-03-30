@@ -1,10 +1,12 @@
 <script>
   import { Button, Icon } from "sveltestrap/src";
+
+  export let onClick;
 </script>
 
 <div class="parent">
   <span>
-    <Button class="addList" color="light">
+    <Button class="addList" color="light" on:click={() => onClick()}>
       Add List
       <Icon class="plusIcon" name="plus" />
     </Button>
