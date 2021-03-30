@@ -1,20 +1,13 @@
 <script>
   import List from "./List.svelte";
+  import AddListButton from "./AddListButton.svelte";
 </script>
 
 <div class="flexBoxContainer">
   <List />
   <List />
   <List />
-  <List />
-  <List />
-  <List />
-  <List />
-  <List />
-  <List />
-  <List />
-  <List />
-  <List />
+  <AddListButton />
 </div>
 
 <style>
