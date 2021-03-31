@@ -58,13 +58,13 @@
     </CardBody>
     <CardFooter class="listFooter">
       <Row>
-        <Col class="leftHalf" xs="6">
+        <Col class="leftHalf">
           <button class="borderlessButton addCard">
             <Icon class="plusIcon" name="plus" />
             Add Card
           </button></Col
         >
-        <Col class="rightHalf" xs="6">
+        <Col class="rightHalf" xs="2">
           <Dropdown {isOpen} toggle={() => (isOpen = !isOpen)}>
             <DropdownToggle caret class="dropDownButton">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
@@ -108,12 +108,16 @@
   .parent :global(.leftHalf) {
     text-align: left;
     padding: 0;
+    display: flex;
     /* background-color: red; */
   }
 
   .parent :global(.rightHalf) {
     text-align: right;
     padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
     /* background-color: blue; */
   }
 
@@ -128,6 +132,9 @@
   }
 
   .borderlessButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     /* background-color: lightcoral; */
     vertical-align: middle;
@@ -135,7 +142,6 @@
     outline: none;
     line-height: 0%;
     padding: 0;
-    font-size: 1.5em;
     transition: transform 0.05s;
   }
 
@@ -162,6 +168,8 @@
 
   .parent :global(.newFolder) {
     color: #40415a;
+    margin-top: 0.08em;
+    font-size: 1.2em;
   }
 
   .parent :global(.newFolder:active) {
