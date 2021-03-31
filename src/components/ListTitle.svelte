@@ -25,6 +25,9 @@
   async function handleKeydown(event) {
     if (event.key === "Enter") {
       isSelected = false;
+      if (value === "") {
+        value = untitledListString;
+      }
     }
   }
 </script>
@@ -35,9 +38,13 @@
       {id}
       class="listTitle {isUntitledList ? 'untitledList' : ''}"
       type="textarea"
+      maxlength="64"
       bind:value
       on:focus={() => {
         isSelected = true;
+        if (value === untitledListString) {
+          value = "";
+        }
       }}
       on:blur={() => {
         isSelected = false;
