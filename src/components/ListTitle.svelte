@@ -2,12 +2,6 @@
   import { tick } from "svelte";
   import { Input } from "sveltestrap/src";
 
-  //   const dispatch = createEventDispatcher();
-
-  //   function wasClicked() {
-  //     dispatch();
-  //   }
-
   export let value;
   export let id;
 
