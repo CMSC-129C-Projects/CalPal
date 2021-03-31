@@ -13,9 +13,9 @@
 </script>
 
 <div class="flexBoxContainer">
-  {#each lists as list}
+  {#each lists as list, i}
     <div transition:fade={{ duration: 150 }}>
-      <List list_name={list.list_name} />
+      <List list_name={list.list_name} id="list-{i}" />
     </div>
   {/each}
   <AddListButton
