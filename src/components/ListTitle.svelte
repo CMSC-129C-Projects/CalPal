@@ -77,5 +77,7 @@
     font-size: 1.25em;
     margin: 0px 0px 0px 0px;
     padding: 0%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 </style>
