@@ -30,6 +30,20 @@
       }
     }
   }
+
+  async function onFocus() {
+    isSelected = true;
+    if (value === untitledListString) {
+      value = "";
+    }
+  }
+
+  async function onBlur() {
+    isSelected = false;
+    if (value === "") {
+      value = untitledListString;
+    }
+  }
 </script>
 
 <div class="parent">
@@ -40,18 +54,8 @@
       type="textarea"
       maxlength="64"
       bind:value
-      on:focus={() => {
-        isSelected = true;
-        if (value === untitledListString) {
-          value = "";
-        }
-      }}
-      on:blur={() => {
-        isSelected = false;
-        if (value === "") {
-          value = untitledListString;
-        }
-      }}
+      on:focus={() => onFocus()}
+      on:blur={() => onBlur()}
       on:keydown={(e) => handleKeydown(e)}
     />
   {:else}
