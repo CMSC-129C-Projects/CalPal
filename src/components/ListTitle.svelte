@@ -24,10 +24,7 @@
 
   async function handleKeydown(event) {
     if (event.key === "Enter") {
-      isSelected = false;
-      if (value === "") {
-        value = untitledListString;
-      }
+      await onBlur();
     }
   }
 
@@ -40,6 +37,7 @@
 
   async function onBlur() {
     isSelected = false;
+    value = value.trim();
     if (value === "") {
       value = untitledListString;
     }
