@@ -10,6 +10,8 @@
     Container,
     Row,
   } from "sveltestrap/src";
+
+  export let list_name;
 </script>
 
 <div class="parent">
@@ -18,7 +20,7 @@
       <Container class="container">
         <Row>
           <Col class="leftHalf" xs="6"
-            ><CardTitle class="cardTitle">List Title</CardTitle></Col
+            ><CardTitle class="cardTitle">{list_name}</CardTitle></Col
           >
           <Col class="rightHalf" xs="6">
             <button class="borderlessButton newFolder">

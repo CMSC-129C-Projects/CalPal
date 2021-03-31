@@ -22,7 +22,7 @@
 
 <div class="parent">
   {#if userCards}
-    <Board />
+    <Board lists={userCards.lists} />
   {:else}
     <p>Could not get cards.</p>
   {/if}

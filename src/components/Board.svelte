@@ -3,19 +3,19 @@
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
 
-  export let lists = [0];
+  export let lists;
 
   function createNewList() {
     const last = lists.slice(-1)[0];
-    lists = [...lists, last + 1];
+    lists = [...lists, { list_name: "New List" }];
     console.debug(`lists is now ${lists}`);
   }
 </script>
 
 <div class="flexBoxContainer">
-  {#each lists as list (list)}
+  {#each lists as list}
     <div transition:fade={{ duration: 150 }}>
-      <List />
+      <List list_name={list.list_name} />
     </div>
   {/each}
   <AddListButton
