@@ -9,8 +9,14 @@
     Col,
     Container,
     Row,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
   } from "sveltestrap/src";
   import ListTitle from "./ListTitle.svelte";
+
+  let isOpen = false;
 
   export let list_name;
   export let id;
@@ -51,9 +57,24 @@
       </div>
     </CardBody>
     <CardFooter class="listFooter">
-      <button class="borderlessButton addCard">
-        <Icon class="plusIcon" name="plus" />
-      </button>
+      <Row>
+        <Col class="leftHalf" xs="6">
+          <button class="borderlessButton addCard">
+            <Icon class="plusIcon" name="plus" />
+            Add Card
+          </button></Col
+        >
+        <Col class="rightHalf" xs="6">
+          <Dropdown {isOpen} toggle={() => (isOpen = !isOpen)}>
+            <DropdownToggle caret class="dropDownButton">
+              <!-- <Icon class="threeDots" name="three-dots" /> -->
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>Archive List</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Col>
+      </Row>
     </CardFooter>
   </Card>
 </div>
@@ -98,8 +119,11 @@
 
   .parent :global(.listFooter) {
     text-align: center;
+    vertical-align: middle;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
+    padding-left: 2em;
+    padding-right: 2em;
     font-size: medium;
   }
 
@@ -115,19 +139,44 @@
     transition: transform 0.05s;
   }
 
+  .parent :global(.addCard) {
+    color: #40415a;
+    font-size: 15px;
+  }
+
+  .parent :global(.dropDownButton) {
+    background-color: transparent;
+    color: #40415a;
+    vertical-align: middle;
+    border: none;
+    outline: none;
+    line-height: 0%;
+    padding: 0;
+    font-size: 1.5em;
+  }
+
   .parent :global(.plusIcon) {
     color: #40415a;
+    font-size: 1.5em;
   }
 
   .parent :global(.newFolder) {
     color: #40415a;
   }
 
+  .parent :global(.newFolder:active) {
+    color: #f58f29;
+  }
+
   .parent :global(.plusIcon:active) {
     color: #f58f29;
   }
 
-  .parent :global(.newFolder:active) {
+  .parent :global(.addCard:active) {
     color: #f58f29;
+  }
+
+  .parent :global(.isOpen) {
+    outline: none;
   }
 </style>
