@@ -10,8 +10,16 @@
     Container,
     Row,
   } from "sveltestrap/src";
+  import ListTitle from "./ListTitle.svelte";
 
   export let list_name;
+  export let id;
+
+  let isTitleSelected = false;
+
+  function onTitleClicked() {
+    isTitleSelected = !isTitleSelected;
+  }
 </script>
 
 <div class="parent">
@@ -19,8 +27,13 @@
     <CardHeader class="listHeader">
       <Container class="container">
         <Row>
-          <Col class="leftHalf"
-            ><CardTitle class="cardTitle">{list_name}</CardTitle></Col
+          <Col class="leftHalf">
+            <CardTitle
+              class="cardTitleContainer"
+              on:click={() => onTitleClicked()}
+            >
+              <ListTitle bind:value={list_name} {id} />
+            </CardTitle></Col
           >
           <Col class="rightHalf" xs="2">
             <button class="borderlessButton newFolder">
@@ -66,10 +79,7 @@
     min-width: 250px;
   }
 
-  .parent :global(.cardTitle) {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 1.25em;
+  .parent :global(.cardTitleContainer) {
     margin: 0px 0px 0px 0px;
     padding: 0%;
   }
