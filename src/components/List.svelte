@@ -26,6 +26,10 @@
   function onTitleClicked() {
     isTitleSelected = !isTitleSelected;
   }
+
+  function onArchiveClicked() {
+    alert("Archive list?");
+  }
 </script>
 
 <div class="parent">
@@ -70,7 +74,9 @@
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem>Archive List</DropdownItem>
+              <DropdownItem on:click={onArchiveClicked}
+                >Archive List</DropdownItem
+              >
             </DropdownMenu>
           </Dropdown>
         </Col>
