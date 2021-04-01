@@ -3,13 +3,16 @@
 
   export async function preload(page, session) {
     const userId = "1";
-    const userData = await getCardsOfUser(userId);
+    let userData = await getCardsOfUser(userId);
+    userData = {
+      user_id: userData.user_id,
+      lists: userData.lists,
+    };
     console.debug(`[index.svelte] userData: ${JSON.stringify(userData)}`);
 
     console.debug("[index.svelte] Attemping POST...");
     console.debug(`[index.svelte] POST body: ${JSON.stringify(userData)}`);
 
-    let did_post_succeed = false;
     await this.fetch(`cards/${userId}.json`, {
       method: "POST",
       headers: {
@@ -19,18 +22,14 @@
     }).then((post_res) => {
       if (post_res.ok) {
         console.debug(`[index.svelte] POST success!`);
-        did_post_succeed = true;
+        session.user_id = userData.user_id;
+        session.lists = userData.lists;
       } else {
         console.debug(`[index.svelte] POST failed.`);
         this.error(post_res.status, post_res.message);
         // throw new Error(`POST response failed: ${JSON.stringify(r)}`);
       }
     });
-
-    return {
-      user_id: userData.user_id,
-      lists: userData.lists,
-    };
   }
 </script>
 
@@ -38,10 +37,7 @@
   import { stores } from "@sapper/app";
   import Board from "../components/Board.svelte";
 
-  export let user_id;
-  export let lists;
   const { session } = stores();
-  session.set({ user_id: user_id, lists: lists });
 
   console.debug(`[index.svelte] Session: ${JSON.stringify($session)}`);
 </script>
