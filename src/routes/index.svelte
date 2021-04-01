@@ -1,13 +1,18 @@
 <script context="module">
-  import { getCardsOfUser } from "./cards/_database.js";
-
   export async function preload(page, session) {
     const userId = "1";
-    let userData = await getCardsOfUser(userId);
-    userData = {
-      user_id: userData.user_id,
-      lists: userData.lists,
-    };
+    const userData = await this.fetch(`cards/${userId}.json`)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          this.error(res.status, res.json().message);
+        }
+      })
+      .catch((err) => {
+        this.error(err);
+      });
+
     console.debug(`[index.svelte] userData: ${JSON.stringify(userData)}`);
 
     console.debug("[index.svelte] Attemping POST...");
