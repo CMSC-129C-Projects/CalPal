@@ -1,10 +1,25 @@
 <script context="module">
   export async function preload() {
-    const res = await this.fetch(`cards/1.json`);
+    const userId = 1;
+    const res = await this.fetch(`cards/${userId}.json`);
     const data = await res.json();
 
     if (res.status === 200) {
-      return { userCards: data };
+      const post_res = await this.fetch(`cards/${userId}.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          cards: data,
+        }),
+      });
+      if (post_res === 200) {
+        console.debug("[index.svelte] POSTed!");
+      } else {
+        console.debug("[index.svelte] POST failed.");
+      }
     } else {
       this.error(res.status, data.message);
     }
@@ -12,8 +27,12 @@
 </script>
 
 <script>
+  import { stores } from "@sapper/app";
+  const { session } = stores();
   import Board from "../components/Board.svelte";
   export let userCards;
+
+  console.debug(`[index.svelte] ${$session.user_id}`);
 </script>
 
 <svelte:head>

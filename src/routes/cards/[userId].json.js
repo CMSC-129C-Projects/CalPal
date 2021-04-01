@@ -13,3 +13,16 @@ export async function get(req, res, next) {
     next();
   }
 }
+
+export async function post(req, res, next) {
+  console.debug(`[[userId].json.js] ${JSON.stringify(req)}`);
+  req.session.user_id = req.body.user_id;
+  req.session.cards = req.body.cards;
+
+  res.writeHead(200, {
+    "Content-Type": "application/json",
+  });
+
+  res.end();
+  // next();
+}
