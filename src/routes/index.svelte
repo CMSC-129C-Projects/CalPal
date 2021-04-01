@@ -5,7 +5,7 @@
     const data = await res.json();
 
     if (res.status === 200) {
-      const post_res = await this.fetch(`cards/${userId}.json`, {
+      await this.fetch(`cards/${userId}.json`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -14,12 +14,17 @@
           user_id: userId,
           cards: data,
         }),
-      });
-      if (post_res === 200) {
-        console.debug("[index.svelte] POSTed!");
-      } else {
-        console.debug("[index.svelte] POST failed.");
-      }
+      })
+        .then((r) => {
+          if (r.ok) {
+            console.debug(`[index.svelte] POST success!`);
+          } else {
+            throw new Error(`POST response failed: ${JSON.stringify(r)}`);
+          }
+        })
+        .catch((e) => {
+          console.debug(`[index.svelte] POST failed. ${e}`);
+        });
     } else {
       this.error(res.status, data.message);
     }
@@ -32,7 +37,7 @@
   import Board from "../components/Board.svelte";
   export let userCards;
 
-  console.debug(`[index.svelte] ${$session.user_id}`);
+  console.debug(`[index.svelte] ${JSON.stringify($session)}`);
 </script>
 
 <svelte:head>

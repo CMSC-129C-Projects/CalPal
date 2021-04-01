@@ -12,8 +12,9 @@ polka() // You can also use Express
     sirv("static", { dev }),
     sapper.middleware({
       session: (req, res) => ({
-        user_id: req.user_id,
-        cards: req.cards,
+        user_id:
+          req.session && req.session.user_id ? req.session.user_id : null,
+        cards: req.session && req.session.cards ? req.session.cards : null,
       }),
     })
   )

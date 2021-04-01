@@ -14,10 +14,13 @@ export async function get(req, res, next) {
   }
 }
 
-export async function post(req, res, next) {
-  console.debug(`[[userId].json.js] ${JSON.stringify(req)}`);
-  req.session.user_id = req.body.user_id;
-  req.session.cards = req.body.cards;
+export async function post(req, res) {
+  req.session = {
+    user_id: req.body.user_id,
+    cards: req.body.cards,
+  };
+  // console.debug(`[[userId].json.js] ${typeof req.session}`);
+  console.debug(`[[userId].json.js] ${JSON.stringify(req.session)}`);
 
   res.writeHead(200, {
     "Content-Type": "application/json",
