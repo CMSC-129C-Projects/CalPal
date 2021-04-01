@@ -73,7 +73,7 @@
             <DropdownToggle caret class="dropDownButton">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
-            <DropdownMenu>
+            <DropdownMenu right>
               <DropdownItem on:click={onArchiveClicked}>
                 Archive List
               </DropdownItem>
