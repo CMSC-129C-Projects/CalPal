@@ -43,8 +43,8 @@
               on:click={() => onTitleClicked()}
             >
               <ListTitle bind:value={list_name} {id} />
-            </CardTitle></Col
-          >
+            </CardTitle>
+          </Col>
           <Col class="rightHalf" xs="2">
             <button class="borderlessButton newFolder">
               <Icon class="newFolder" name="folder-plus" />
@@ -66,17 +66,17 @@
           <button class="borderlessButton addCard">
             <Icon class="plusIcon" name="plus" />
             Add Card
-          </button></Col
-        >
+          </button>
+        </Col>
         <Col class="rightHalf" xs="2">
           <Dropdown {isOpen} toggle={() => (isOpen = !isOpen)}>
             <DropdownToggle caret class="dropDownButton">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem on:click={onArchiveClicked}
-                >Archive List</DropdownItem
-              >
+              <DropdownItem on:click={onArchiveClicked}>
+                Archive List
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Col>
