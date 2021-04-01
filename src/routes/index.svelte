@@ -1,43 +1,48 @@
 <script context="module">
-  export async function preload() {
-    const userId = 1;
-    const res = await this.fetch(`cards/${userId}.json`);
-    const data = await res.json();
+  import { getCardsOfUser } from "./cards/_database.js";
 
-    if (res.status === 200) {
-      await this.fetch(`cards/${userId}.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          cards: data,
-        }),
-      })
-        .then((r) => {
-          if (r.ok) {
-            console.debug(`[index.svelte] POST success!`);
-          } else {
-            throw new Error(`POST response failed: ${JSON.stringify(r)}`);
-          }
-        })
-        .catch((e) => {
-          console.debug(`[index.svelte] POST failed. ${e}`);
-        });
-    } else {
-      this.error(res.status, data.message);
-    }
+  export async function preload(page, session) {
+    const userId = "1";
+    const cardData = await getCardsOfUser(userId);
+    console.debug(`[index.svelte] cardData: ${JSON.stringify(cardData)}`);
+
+    console.debug("[index.svelte] Attemping POST...");
+    console.debug(
+      `[index.svelte] POST body: ${JSON.stringify({
+        user_id: userId,
+        cards: cardData,
+      })}`
+    );
+    await this.fetch(`cards/${userId}.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        // cards: cardData,
+      }),
+    }).then((post_res) => {
+      if (post_res.ok) {
+        console.debug(`[index.svelte] POST success!`);
+      } else {
+        console.debug(`[index.svelte] POST failed.`);
+        this.error(post_res.status, post_res.message);
+        // throw new Error(`POST response failed: ${JSON.stringify(r)}`);
+      }
+    });
   }
 </script>
 
 <script>
   import { stores } from "@sapper/app";
-  const { session } = stores();
   import Board from "../components/Board.svelte";
+
+  const { session } = stores();
+
   export let userCards;
 
-  console.debug(`[index.svelte] ${JSON.stringify($session)}`);
+  console.debug(`[index.svelte] Session: ${JSON.stringify($session)}`);
 </script>
 
 <svelte:head>
@@ -45,7 +50,10 @@
 </svelte:head>
 
 <div class="parent">
-  {#if userCards}
+  {#if $session}
+    <code>
+      {JSON.stringify($session)}
+    </code>
     <Board lists={userCards.lists} />
   {:else}
     <p>Could not get cards.</p>
