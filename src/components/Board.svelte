@@ -7,7 +7,7 @@
 
   function createNewList() {
     const last = lists.slice(-1)[0];
-    lists = [...lists, { list_name: "Untitled List" }];
+    lists = [...lists, { list_name: "Untitled List", is_archived: false }];
     console.debug(`lists is now ${lists}`);
   }
 </script>
