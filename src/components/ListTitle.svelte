@@ -1,9 +1,10 @@
 <script>
-  import { tick } from "svelte";
+  import { tick, onMount } from "svelte";
   import { Input } from "sveltestrap/src";
 
   export let value;
-  export let id;
+  let inputElement;
+  let isMounted = false;
 
   let isSelected = false;
   $: {
@@ -15,20 +16,28 @@
   $: isUntitledList = value === untitledListString;
 
   async function handleOnClick(event) {
+    if (!isMounted) {
+      return;
+    }
     isSelected = true;
     await tick();
 
-    const listTitleField = document.getElementById(id);
-    listTitleField.focus();
+    inputElement.focus();
   }
 
   async function handleKeydown(event) {
+    if (!isMounted) {
+      return;
+    }
     if (event.key === "Enter") {
       await onBlur();
     }
   }
 
   async function onFocus() {
+    if (!isMounted) {
+      return;
+    }
     isSelected = true;
     if (value === untitledListString) {
       value = "";
@@ -36,22 +45,29 @@
   }
 
   async function onBlur() {
+    if (!isMounted) {
+      return;
+    }
     isSelected = false;
     value = value.trim();
     if (value === "") {
       value = untitledListString;
     }
   }
+
+  onMount(() => {
+    isMounted = true;
+  });
 </script>
 
 <div class="parent">
   {#if isSelected}
     <Input
-      {id}
       class="listTitle {isUntitledList ? 'untitledList' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
+      bind:this={inputElement}
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}
       on:keydown={(e) => handleKeydown(e)}
