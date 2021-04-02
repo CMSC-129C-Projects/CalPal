@@ -1,6 +1,5 @@
 <script>
   import { stores } from "@sapper/app";
-  import { Button } from "sveltestrap/src";
   import Board from "../components/Board.svelte";
 
   const { session } = stores();
@@ -17,7 +16,7 @@
     <code>
       {JSON.stringify($session)}
     </code>
-    <Board lists={$session.lists} />
+    <Board />
   {:else}
     <p>Could not get cards.</p>
   {/if}
