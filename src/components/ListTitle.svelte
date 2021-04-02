@@ -1,25 +1,21 @@
 <script>
-  import { tick } from "svelte";
+  import { tick, onMount } from "svelte";
   import { Input } from "sveltestrap/src";
 
   export let value;
   export let id;
 
   let isSelected = false;
-  $: {
-    console.debug(`[ListTitle.svelte] isSelected = ${isSelected}`);
-  }
 
   const untitledListString = "Untitled List";
-  let isUntitledList = false;
   $: isUntitledList = value === untitledListString;
 
   async function handleOnClick(event) {
     isSelected = true;
     await tick();
 
-    const listTitleField = document.getElementById(id);
-    listTitleField.focus();
+    const inputElement = document.getElementById(id);
+    inputElement.focus();
   }
 
   async function handleKeydown(event) {

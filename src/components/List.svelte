@@ -18,7 +18,7 @@
 
   let isOpen = false;
 
-  export let list_name;
+  export let list;
   export let id;
 
   let isTitleSelected = false;
@@ -42,7 +42,7 @@
               class="cardTitleContainer"
               on:click={() => onTitleClicked()}
             >
-              <ListTitle bind:value={list_name} {id} />
+              <ListTitle bind:value={list.list_name} {id} />
             </CardTitle>
           </Col>
           <Col class="rightHalf" xs="2">

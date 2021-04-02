@@ -10,7 +10,9 @@
     "lint": "eslint --fix --quiet src --ext .js,.svelte"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "compression": "^1.7.1",
+    "express-session": "^1.17.1",
     "mongodb": "^3.6.5",
     "polka": "next",
     "sirv": "^1.0.0",

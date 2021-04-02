@@ -1,19 +1,33 @@
 <script context="module">
-  export async function preload() {
-    const res = await this.fetch(`cards/1.json`);
-    const data = await res.json();
-
-    if (res.status === 200) {
-      return { userCards: data };
-    } else {
-      this.error(res.status, data.message);
+  export async function preload(page, session) {
+    const userId = 1;
+    if (session.did_cards_load) {
+      await this.fetch(`cards/${userId}-update.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lists: session.lists,
+        }),
+      }).then((res) => {
+        if (res.ok) {
+          if (res.modifiedCount > 0) {
+            console.debug(`[index.svelte] Successfully updated lists!`);
+          } else {
+            console.debug(`[index.svelte] No changes were made.`);
+          }
+        }
+      });
     }
   }
 </script>
 
 <script>
+  import { stores } from "@sapper/app";
   import Board from "../components/Board.svelte";
-  export let userCards;
+
+  const { session } = stores();
 </script>
 
 <svelte:head>
@@ -21,8 +35,8 @@
 </svelte:head>
 
 <div class="parent">
-  {#if userCards}
-    <Board lists={userCards.lists} />
+  {#if $session}
+    <Board />
   {:else}
     <p>Could not get cards.</p>
   {/if}
