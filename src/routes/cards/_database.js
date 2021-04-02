@@ -45,6 +45,7 @@ export async function updateCardsOfUser(userId, lists) {
     console.log(
       `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
     );
+    return result;
   } catch (e) {
     console.error(e);
   } finally {

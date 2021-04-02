@@ -12,7 +12,11 @@
         }),
       }).then((res) => {
         if (res.ok) {
-          console.debug(`[index.svelte] Successfully updated lists!`);
+          if (res.modifiedCount > 0) {
+            console.debug(`[index.svelte] Successfully updated lists!`);
+          } else {
+            console.debug(`[index.svelte] No changes were made.`);
+          }
         }
       });
     }
