@@ -12,7 +12,6 @@
       ...$session.lists,
       { list_name: "Untitled List", is_archived: false },
     ];
-    // console.debug(`lists is now ${lists}`);
   }
 </script>
 

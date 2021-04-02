@@ -24,8 +24,6 @@
   import Board from "../components/Board.svelte";
 
   const { session } = stores();
-
-  console.debug(`[index.svelte] Session: ${JSON.stringify($session)}`);
 </script>
 
 <svelte:head>
@@ -34,9 +32,6 @@
 
 <div class="parent">
   {#if $session}
-    <code>
-      {JSON.stringify($session)}
-    </code>
     <Board />
   {:else}
     <p>Could not get cards.</p>

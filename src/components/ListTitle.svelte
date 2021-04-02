@@ -6,9 +6,6 @@
   export let id;
 
   let isSelected = false;
-  $: {
-    console.debug(`[ListTitle.svelte] isSelected = ${isSelected}`);
-  }
 
   const untitledListString = "Untitled List";
   $: isUntitledList = value === untitledListString;

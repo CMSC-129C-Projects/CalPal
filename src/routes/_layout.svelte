@@ -16,11 +16,6 @@
         this.error(err);
       });
 
-    console.debug(`[index.svelte] userData: ${JSON.stringify(userData)}`);
-
-    console.debug("[index.svelte] Attemping POST...");
-    console.debug(`[index.svelte] POST body: ${JSON.stringify(userData)}`);
-
     await this.fetch(`cards/${userId}.json`, {
       method: "POST",
       headers: {
