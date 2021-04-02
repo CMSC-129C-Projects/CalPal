@@ -1,19 +1,21 @@
 <script context="module">
   export async function preload(page, session) {
     const userId = 1;
-    await this.fetch(`cards/${userId}-update.json.js`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        lists: session.lists,
-      }),
-    }).then((res) => {
-      if (res.ok) {
-        console.debug(`[index.svelte] Successfully updated lists!`);
-      }
-    });
+    if (session.did_cards_load) {
+      await this.fetch(`cards/${userId}-update.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lists: session.lists,
+        }),
+      }).then((res) => {
+        if (res.ok) {
+          console.debug(`[index.svelte] Successfully updated lists!`);
+        }
+      });
+    }
   }
 </script>
 

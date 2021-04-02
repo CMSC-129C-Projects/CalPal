@@ -1,5 +1,7 @@
 <script context="module">
   export async function preload(page, session) {
+    session.did_cards_load = false;
+
     console.debug(`[index.svelte] preload() called!`);
     const userId = "1";
     const userData = await this.fetch(`cards/${userId}.json`)
@@ -36,6 +38,8 @@
         // throw new Error(`POST response failed: ${JSON.stringify(r)}`);
       }
     });
+
+    session.did_cards_load = true;
   }
 </script>
 

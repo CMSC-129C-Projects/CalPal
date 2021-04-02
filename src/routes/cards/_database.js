@@ -35,8 +35,13 @@ export async function updateCardsOfUser(userId, lists) {
     const cards = database.collection("cards");
 
     const filter = { user_id: userId };
+    const updatedDocument = {
+      $set: {
+        lists: lists,
+      },
+    };
 
-    const result = await cards.updateOne(filter, lists);
+    const result = await cards.updateOne(filter, updatedDocument);
     console.log(
       `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
     );
