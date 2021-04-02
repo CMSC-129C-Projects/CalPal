@@ -22,3 +22,27 @@ export async function getCardsOfUser(userId) {
     await client.close();
   }
 }
+
+export async function updateCardsOfUser(userId, lists) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  try {
+    await client.connect();
+
+    const database = client.db("calpal");
+    const cards = database.collection("cards");
+
+    const filter = { user_id: userId };
+
+    const result = await cards.updateOne(filter, lists);
+    console.log(
+      `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
+    );
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+}
