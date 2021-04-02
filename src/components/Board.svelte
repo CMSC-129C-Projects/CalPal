@@ -17,9 +17,9 @@
 </script>
 
 <div class="flexBoxContainer">
-  {#each $session.lists as list (list.list_name)}
+  {#each $session.lists as list, i (i)}
     <div transition:fade={{ duration: 150 }}>
-      <List bind:list />
+      <List bind:list id="list-{i}" />
     </div>
   {/each}
   <AddListButton

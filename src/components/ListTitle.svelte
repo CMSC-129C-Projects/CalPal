@@ -3,8 +3,7 @@
   import { Input } from "sveltestrap/src";
 
   export let value;
-  let inputElement;
-  let isMounted = false;
+  export let id;
 
   let isSelected = false;
   $: {
@@ -12,32 +11,23 @@
   }
 
   const untitledListString = "Untitled List";
-  let isUntitledList = false;
   $: isUntitledList = value === untitledListString;
 
   async function handleOnClick(event) {
-    if (!isMounted) {
-      return;
-    }
     isSelected = true;
     await tick();
 
+    const inputElement = document.getElementById(id);
     inputElement.focus();
   }
 
   async function handleKeydown(event) {
-    if (!isMounted) {
-      return;
-    }
     if (event.key === "Enter") {
       await onBlur();
     }
   }
 
   async function onFocus() {
-    if (!isMounted) {
-      return;
-    }
     isSelected = true;
     if (value === untitledListString) {
       value = "";
@@ -45,29 +35,22 @@
   }
 
   async function onBlur() {
-    if (!isMounted) {
-      return;
-    }
     isSelected = false;
     value = value.trim();
     if (value === "") {
       value = untitledListString;
     }
   }
-
-  onMount(() => {
-    isMounted = true;
-  });
 </script>
 
 <div class="parent">
   {#if isSelected}
     <Input
+      {id}
       class="listTitle {isUntitledList ? 'untitledList' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
-      bind:this={inputElement}
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}
       on:keydown={(e) => handleKeydown(e)}
