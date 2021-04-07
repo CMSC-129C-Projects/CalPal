@@ -7,16 +7,18 @@
     CardSubtitle,
     CardText,
     CardTitle,
-    Modal,
   } from "sveltestrap/src";
+
+  import ViewCard from "./ViewCard.svelte";
 </script>
 
 <div class="parent">
+  <ViewCard />
   <Button class="cardButton">
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">John Smith's Birthday</CardTitle>
-        <CardSubtitle class="dueDate">January 1, 2022</CardSubtitle>
+        <CardSubtitle class="eventDate">January 1, 2022</CardSubtitle>
       </CardBody>
     </Card>
   </Button>
@@ -54,7 +56,7 @@
     font-size: 1.25em;
   }
 
-  .parent :global(.dueDate) {
+  .parent :global(.eventDate) {
     padding-top: 0%;
     font-size: 0.9em;
   }
