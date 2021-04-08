@@ -1,5 +1,5 @@
 <script>
-  import { tick, onMount } from "svelte";
+  import { tick } from "svelte";
   import { Input } from "sveltestrap/src";
 
   export let value;
