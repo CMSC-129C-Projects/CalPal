@@ -70,7 +70,7 @@
     <CardBody class="listBody">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, i (i)}
+      }) as card, i (card)}
         <CalPalCard bind:card id="{id}-card-{i}" />
       {/each}
     </CardBody>
