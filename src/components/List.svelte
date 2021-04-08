@@ -22,12 +22,6 @@
   export let list;
   export let id;
 
-  let isTitleSelected = false;
-
-  function onTitleClicked() {
-    isTitleSelected = !isTitleSelected;
-  }
-
   function onArchiveClicked() {
     alert("Archive list?");
   }
@@ -57,10 +51,7 @@
       <Container class="container">
         <Row>
           <Col class="leftHalf">
-            <CardTitle
-              class="cardTitleContainer"
-              on:click={() => onTitleClicked()}
-            >
+            <CardTitle class="cardTitleContainer">
               <Title
                 bind:value={list.list_name}
                 {id}
