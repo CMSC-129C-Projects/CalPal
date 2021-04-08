@@ -55,8 +55,10 @@
       </Container>
     </CardHeader>
     <CardBody class="listBody">
-      {#each list.cards as card, i (i)}
-        <CalPalCard {card} />
+      {#each list.cards.filter((c) => {
+        return typeof c.card_name !== "undefined";
+      }) as card, i (i)}
+        <CalPalCard bind:card />
       {/each}
     </CardBody>
     <CardFooter class="listFooter">
