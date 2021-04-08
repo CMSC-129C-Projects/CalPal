@@ -9,10 +9,11 @@
   import ViewCard from "./ViewCard.svelte";
 
   export let card;
+  export let id;
 </script>
 
 <div class="parent">
-  <ViewCard bind:card />
+  <ViewCard bind:card {id} />
   <Button class="cardButton">
     <Card class="actualCard">
       <CardBody class="cardBody">
