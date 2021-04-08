@@ -14,7 +14,8 @@
     Container,
     Row,
   } from "sveltestrap/src";
-  import Title from "./Title.svelte";
+  //import Title from "./Title.svelte";
+  import CardTitle from "./CardTitle.svelte";
 
   export let card;
   export let id;
@@ -29,10 +30,28 @@
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
-      <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
+      <CardTitle
+        bind:value={card.card_name}
+        {id}
+        untitledString="Untitled Card"
+      />
+      <!-- <Container class="container">
+        <Row>
+          <Col class="leftHalf" xs="8">
+              <Title
+                  class="cardLabelTitle"
+                  bind:value={card.card_name}
+                  {id}
+                  untitledString="Untitled Card"
+              />
+          </Col>
+          <Col class="rightHalf" xs="4">
+          </Col>
+        </Row>
+      </Container> -->
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.card_name}</div>
+      <div class="cardTitle">{card.original_title}</div>
       <div class="eventDate">{new Date(card.original_date)}</div>
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
