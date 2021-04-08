@@ -89,7 +89,7 @@
       </Container>
     </ModalBody>
     <ModalFooter>
-      <ArchiveCard />
+      <ArchiveCard bind:is_archived={card.is_archived} />
     </ModalFooter>
   </Modal>
 </div>
