@@ -32,7 +32,7 @@
       <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.card_name}</div>
+      <div class="cardTitle">{card.original_title}</div>
       <div class="eventDate">{new Date(card.original_date)}</div>
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
