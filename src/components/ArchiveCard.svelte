@@ -17,7 +17,7 @@
 </script>
 
 <div class="parent">
-  <Button color="#ffffff" on:click={toggle}>
+  <Button outline color="danger" on:click={toggle}>
     <Icon name="archive" />
     Archive Card
   </Button>
@@ -40,10 +40,4 @@
 </div>
 
 <style>
-  .parent {
-    border: solid;
-    border-radius: 8px;
-    border-color: lightgray;
-    border-width: 2px;
-  }
 </style>
