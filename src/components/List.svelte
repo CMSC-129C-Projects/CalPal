@@ -31,6 +31,24 @@
   function onArchiveClicked() {
     alert("Archive list?");
   }
+
+  function addCard() {
+    list.cards = [
+      ...list.cards,
+      {
+        card_name: "Untitled Card",
+        original_title: "",
+        original_calendar: "",
+        original_date: "",
+        date_created: "",
+        due_date_time: "",
+        remind_date_time: "",
+        description: "",
+        color: "#ffffff",
+        is_archived: false,
+      },
+    ];
+  }
 </script>
 
 <div class="parent">
@@ -64,7 +82,7 @@
     <CardFooter class="listFooter">
       <Row>
         <Col class="leftHalf">
-          <button class="borderlessButton addCard">
+          <button class="borderlessButton addCard" on:click={() => addCard()}>
             <Icon class="plusIcon" name="plus" />
             Add Card
           </button>
