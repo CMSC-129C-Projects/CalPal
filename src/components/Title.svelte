@@ -44,7 +44,7 @@
   {#if isSelected}
     <Input
       {id}
-      class="listTitle {isUntitled ? 'untitled' : ''}"
+      class="title {isUntitled ? 'untitled' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
@@ -54,7 +54,7 @@
     />
   {:else}
     <div
-      class="listTitle {isUntitled ? 'untitled' : ''}"
+      class="title {isUntitled ? 'untitled' : ''}"
       on:click={(e) => handleOnClick(e)}
     >
       {value}
@@ -67,7 +67,7 @@
     color: #aaa;
   }
 
-  .parent :global(.listTitle) {
+  .parent :global(.title) {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 1.25em;
