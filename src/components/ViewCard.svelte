@@ -5,9 +5,7 @@
     ModalBody,
     ModalFooter,
     ModalHeader,
-    Form,
     FormGroup,
-    FormText,
     Input,
     Label,
     Icon,
@@ -16,8 +14,11 @@
     Container,
     Row,
   } from "sveltestrap/src";
+  import Title from "./Title.svelte";
 
   export let card;
+  export let id;
+
   let open = false;
   const toggle = () => (open = !open);
 
@@ -27,7 +28,9 @@
 <div class="parent">
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="cardLabel" {toggle}>Enter a Label</ModalHeader>
+    <ModalHeader class="cardLabel" {toggle}>
+      <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
+    </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.card_name}</div>
       <div class="eventDate">{new Date(card.original_date)}</div>
@@ -86,7 +89,7 @@
       </Container>
     </ModalBody>
     <ModalFooter>
-      <ArchiveCard />
+      <ArchiveCard bind:is_archived={card.is_archived} />
     </ModalFooter>
   </Modal>
 </div>

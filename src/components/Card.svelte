@@ -3,19 +3,17 @@
     Button,
     Card,
     CardBody,
-    CardHeader,
     CardSubtitle,
-    CardText,
     CardTitle,
   } from "sveltestrap/src";
   import ViewCard from "./ViewCard.svelte";
 
   export let card;
-  console.debug(`[Card.svelte] card: ${card}`);
+  export let id;
 </script>
 
 <div class="parent">
-  <ViewCard bind:card />
+  <ViewCard bind:card {id} />
   <Button class="cardButton">
     <Card class="actualCard">
       <CardBody class="cardBody">

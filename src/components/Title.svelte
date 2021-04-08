@@ -1,14 +1,14 @@
 <script>
-  import { tick, onMount } from "svelte";
+  import { tick } from "svelte";
   import { Input } from "sveltestrap/src";
 
   export let value;
   export let id;
+  export let untitledString = "";
 
   let isSelected = false;
 
-  const untitledListString = "Untitled List";
-  $: isUntitledList = value === untitledListString;
+  $: isUntitled = value === untitledString;
 
   async function handleOnClick(event) {
     isSelected = true;
@@ -26,7 +26,7 @@
 
   async function onFocus() {
     isSelected = true;
-    if (value === untitledListString) {
+    if (value === untitledString) {
       value = "";
     }
   }
@@ -35,7 +35,7 @@
     isSelected = false;
     value = value.trim();
     if (value === "") {
-      value = untitledListString;
+      value = untitledString;
     }
   }
 </script>
@@ -44,7 +44,7 @@
   {#if isSelected}
     <Input
       {id}
-      class="listTitle {isUntitledList ? 'untitledList' : ''}"
+      class="title {isUntitled ? 'untitled' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
@@ -54,7 +54,7 @@
     />
   {:else}
     <div
-      class="listTitle {isUntitledList ? 'untitledList' : ''}"
+      class="title {isUntitled ? 'untitled' : ''}"
       on:click={(e) => handleOnClick(e)}
     >
       {value}
@@ -63,11 +63,11 @@
 </div>
 
 <style>
-  .parent :global(.untitledList) {
+  .parent :global(.untitled) {
     color: #aaa;
   }
 
-  .parent :global(.listTitle) {
+  .parent :global(.title) {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 1.25em;

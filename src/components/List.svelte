@@ -14,7 +14,7 @@
     DropdownMenu,
     DropdownToggle,
   } from "sveltestrap/src";
-  import ListTitle from "./ListTitle.svelte";
+  import Title from "./Title.svelte";
   import CalPalCard from "./Card.svelte";
 
   let isOpen = false;
@@ -22,14 +22,26 @@
   export let list;
   export let id;
 
-  let isTitleSelected = false;
-
-  function onTitleClicked() {
-    isTitleSelected = !isTitleSelected;
-  }
-
   function onArchiveClicked() {
     alert("Archive list?");
+  }
+
+  function addCard() {
+    list.cards = [
+      ...list.cards,
+      {
+        card_name: "Untitled Card",
+        original_title: "",
+        original_calendar: "",
+        original_date: "",
+        date_created: "",
+        due_date_time: "",
+        remind_date_time: "",
+        description: "",
+        color: "#ffffff",
+        is_archived: false,
+      },
+    ];
   }
 </script>
 
@@ -39,11 +51,12 @@
       <Container class="container">
         <Row>
           <Col class="leftHalf">
-            <CardTitle
-              class="cardTitleContainer"
-              on:click={() => onTitleClicked()}
-            >
-              <ListTitle bind:value={list.list_name} {id} />
+            <CardTitle class="cardTitleContainer">
+              <Title
+                bind:value={list.list_name}
+                {id}
+                untitledString="Untitled List"
+              />
             </CardTitle>
           </Col>
           <Col class="rightHalf" xs="2">
@@ -56,15 +69,15 @@
     </CardHeader>
     <CardBody class="listBody">
       {#each list.cards.filter((c) => {
-        return typeof c.card_name !== "undefined";
+        return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card, i (i)}
-        <CalPalCard bind:card />
+        <CalPalCard bind:card id="{id}-card-{i}" />
       {/each}
     </CardBody>
     <CardFooter class="listFooter">
       <Row>
         <Col class="leftHalf">
-          <button class="borderlessButton addCard">
+          <button class="borderlessButton addCard" on:click={() => addCard()}>
             <Icon class="plusIcon" name="plus" />
             Add Card
           </button>
