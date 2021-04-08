@@ -14,8 +14,10 @@
     Container,
     Row,
   } from "sveltestrap/src";
+  import CardTitle from "./CardTitle.svelte";
 
   export let card;
+  export let id;
 
   let open = false;
   const toggle = () => (open = !open);
@@ -24,7 +26,9 @@
 <div class="parent">
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="cardLabel" {toggle}>Enter a Label</ModalHeader>
+    <ModalHeader class="cardLabel" {toggle}>
+      <CardTitle bind:value={card.card_name} {id} />
+    </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.card_name}</div>
       <div class="eventDate">{new Date(card.original_date)}</div>

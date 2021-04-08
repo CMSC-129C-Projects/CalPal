@@ -76,7 +76,7 @@
       {#each list.cards.filter((c) => {
         return typeof c.card_name !== "undefined";
       }) as card, i (i)}
-        <CalPalCard bind:card />
+        <CalPalCard bind:card id="card-{i}" />
       {/each}
     </CardBody>
     <CardFooter class="listFooter">
