@@ -16,6 +16,9 @@
     Container,
     Row,
   } from "sveltestrap/src";
+
+  export let card;
+
   let open = false;
   const toggle = () => (open = !open);
 </script>
@@ -25,16 +28,22 @@
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>Enter a Label</ModalHeader>
     <ModalBody>
-      <div class="cardTitle">John Smith's Birthday</div>
-      <div class="eventDate">January 1, 2022</div>
+      <div class="cardTitle">{card.card_name}</div>
+      <div class="eventDate">{new Date(card.original_date)}</div>
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
-        <Input type="textarea" name="text" id="cardNotes" />
+        <Input
+          type="textarea"
+          name="text"
+          id="cardNotes"
+          bind:value={card.description}
+        />
       </FormGroup>
       <FormGroup class="cardAttachments">
-        <Label for="attachements"
-          ><Icon class="paperClip" name="paperclip" />Attachements</Label
-        >
+        <Label for="attachements">
+          <Icon class="paperClip" name="paperclip" />
+          Attachments
+        </Label>
         <CustomInput type="file" id="attachments" name="customFile" />
       </FormGroup>
       <FormGroup class="cardColor">
@@ -43,7 +52,8 @@
           type="color"
           name="cardColor"
           id="cardColor"
-          placeholder="color placeholder"
+          placeholder="#ffffff"
+          bind:value={card.color}
         />
       </FormGroup>
       <Container class="container">
@@ -55,7 +65,7 @@
                 type="date"
                 name="dueDate"
                 id="dueDate"
-                placeholder="date placeholder"
+                bind:value={card.due_date_time}
               />
             </FormGroup>
           </Col>
@@ -66,7 +76,8 @@
                 type="date"
                 name="reminderSet"
                 id="reminderSet"
-                placeholder="date placeholder"
+                bind:value={card.remind_date_time}
+                disabled={card.due_date_time === ""}
               />
             </FormGroup>
           </Col>

@@ -15,7 +15,7 @@
     DropdownToggle,
   } from "sveltestrap/src";
   import ListTitle from "./ListTitle.svelte";
-  import ActualCard from "./Card.svelte";
+  import CalPalCard from "./Card.svelte";
 
   let isOpen = false;
 
@@ -55,11 +55,11 @@
       </Container>
     </CardHeader>
     <CardBody class="listBody">
-      <div class="flexBoxContainer">
-        <div class="cardSample"><ActualCard /></div>
-        <div class="cardSample"><ActualCard /></div>
-        <div class="cardSample"><ActualCard /></div>
-      </div>
+      {#each list.cards.filter((c) => {
+        return typeof c.card_name !== "undefined";
+      }) as card, i (i)}
+        <CalPalCard bind:card />
+      {/each}
     </CardBody>
     <CardFooter class="listFooter">
       <Row>
