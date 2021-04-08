@@ -14,7 +14,7 @@
     DropdownMenu,
     DropdownToggle,
   } from "sveltestrap/src";
-  import ListTitle from "./ListTitle.svelte";
+  import Title from "./Title.svelte";
   import CalPalCard from "./Card.svelte";
 
   let isOpen = false;
@@ -61,7 +61,11 @@
               class="cardTitleContainer"
               on:click={() => onTitleClicked()}
             >
-              <ListTitle bind:value={list.list_name} {id} />
+              <Title
+                bind:value={list.list_name}
+                {id}
+                untitledString="Untitled List"
+              />
             </CardTitle>
           </Col>
           <Col class="rightHalf" xs="2">
