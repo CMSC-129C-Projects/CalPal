@@ -8,8 +8,10 @@
     CardText,
     CardTitle,
   } from "sveltestrap/src";
-
   import ViewCard from "./ViewCard.svelte";
+
+  export let card;
+  console.debug(`[Card.svelte] card: ${card}`);
 </script>
 
 <div class="parent">
@@ -17,8 +19,8 @@
   <Button class="cardButton">
     <Card class="actualCard">
       <CardBody class="cardBody">
-        <CardTitle class="cardTitle">John Smith's Birthday</CardTitle>
-        <CardSubtitle class="eventDate">January 1, 2022</CardSubtitle>
+        <CardTitle class="cardTitle">{card.card_name}</CardTitle>
+        <CardSubtitle class="eventDate">{card.due_date_time}</CardSubtitle>
       </CardBody>
     </Card>
   </Button>
