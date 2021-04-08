@@ -15,6 +15,7 @@
     DropdownToggle,
   } from "sveltestrap/src";
   import ListTitle from "./ListTitle.svelte";
+  import CalPalCard from "./Card.svelte";
 
   let isOpen = false;
 
@@ -53,12 +54,12 @@
         </Row>
       </Container>
     </CardHeader>
-    <CardBody>
-      <div class="flexBoxContainer">
-        <div class="cardSample">card 1</div>
-        <div class="cardSample">card 2</div>
-        <div class="cardSample">card 3</div>
-      </div>
+    <CardBody class="listBody">
+      {#each list.cards.filter((c) => {
+        return typeof c.card_name !== "undefined";
+      }) as card, i (i)}
+        <CalPalCard bind:card />
+      {/each}
     </CardBody>
     <CardFooter class="listFooter">
       <Row>
@@ -87,7 +88,7 @@
 
 <style>
   .flexBoxContainer {
-    background-color: lightskyblue;
+    /* background-color: lightskyblue; */
     flex-direction: column;
     justify-content: space-evenly;
   }
@@ -125,6 +126,11 @@
     flex-direction: row-reverse;
     align-items: flex-start;
     /* background-color: blue; */
+  }
+
+  .parent :global(.listBody) {
+    padding: 0%;
+    margin-top: 10px;
   }
 
   .parent :global(.listFooter) {

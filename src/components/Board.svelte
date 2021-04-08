@@ -10,7 +10,7 @@
     const last = $session.lists.slice(-1)[0];
     $session.lists = [
       ...$session.lists,
-      { list_name: "Untitled List", is_archived: false },
+      { list_name: "Untitled List", is_archived: false, cards: [] },
     ];
   }
 </script>
