@@ -15,7 +15,7 @@
 </script>
 
 <div class="parent">
-  <ViewCard />
+  <ViewCard bind:card />
   <Button class="cardButton">
     <Card class="actualCard">
       <CardBody class="cardBody">
