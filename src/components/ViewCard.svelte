@@ -14,7 +14,7 @@
     Container,
     Row,
   } from "sveltestrap/src";
-  import CardTitle from "./CardTitle.svelte";
+  import Title from "./Title.svelte";
 
   export let card;
   export let id;
@@ -27,7 +27,7 @@
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
-      <CardTitle bind:value={card.card_name} {id} />
+      <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
     </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.card_name}</div>
