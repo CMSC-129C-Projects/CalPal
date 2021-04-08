@@ -21,6 +21,8 @@
 
   let open = false;
   const toggle = () => (open = !open);
+
+  import ArchiveCard from "./ArchiveCard.svelte";
 </script>
 
 <div class="parent">
@@ -87,7 +89,7 @@
       </Container>
     </ModalBody>
     <ModalFooter>
-      <Button class="archiveCard"><Icon name="archive" /> Archive</Button>
+      <ArchiveCard />
     </ModalFooter>
   </Modal>
 </div>
