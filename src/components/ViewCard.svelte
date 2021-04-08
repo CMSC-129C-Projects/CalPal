@@ -77,6 +77,7 @@
                 name="reminderSet"
                 id="reminderSet"
                 bind:value={card.remind_date_time}
+                disabled={card.due_date_time === ""}
               />
             </FormGroup>
           </Col>
