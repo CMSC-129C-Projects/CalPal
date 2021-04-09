@@ -57,10 +57,14 @@
   .parent :global(.cardTitle) {
     margin-bottom: 2%;
     font-size: 1.25em;
+    /* filter: invert(1);
+    color: black;
+    mix-blend-mode: difference; */
   }
 
   .parent :global(.eventDate) {
     padding-top: 0%;
+    padding-bottom: 2%;
     font-size: 0.9em;
   }
 </style>
