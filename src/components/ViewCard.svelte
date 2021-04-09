@@ -23,10 +23,15 @@
   let open = false;
   const toggle = () => (open = !open);
 
+  //let cardColor = "#FF69B4";
+  $: cardColor = card.color;
+
+  //$: cssVarStyles = `--card-color:${cardColor}`;
+
   import ArchiveCard from "./ArchiveCard.svelte";
 </script>
 
-<div class="parent">
+<div class="parent" style="--card-color: {cardColor}">
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
@@ -35,20 +40,6 @@
         {id}
         untitledString="Untitled Card"
       />
-      <!-- <Container class="container">
-        <Row>
-          <Col class="leftHalf" xs="8">
-              <Title
-                  class="cardLabelTitle"
-                  bind:value={card.card_name}
-                  {id}
-                  untitledString="Untitled Card"
-              />
-          </Col>
-          <Col class="rightHalf" xs="4">
-          </Col>
-        </Row>
-      </Container> -->
     </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.original_title}</div>
@@ -114,6 +105,10 @@
 </div>
 
 <style>
+  .parent :global(.cardLabel) {
+    background-color: var(--card-color, lightgreen);
+  }
+
   .parent :global(.archiveCard) {
     background-color: transparent;
     color: black;
