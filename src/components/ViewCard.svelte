@@ -106,7 +106,7 @@
 
 <style>
   .parent :global(.cardLabel) {
-    background-color: var(--card-color, lightgreen);
+    background-color: var(--card-color, transparent);
   }
 
   .parent :global(.archiveCard) {
