@@ -88,7 +88,7 @@
           </Col>
         </Row>
       </Container>
-      <ColorPicker />
+      <ColorPicker bind:color={card.color} />
     </ModalBody>
     <ModalFooter>
       <ArchiveCard bind:is_archived={card.is_archived} />
