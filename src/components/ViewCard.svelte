@@ -16,6 +16,7 @@
   } from "sveltestrap/src";
   //import Title from "./Title.svelte";
   import CardTitle from "./CardTitle.svelte";
+  import ColorPicker from "./ColorPicker.svelte";
 
   export let card;
   export let id;
@@ -87,17 +88,7 @@
           </Col>
         </Row>
       </Container>
-      <FormGroup class="cardColor">
-        <Label for="cardColor">Color</Label>
-        <Input
-          type="color"
-          name="cardColor"
-          class="colorBar"
-          id="cardColor"
-          placeholder="#ffffff"
-          bind:value={card.color}
-        />
-      </FormGroup>
+      <ColorPicker />
     </ModalBody>
     <ModalFooter>
       <ArchiveCard bind:is_archived={card.is_archived} />
