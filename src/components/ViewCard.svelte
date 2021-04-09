@@ -14,7 +14,8 @@
     Container,
     Row,
   } from "sveltestrap/src";
-  import Title from "./Title.svelte";
+  //import Title from "./Title.svelte";
+  import CardTitle from "./CardTitle.svelte";
 
   export let card;
   export let id;
@@ -22,14 +23,23 @@
   let open = false;
   const toggle = () => (open = !open);
 
+  //let cardColor = "#FF69B4";
+  $: cardColor = card.color;
+
+  //$: cssVarStyles = `--card-color:${cardColor}`;
+
   import ArchiveCard from "./ArchiveCard.svelte";
 </script>
 
-<div class="parent">
+<div class="parent" style="--card-color: {cardColor}">
   <Button color="danger" on:click={toggle}>Open Modal</Button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
-      <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
+      <CardTitle
+        bind:value={card.card_name}
+        {id}
+        untitledString="Untitled Card"
+      />
     </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.original_title}</div>
@@ -49,16 +59,6 @@
           Attachments
         </Label>
         <CustomInput type="file" id="attachments" name="customFile" />
-      </FormGroup>
-      <FormGroup class="cardColor">
-        <Label for="cardColor">Color</Label>
-        <Input
-          type="color"
-          name="cardColor"
-          id="cardColor"
-          placeholder="#ffffff"
-          bind:value={card.color}
-        />
       </FormGroup>
       <Container class="container">
         <Row>
@@ -87,6 +87,17 @@
           </Col>
         </Row>
       </Container>
+      <FormGroup class="cardColor">
+        <Label for="cardColor">Color</Label>
+        <Input
+          type="color"
+          name="cardColor"
+          class="colorBar"
+          id="cardColor"
+          placeholder="#ffffff"
+          bind:value={card.color}
+        />
+      </FormGroup>
     </ModalBody>
     <ModalFooter>
       <ArchiveCard bind:is_archived={card.is_archived} />
@@ -95,6 +106,10 @@
 </div>
 
 <style>
+  .parent :global(.cardLabel) {
+    background-color: var(--card-color, transparent);
+  }
+
   .parent :global(.archiveCard) {
     background-color: transparent;
     color: black;
@@ -106,5 +121,10 @@
 
   .eventDate {
     /* background-color: lightseagreen; */
+  }
+
+  .parent :global(.colorBar) {
+    //background-color: teal;
+    width: 50px;
   }
 </style>

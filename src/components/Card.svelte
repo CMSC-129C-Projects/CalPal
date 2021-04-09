@@ -10,9 +10,11 @@
 
   export let card;
   export let id;
+
+  $: cardColor = card.color;
 </script>
 
-<div class="parent">
+<div class="parent" style="--card-color: {cardColor}">
   <ViewCard bind:card {id} />
   <Button class="cardButton">
     <Card class="actualCard">
@@ -46,6 +48,7 @@
   }
 
   .parent :global(.cardBody) {
+    background-color: var(--card-color, transparent);
     padding-top: 0%;
     padding-bottom: 0%;
     padding-left: 5%;
