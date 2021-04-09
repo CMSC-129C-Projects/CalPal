@@ -3,46 +3,46 @@
 </script>
 
 <div class="parent">
-  <button class="switchView"><Icon class="calendar" name="calendar3" /></button>
-  <button class="addCalendar"
+  <button class="scaleOnHover borderlessButton"
+    ><Icon class="calendar" name="calendar3" /></button
+  >
+  <button class="scaleOnHover borderlessButton"
     ><Icon class="plus" name="plus-square-dotted" /></button
   >
 </div>
 
 <style>
   .parent {
-    /*padding-left: 8em;*/
-    padding-top: 0.5em;
     font-size: 10;
-    text-align: right;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1em;
+    /* margin-top: -0.3em; */
   }
 
-  .switchView {
+  .borderlessButton {
     background-color: transparent;
-    color: #40415a;
     border: none;
     outline: none;
+    line-height: 0%;
+    padding: 0%;
     font-size: 30px;
-    text-align: right;
-    /* transition: transform 0.1s; */
+    transition: transform 0.05s;
+    transform-origin: center center;
   }
 
-  .addCalendar {
-    background-color: transparent;
-    color: #40415a;
-    border: none;
-    outline: none;
-    font-size: 30px;
-    text-align: right;
-    /* transition: transform 0.1s; */
-  }
-
-  .switchView:hover {
+  .scaleOnHover:hover {
     transform: scale(1.1);
   }
 
-  .addCalendar:hover {
-    transform: scale(1.1);
+  .parent :global(.calendar) {
+    color: #40415a;
+  }
+
+  .parent :global(.plus) {
+    color: #40415a;
   }
 
   .parent :global(.calendar:active) {
