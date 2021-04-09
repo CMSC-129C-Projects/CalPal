@@ -44,7 +44,11 @@
     </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.original_title}</div>
-      <div class="eventDate">{new Date(card.original_date)}</div>
+      {#if !card.original_date}
+        <div class="eventDate">{new Date(card.due_date_time)}</div>
+      {:else}
+        <div class="eventDate">{new Date(card.original_date)}</div>
+      {/if}
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
         <Input
