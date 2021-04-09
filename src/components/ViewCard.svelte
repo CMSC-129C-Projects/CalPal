@@ -60,16 +60,6 @@
         </Label>
         <CustomInput type="file" id="attachments" name="customFile" />
       </FormGroup>
-      <FormGroup class="cardColor">
-        <Label for="cardColor">Color</Label>
-        <Input
-          type="color"
-          name="cardColor"
-          id="cardColor"
-          placeholder="#ffffff"
-          bind:value={card.color}
-        />
-      </FormGroup>
       <Container class="container">
         <Row>
           <Col class="leftHalf" xs="6">
@@ -97,6 +87,17 @@
           </Col>
         </Row>
       </Container>
+      <FormGroup class="cardColor">
+        <Label for="cardColor">Color</Label>
+        <Input
+          type="color"
+          name="cardColor"
+          class="colorBar"
+          id="cardColor"
+          placeholder="#ffffff"
+          bind:value={card.color}
+        />
+      </FormGroup>
     </ModalBody>
     <ModalFooter>
       <ArchiveCard bind:is_archived={card.is_archived} />
@@ -120,5 +121,10 @@
 
   .eventDate {
     /* background-color: lightseagreen; */
+  }
+
+  .parent :global(.colorBar) {
+    //background-color: teal;
+    width: 50px;
   }
 </style>
