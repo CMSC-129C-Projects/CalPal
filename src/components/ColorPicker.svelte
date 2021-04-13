@@ -30,7 +30,7 @@
       lucca1: "#aed0e5",
       lucca2: "#cec198",
       lucca3: "#fbeab7",
-      lucca4: "#27305c",
+      lucca4: "#a6d7c2",
       lucca5: "#f6e9c8",
     },
     winnieThePooh: {
@@ -38,7 +38,7 @@
       winnieThePooh2: "#fff19c",
       winnieThePooh3: "#ff6d6d",
       winnieThePooh4: "#d8fffe",
-      winnieThePooh5: "#ffffe0",
+      winnieThePooh5: "#f4c9dc",
     },
     herbsAndSpices: {
       herbsAndSpices1: "#e1cf6b",
