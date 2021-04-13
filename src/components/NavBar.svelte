@@ -3,12 +3,14 @@
 </script>
 
 <div class="parent">
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="calendar" name="calendar3" /></button
-  >
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="plus" name="plus-square-dotted" /></button
-  >
+  <button class="scaleOnHover borderlessButton">
+    <!-- <Icon class="calendar" name="calendar3" /> -->
+    <img src="add_calendar.png" alt="Add Calendar" />
+  </button>
+  <button class="scaleOnHover borderlessButton">
+    <!-- <Icon class="plus" name="plus-square-dotted" /> -->
+    <img src="switch_board_view.png" alt="Board view" />
+  </button>
 </div>
 
 <style>
@@ -37,7 +39,7 @@
     transform: scale(1.1);
   }
 
-  .parent :global(.calendar) {
+  /* .parent :global(.calendar) {
     color: #40415a;
   }
 
@@ -51,5 +53,10 @@
 
   .parent :global(.plus:active) {
     color: #f58f29;
+  } */
+
+  img {
+    width: 45px;
+    height: 45px;
   }
 </style>
