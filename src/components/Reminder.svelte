@@ -3,7 +3,7 @@
 
   export let card;
 
-  let dueDate = new Date(card.due_date_time);
+  $: dueDate = new Date(card.due_date_time);
 </script>
 
 {#if !card.is_archived}
