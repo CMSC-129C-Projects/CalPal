@@ -6,7 +6,7 @@
     CardSubtitle,
     CardTitle,
   } from "sveltestrap/src";
-  import ViewCard from "./ViewCard.svelte";
+  import formattedDate from "../routes/_date-format.js";
 
   export let card;
   export let id;
@@ -15,12 +15,13 @@
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">
-  <ViewCard bind:card {id} />
-  <Button class="cardButton">
+  <Button class="cardButton" on:click>
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">{card.card_name}</CardTitle>
-        <CardSubtitle class="eventDate">{card.due_date_time}</CardSubtitle>
+        <CardSubtitle class="eventDate"
+          >{formattedDate(new Date(card.due_date_time))}</CardSubtitle
+        >
       </CardBody>
     </Card>
   </Button>
@@ -40,11 +41,7 @@
   }
 
   .parent :global(.actualCard) {
-    /* margin: 10px; */
-    /* border-width: 0.15em; */
     border-color: #d9d9d9;
-    /* height: 65px; */
-    /* background-color: lightgreen; */
   }
 
   .parent :global(.cardBody) {
@@ -57,9 +54,6 @@
   .parent :global(.cardTitle) {
     margin-bottom: 2%;
     font-size: 1.25em;
-    /* filter: invert(1);
-    color: black;
-    mix-blend-mode: difference; */
   }
 
   .parent :global(.eventDate) {
