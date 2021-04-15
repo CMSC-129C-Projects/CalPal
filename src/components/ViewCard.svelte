@@ -16,6 +16,7 @@
   import Card from "./Card.svelte";
   import CardTitle from "./CardTitle.svelte";
   import ColorPicker from "./ColorPicker.svelte";
+  import Reminder from "./Reminder.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
   import formattedDate from "../routes/_date-format.js";
 
@@ -98,6 +99,7 @@
       <ArchiveCard bind:is_archived={card.is_archived} />
     </ModalFooter>
   </Modal>
+  <Reminder {card} />
 </div>
 
 <style>
