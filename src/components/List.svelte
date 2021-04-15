@@ -15,7 +15,7 @@
     DropdownToggle,
   } from "sveltestrap/src";
   import Title from "./Title.svelte";
-  import CalPalCard from "./Card.svelte";
+  import ViewCard from "./ViewCard.svelte";
 
   let isOpen = false;
 
@@ -71,7 +71,7 @@
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card, i (card)}
-        <CalPalCard bind:card id="{id}-card-{i}" />
+        <ViewCard bind:card id="{id}-card-{i}" />
       {/each}
     </CardBody>
     <CardFooter class="listFooter">

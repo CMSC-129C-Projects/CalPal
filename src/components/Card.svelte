@@ -6,7 +6,6 @@
     CardSubtitle,
     CardTitle,
   } from "sveltestrap/src";
-  import ViewCard from "./ViewCard.svelte";
 
   export let card;
   export let id;
@@ -15,8 +14,7 @@
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">
-  <ViewCard bind:card {id} />
-  <Button class="cardButton">
+  <Button class="cardButton" on:click>
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">{card.card_name}</CardTitle>

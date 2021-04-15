@@ -14,9 +14,10 @@
     Container,
     Row,
   } from "sveltestrap/src";
-  //import Title from "./Title.svelte";
+  import Card from "./Card.svelte";
   import CardTitle from "./CardTitle.svelte";
   import ColorPicker from "./ColorPicker.svelte";
+  import ArchiveCard from "./ArchiveCard.svelte";
 
   export let card;
   export let id;
@@ -24,16 +25,11 @@
   let open = false;
   const toggle = () => (open = !open);
 
-  //let cardColor = "#FF69B4";
   $: cardColor = card.color;
-
-  //$: cssVarStyles = `--card-color:${cardColor}`;
-
-  import ArchiveCard from "./ArchiveCard.svelte";
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">
-  <Button color="danger" on:click={toggle}>Open Modal</Button>
+  <Card {card} {id} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
       <CardTitle
