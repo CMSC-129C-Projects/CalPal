@@ -42,6 +42,9 @@ const dayNames = {
 };
 
 export default function formattedDate(inputDate) {
+  if (inputDate.toString() === "Invalid Date") {
+    return "";
+  }
   const [month, date, year] = inputDate.toLocaleDateString("en-US").split("/");
   const day = inputDate.getDay();
   return `${dayNames["short"][day]}, ${
