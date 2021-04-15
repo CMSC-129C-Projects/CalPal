@@ -1,6 +1,5 @@
 <script>
   import {
-    Button,
     Modal,
     ModalBody,
     ModalFooter,

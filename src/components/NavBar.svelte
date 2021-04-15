@@ -1,5 +1,4 @@
 <script>
-  import { Icon } from "sveltestrap/src";
 </script>
 
 <div class="parent">

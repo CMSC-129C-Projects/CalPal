@@ -10,7 +10,7 @@
 
   $: isUntitled = value === untitledString;
 
-  async function handleOnClick(event) {
+  async function handleOnClick(_event) {
     isSelected = true;
     await tick();
 

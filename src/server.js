@@ -24,7 +24,7 @@ polka() // You can also use Express
     sirv("static", { dev }),
     json(),
     sapper.middleware({
-      session: (req, res) => ({
+      session: (req, _res) => ({
         did_cards_load: req.session.did_cards_load,
         user_id: req.session.user_id,
         cards: req.session.cards,
