@@ -110,16 +110,7 @@
     color: black;
   }
 
-  .cardTitle {
-    /* background-color: lightyellow; */
-  }
-
-  .eventDate {
-    /* background-color: lightseagreen; */
-  }
-
   .parent :global(.colorBar) {
-    //background-color: teal;
     width: 50px;
   }
 </style>

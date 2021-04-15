@@ -41,11 +41,7 @@
   }
 
   .parent :global(.actualCard) {
-    /* margin: 10px; */
-    /* border-width: 0.15em; */
     border-color: #d9d9d9;
-    /* height: 65px; */
-    /* background-color: lightgreen; */
   }
 
   .parent :global(.cardBody) {
@@ -58,9 +54,6 @@
   .parent :global(.cardTitle) {
     margin-bottom: 2%;
     font-size: 1.25em;
-    /* filter: invert(1);
-    color: black;
-    mix-blend-mode: difference; */
   }
 
   .parent :global(.eventDate) {

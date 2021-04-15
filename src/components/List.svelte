@@ -101,21 +101,11 @@
 
 <style>
   .flexBoxContainer {
-    /* background-color: lightskyblue; */
     flex-direction: column;
     justify-content: space-evenly;
   }
 
-  .parent {
-    /* margin: 10px 10px 10px 10px; */
-  }
-
-  .parent :global(.container) {
-    /* background-color: lightseagreen; */
-  }
-
   .parent :global(.list) {
-    /* background-color: lightgray; */
     width: 250px;
     min-width: 250px;
   }
@@ -129,7 +119,6 @@
     text-align: left;
     padding: 0;
     display: flex;
-    /* background-color: red; */
   }
 
   .parent :global(.rightHalf) {
@@ -138,7 +127,6 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: flex-start;
-    /* background-color: blue; */
   }
 
   .parent :global(.listBody) {
@@ -161,7 +149,6 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    /* background-color: lightcoral; */
     vertical-align: middle;
     border: none;
     outline: none;
