@@ -17,6 +17,7 @@
   //import Title from "./Title.svelte";
   import CardTitle from "./CardTitle.svelte";
   import ColorPicker from "./ColorPicker.svelte";
+  import Reminder from "./Reminder.svelte";
 
   export let card;
   export let id;
@@ -98,6 +99,7 @@
       <ArchiveCard bind:is_archived={card.is_archived} />
     </ModalFooter>
   </Modal>
+  <Reminder {card} />
 </div>
 
 <style>
