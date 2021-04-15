@@ -6,6 +6,7 @@
     CardSubtitle,
     CardTitle,
   } from "sveltestrap/src";
+  import formattedDate from "../routes/_date-format.js";
 
   export let card;
   export let id;
@@ -18,7 +19,9 @@
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">{card.card_name}</CardTitle>
-        <CardSubtitle class="eventDate">{card.due_date_time}</CardSubtitle>
+        <CardSubtitle class="eventDate"
+          >{formattedDate(new Date(card.due_date_time))}</CardSubtitle
+        >
       </CardBody>
     </Card>
   </Button>

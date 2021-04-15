@@ -18,6 +18,7 @@
   import CardTitle from "./CardTitle.svelte";
   import ColorPicker from "./ColorPicker.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
+  import formattedDate from "../routes/_date-format.js";
 
   export let card;
   export let id;
@@ -40,11 +41,13 @@
     </ModalHeader>
     <ModalBody>
       <div class="cardTitle">{card.original_title}</div>
-      {#if !card.original_date}
-        <div class="eventDate">{new Date(card.due_date_time)}</div>
-      {:else}
-        <div class="eventDate">{new Date(card.original_date)}</div>
-      {/if}
+      <div class="eventDate">
+        {#if !card.original_date}
+          {formattedDate(new Date(card.due_date_time))}
+        {:else}
+          {formattedDate(new Date(card.original_date))}
+        {/if}
+      </div>
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
         <Input
