@@ -9,7 +9,6 @@
   import formattedDate from "../routes/_date-format.js";
 
   export let card;
-  export let id;
 
   $: cardColor = card.color;
 
