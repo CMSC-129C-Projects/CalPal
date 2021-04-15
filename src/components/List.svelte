@@ -100,11 +100,6 @@
 </div>
 
 <style>
-  .flexBoxContainer {
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-
   .parent :global(.list) {
     width: 250px;
     min-width: 250px;
