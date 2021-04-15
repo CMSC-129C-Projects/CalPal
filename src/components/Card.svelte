@@ -9,9 +9,22 @@
   import formattedDate from "../routes/_date-format.js";
 
   export let card;
-  export let id;
 
   $: cardColor = card.color;
+
+  let dateToDisplay;
+  $: {
+    const originalDate = new Date(card.original_date);
+    const dueDateTime = new Date(card.due_date_time);
+
+    if (dueDateTime.toString() !== "Invalid Date") {
+      dateToDisplay = formattedDate(dueDateTime);
+    } else if (originalDate.toString() !== "Invalid Date") {
+      dateToDisplay = formattedDate(originalDate);
+    } else {
+      dateToDisplay = "";
+    }
+  }
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">
@@ -19,9 +32,9 @@
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">{card.card_name}</CardTitle>
-        <CardSubtitle class="eventDate"
-          >{formattedDate(new Date(card.due_date_time))}</CardSubtitle
-        >
+        <CardSubtitle class="eventDate">
+          {dateToDisplay}
+        </CardSubtitle>
       </CardBody>
     </Card>
   </Button>
