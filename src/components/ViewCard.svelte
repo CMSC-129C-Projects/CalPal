@@ -36,7 +36,7 @@
       <CardTitle
         bind:value={card.card_name}
         {id}
-        untitledString="Untitled Card"
+        untitledString={card.original_title}
       />
     </ModalHeader>
     <ModalBody>
