@@ -3,8 +3,12 @@
   import { fade } from "svelte/transition";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
+  import Notify from "./Notify.svelte";
+  // import Reminder from "./Reminder.svelte";
 
   const { session } = stores();
+
+  // export let card;
 
   function createNewList() {
     $session.lists = [
@@ -26,6 +30,24 @@
     }}
   />
 </div>
+<div class="alert-area">
+  <div class="alert-flexbox-container">
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+    <Notify />
+  </div>
+  <!-- <Reminder {card} /> -->
+</div>
 
 <style>
   .flexBoxContainer {
@@ -35,5 +57,27 @@
     padding: 8px;
     gap: 8px;
     height: 100%;
+  }
+
+  .alert-area {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    /* padding: 20px; */
+    margin: none;
+    width: 400px;
+    /* background-color: lightseagreen; */
+    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.9);
+    /* right: 0; */
+  }
+
+  .alert-flexbox-container {
+    display: flex;
+    flex-direction: column;
+    overflow-x: none;
+    overflow-y: auto;
+    /* background-color: lightsalmon; */
+    max-height: 500px;
   }
 </style>
