@@ -7,7 +7,7 @@
   <Row class="header">
     <Col class="col1" xs="4">
       <p class="overflow">
-        <img src="CalPal_Logo.png" alt="CalPal_Logo.png" />
+        <img src="CalPal_logo.png" alt="CalPal Logo" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
       </p>
