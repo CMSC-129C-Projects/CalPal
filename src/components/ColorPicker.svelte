@@ -64,7 +64,7 @@
     }}
   >
     <DropdownToggle class="colorPickerButton" caret>Color</DropdownToggle>
-    <DropdownMenu>
+    <DropdownMenu class="drop-down-menu">
       <Container>
         {#each Object.entries(colors) as [_palette, paletteColors]}
           <Row>
@@ -89,6 +89,10 @@
     background-color: transparent;
     color: black;
     box-shadow: none;
+  }
+
+  .parent :global(.drop-down-menu) {
+    width: 300px;
   }
 
   .parent :global(.colors) {
