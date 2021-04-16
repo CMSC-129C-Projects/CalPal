@@ -1,6 +1,5 @@
 <script>
   import {
-    Button,
     Modal,
     ModalBody,
     ModalFooter,
@@ -14,7 +13,12 @@
     Container,
     Row,
   } from "sveltestrap/src";
-  import Title from "./Title.svelte";
+  import Card from "./Card.svelte";
+  import CardTitle from "./CardTitle.svelte";
+  import ColorPicker from "./ColorPicker.svelte";
+  import Reminder from "./Reminder.svelte";
+  import ArchiveCard from "./ArchiveCard.svelte";
+  import formattedDate from "../routes/_date-format.js";
 
   export let card;
   export let id;
@@ -22,18 +26,30 @@
   let open = false;
   const toggle = () => (open = !open);
 
-  import ArchiveCard from "./ArchiveCard.svelte";
+  $: cardColor = card.color;
 </script>
 
-<div class="parent">
-  <Button color="danger" on:click={toggle}>Open Modal</Button>
+<div class="parent" style="--card-color: {cardColor}">
+  <Card {card} {id} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="cardLabel" {toggle}>
-      <Title bind:value={card.card_name} {id} untitledString="Untitled Card" />
+      <CardTitle
+        bind:value={card.card_name}
+        {id}
+        untitledString={card.original_title
+          ? card.original_title
+          : "Untitled Card"}
+      />
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.card_name}</div>
-      <div class="eventDate">{new Date(card.original_date)}</div>
+      <div class="cardTitle">{card.original_title}</div>
+      <div class="eventDate">
+        {#if !card.original_date}
+          {formattedDate(new Date(card.due_date_time))}
+        {:else}
+          {formattedDate(new Date(card.original_date))}
+        {/if}
+      </div>
       <FormGroup class="cardNotes">
         <Label for="cardNotes">NOTES</Label>
         <Input
@@ -49,16 +65,6 @@
           Attachments
         </Label>
         <CustomInput type="file" id="attachments" name="customFile" />
-      </FormGroup>
-      <FormGroup class="cardColor">
-        <Label for="cardColor">Color</Label>
-        <Input
-          type="color"
-          name="cardColor"
-          id="cardColor"
-          placeholder="#ffffff"
-          bind:value={card.color}
-        />
       </FormGroup>
       <Container class="container">
         <Row>
@@ -87,24 +93,26 @@
           </Col>
         </Row>
       </Container>
+      <ColorPicker bind:color={card.color} />
     </ModalBody>
     <ModalFooter>
       <ArchiveCard bind:is_archived={card.is_archived} />
     </ModalFooter>
   </Modal>
+  <Reminder {card} />
 </div>
 
 <style>
+  .parent :global(.cardLabel) {
+    background-color: var(--card-color, transparent);
+  }
+
   .parent :global(.archiveCard) {
     background-color: transparent;
     color: black;
   }
 
-  .cardTitle {
-    /* background-color: lightyellow; */
-  }
-
-  .eventDate {
-    /* background-color: lightseagreen; */
+  .parent :global(.colorBar) {
+    width: 50px;
   }
 </style>

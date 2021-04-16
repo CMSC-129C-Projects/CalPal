@@ -47,6 +47,7 @@
       class="title {isUntitled ? 'untitled' : ''}"
       type="textarea"
       maxlength="64"
+      inputStyle
       bind:value
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}
@@ -75,5 +76,6 @@
     padding: 0%;
     overflow-wrap: anywhere;
     hyphens: auto;
+    width: 430px;
   }
 </style>
