@@ -1,5 +1,5 @@
 <script context="module">
-  export async function preload(page, session) {
+  export async function preload(_page, session) {
     session.did_cards_load = false;
 
     console.debug(`[index.svelte] preload() called!`);
@@ -30,7 +30,6 @@
       } else {
         console.debug(`[index.svelte] POST failed.`);
         this.error(post_res.status, post_res.message);
-        // throw new Error(`POST response failed: ${JSON.stringify(r)}`);
       }
     });
 
@@ -40,7 +39,6 @@
 
 <script>
   import Header from "../components/Header.svelte";
-  export let segment;
 </script>
 
 <main>
@@ -65,8 +63,4 @@
     flex-direction: column;
     height: 100%;
   }
-
-  /* slot {
-    height: 100%;
-  } */
 </style>

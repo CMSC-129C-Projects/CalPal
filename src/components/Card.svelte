@@ -6,21 +6,35 @@
     CardSubtitle,
     CardTitle,
   } from "sveltestrap/src";
-  import ViewCard from "./ViewCard.svelte";
+  import formattedDate from "../routes/_date-format.js";
 
   export let card;
-  export let id;
 
   $: cardColor = card.color;
+
+  let dateToDisplay;
+  $: {
+    const originalDate = new Date(card.original_date);
+    const dueDateTime = new Date(card.due_date_time);
+
+    if (dueDateTime.toString() !== "Invalid Date") {
+      dateToDisplay = formattedDate(dueDateTime);
+    } else if (originalDate.toString() !== "Invalid Date") {
+      dateToDisplay = formattedDate(originalDate);
+    } else {
+      dateToDisplay = "";
+    }
+  }
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">
-  <ViewCard bind:card {id} />
-  <Button class="cardButton">
+  <Button class="cardButton" on:click>
     <Card class="actualCard">
       <CardBody class="cardBody">
         <CardTitle class="cardTitle">{card.card_name}</CardTitle>
-        <CardSubtitle class="eventDate">{card.due_date_time}</CardSubtitle>
+        <CardSubtitle class="eventDate">
+          {dateToDisplay}
+        </CardSubtitle>
       </CardBody>
     </Card>
   </Button>
@@ -40,11 +54,7 @@
   }
 
   .parent :global(.actualCard) {
-    /* margin: 10px; */
-    /* border-width: 0.15em; */
     border-color: #d9d9d9;
-    /* height: 65px; */
-    /* background-color: lightgreen; */
   }
 
   .parent :global(.cardBody) {
@@ -61,6 +71,7 @@
 
   .parent :global(.eventDate) {
     padding-top: 0%;
+    padding-bottom: 2%;
     font-size: 0.9em;
   }
 </style>
