@@ -68,7 +68,7 @@
       </FormGroup>
       <Container class="container">
         <Row>
-          <Col class="leftHalf" xs="6">
+          <Col class="leftHalfDate" xs="6">
             <FormGroup class="dueDate">
               <Label for="dueDate">Due Date</Label>
               <Input
@@ -79,9 +79,22 @@
               />
             </FormGroup>
           </Col>
-          <Col class="rightHalf" xs="6">
+          <Col class="rightHalfDate" xs="6">
+            <FormGroup>
+              <Label for="exampleTime">Time</Label>
+              <Input
+                type="time"
+                name="time"
+                id="reminderTime"
+                placeholder="time placeholder"
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col class="leftHalfDate" xs="6">
             <FormGroup class="reminderSet">
-              <Label for="reminderSet">Reminder Set</Label>
+              <Label for="reminderSet">Reminder</Label>
               <Input
                 type="date"
                 name="reminderSet"
@@ -91,12 +104,32 @@
               />
             </FormGroup>
           </Col>
+          <Col class="rightHalfDate" xs="6">
+            <FormGroup>
+              <Label for="exampleTime">Time</Label>
+              <Input
+                type="time"
+                name="time"
+                id="reminderTime"
+                placeholder="time placeholder"
+                disabled={card.remind_date_time === ""}
+              />
+            </FormGroup>
+          </Col>
         </Row>
       </Container>
-      <ColorPicker bind:color={card.color} />
     </ModalBody>
     <ModalFooter>
-      <ArchiveCard bind:is_archived={card.is_archived} />
+      <Container class="container">
+        <Row>
+          <Col class="leftHalf" xs="8">
+            <ColorPicker bind:color={card.color} />
+          </Col>
+          <Col class="rightHalf" xs="4">
+            <ArchiveCard bind:is_archived={card.is_archived} />
+          </Col>
+        </Row>
+      </Container>
     </ModalFooter>
   </Modal>
   <Reminder {card} />
