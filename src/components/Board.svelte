@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="flexBoxContainer">
+<div class="board-flex-box-container">
   {#each $session.lists as list, i (i)}
     <div transition:fade={{ duration: 150 }}>
       <List bind:list id="list-{i}" />
@@ -28,7 +28,7 @@
 </div>
 
 <style>
-  .flexBoxContainer {
+  .board-flex-box-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;

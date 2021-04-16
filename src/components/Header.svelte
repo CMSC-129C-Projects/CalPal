@@ -3,26 +3,26 @@
   import NavBar from "./NavBar.svelte";
 </script>
 
-<div class="parent">
-  <Row class="header">
-    <Col class="col1" xs="4">
+<div class="header-parent">
+  <Row class="header-header">
+    <Col xs="4">
       <p class="overflow">
         <img src="CalPal_logo.png" alt="CalPal Logo" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
       </p>
     </Col>
-    <Col class="col2" xs="4" />
-    <Col class="col3" xs="4"><NavBar /></Col>
+    <Col xs="4" />
+    <Col xs="4"><NavBar /></Col>
   </Row>
 </div>
 
 <style>
-  .parent {
+  .header-parent {
     background-color: #78c0e0;
   }
 
-  .parent :global(.header) {
+  .header-parent :global(.header-header) {
     margin-left: 1.5em;
     margin-right: 1.5em;
     padding: 0;

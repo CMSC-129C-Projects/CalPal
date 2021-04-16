@@ -14,7 +14,7 @@
     Row,
   } from "sveltestrap/src";
   import Card from "./Card.svelte";
-  import CardTitle from "./CardTitle.svelte";
+  import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
   import Reminder from "./Reminder.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
@@ -29,11 +29,11 @@
   $: cardColor = card.color;
 </script>
 
-<div class="parent" style="--card-color: {cardColor}">
+<div class="view-card-parent" style="--card-color: {cardColor}">
   <Card {card} {id} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="cardLabel" {toggle}>
-      <CardTitle
+    <ModalHeader class="card-card-label" {toggle}>
+      <Title
         bind:value={card.card_name}
         {id}
         untitledString={card.original_title
@@ -42,15 +42,15 @@
       />
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.original_title}</div>
-      <div class="eventDate">
+      <div>{card.original_title}</div>
+      <div>
         {#if !card.original_date}
           {formattedDate(new Date(card.due_date_time))}
         {:else}
           {formattedDate(new Date(card.original_date))}
         {/if}
       </div>
-      <FormGroup class="cardNotes">
+      <FormGroup>
         <Label for="cardNotes">NOTES</Label>
         <Input
           type="textarea"
@@ -59,17 +59,17 @@
           bind:value={card.description}
         />
       </FormGroup>
-      <FormGroup class="cardAttachments">
+      <FormGroup>
         <Label for="attachements">
-          <Icon class="paperClip" name="paperclip" />
+          <Icon name="paperclip" />
           Attachments
         </Label>
         <CustomInput type="file" id="attachments" name="customFile" />
       </FormGroup>
-      <Container class="container">
+      <Container>
         <Row>
-          <Col class="leftHalf" xs="6">
-            <FormGroup class="dueDate">
+          <Col xs="6">
+            <FormGroup>
               <Label for="dueDate">Due Date</Label>
               <Input
                 type="date"
@@ -79,8 +79,8 @@
               />
             </FormGroup>
           </Col>
-          <Col class="rightHalf" xs="6">
-            <FormGroup class="reminderSet">
+          <Col xs="6">
+            <FormGroup>
               <Label for="reminderSet">Reminder Set</Label>
               <Input
                 type="date"
@@ -103,16 +103,7 @@
 </div>
 
 <style>
-  .parent :global(.cardLabel) {
+  .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
-  }
-
-  .parent :global(.archiveCard) {
-    background-color: transparent;
-    color: black;
-  }
-
-  .parent :global(.colorBar) {
-    width: 50px;
   }
 </style>

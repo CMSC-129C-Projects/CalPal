@@ -16,7 +16,7 @@
   };
 </script>
 
-<div class="parent">
+<div>
   <Button outline color="danger" on:click={toggle}>
     <Icon name="archive" />
     Archive Card

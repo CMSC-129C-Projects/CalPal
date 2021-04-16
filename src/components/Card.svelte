@@ -27,12 +27,12 @@
   }
 </script>
 
-<div class="parent" style="--card-color: {cardColor}">
-  <Button class="cardButton" on:click>
-    <Card class="actualCard">
-      <CardBody class="cardBody">
-        <CardTitle class="cardTitle">{card.card_name}</CardTitle>
-        <CardSubtitle class="eventDate">
+<div class="card-parent" style="--card-color: {cardColor}">
+  <Button class="card-card-button" on:click>
+    <Card class="card-actual-card">
+      <CardBody class="card-card-body">
+        <CardTitle class="card-card-title">{card.card_name}</CardTitle>
+        <CardSubtitle class="card-event-date">
           {dateToDisplay}
         </CardSubtitle>
       </CardBody>
@@ -41,7 +41,7 @@
 </div>
 
 <style>
-  .parent :global(.cardButton) {
+  .card-parent :global(.card-card-button) {
     background-color: transparent;
     padding: 0%;
     margin-bottom: 10px;
@@ -53,23 +53,23 @@
     width: 230px;
   }
 
-  .parent :global(.actualCard) {
+  .card-parent :global(.card-actual-card) {
     border-color: #d9d9d9;
   }
 
-  .parent :global(.cardBody) {
+  .card-parent :global(.card-card-body) {
     background-color: var(--card-color, transparent);
     padding-top: 0%;
     padding-bottom: 0%;
     padding-left: 5%;
   }
 
-  .parent :global(.cardTitle) {
+  .card-parent :global(.card-card-title) {
     margin-bottom: 2%;
     font-size: 1.25em;
   }
 
-  .parent :global(.eventDate) {
+  .card-parent :global(.card-event-date) {
     padding-top: 0%;
     padding-bottom: 2%;
     font-size: 0.9em;
