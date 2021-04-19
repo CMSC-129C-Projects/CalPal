@@ -1,4 +1,8 @@
 <script>
+  //import Menu from "./Menu.svelte";
+
+  import Sidebar from "./Sidebar.svelte";
+  let sidebar_show = false;
 </script>
 
 <div class="parent">
@@ -8,6 +12,14 @@
   <button class="scaleOnHover borderlessButton">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
+  <button
+    class="scaleOnHover borderlessButton"
+    on:click={() => (sidebar_show = !sidebar_show)}
+  >
+    <img src="menu_ellipses_vertical.png" alt="Menu" />
+  </button>
+  <!-- <button class="scaleOnHover borderlessButton"><Menu /></button> -->
+  <Sidebar bind:show={sidebar_show} />
 </div>
 
 <style>
