@@ -6,17 +6,17 @@
 </script>
 
 {#if show}
-  <sidebar transition:fly={{ x: 250, opacity: 1 }}>
+  <nav transition:fly={{ x: 250, opacity: 1 }}>
     <Button
       on:click={() => {
         show = false;
       }}>Close</Button
     >
-  </sidebar>
+  </nav>
 {/if}
 
 <style>
-  sidebar {
+  nav {
     position: fixed;
     top: 6.1em;
     right: 0;
@@ -26,6 +26,6 @@
     background: #000;
     overflow-y: auto;
     width: 20rem;
-    z-index: 10;
+    z-index: 1030;
   }
 </style>

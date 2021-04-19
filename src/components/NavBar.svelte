@@ -1,5 +1,5 @@
 <script>
-  //import Menu from "./Menu.svelte";
+  // import Menu from "./Menu.svelte";
 
   import Sidebar from "./Sidebar.svelte";
   let sidebar_show = false;

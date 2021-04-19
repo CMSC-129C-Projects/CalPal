@@ -19,8 +19,12 @@
     <DropdownItem header>Profile</DropdownItem>
     <DropdownItem>Settings</DropdownItem>
     <DropdownItem divider />
+    <DropdownItem
+      ><Button on:click={() => (sidebar_show = !sidebar_show)}
+        >Archive Cards</Button
+      ></DropdownItem
+    >
   </DropdownMenu>
-  <Button on:click={() => (sidebar_show = !sidebar_show)}>Archive Cards</Button>
 </Dropdown>
 
 <Sidebar bind:show={sidebar_show} />
