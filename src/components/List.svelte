@@ -45,13 +45,13 @@
   }
 </script>
 
-<div class="parent">
-  <Card class="list">
-    <CardHeader class="listHeader">
-      <Container class="container">
+<div class="list-parent">
+  <Card class="list-list">
+    <CardHeader>
+      <Container>
         <Row>
-          <Col class="leftHalf">
-            <CardTitle class="cardTitleContainer">
+          <Col class="list-left-half">
+            <CardTitle class="card-card-title-container">
               <Title
                 bind:value={list.list_name}
                 {id}
@@ -59,31 +59,37 @@
               />
             </CardTitle>
           </Col>
-          <Col class="rightHalf" xs="2">
-            <button class="borderlessButton newFolder">
-              <Icon class="newFolder" name="folder-plus" />
+          <Col class="list-right-half" xs="2">
+            <button class="borderless-button list-new-folder">
+              <Icon class="list-new-folder" name="folder-plus" />
             </button>
           </Col>
         </Row>
       </Container>
     </CardHeader>
-    <CardBody class="listBody">
+    <CardBody class="list-list-body">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card, i (card)}
         <ViewCard bind:card id="{id}-card-{i}" />
       {/each}
     </CardBody>
-    <CardFooter class="listFooter">
+    <CardFooter class="list-list-footer">
       <Row>
-        <Col class="leftHalf">
-          <button class="borderlessButton addCard" on:click={() => addCard()}>
-            <Icon class="plusIcon" name="plus" />
+        <Col class="list-left-half">
+          <button
+            class="borderless-button list-add-card"
+            on:click={() => addCard()}
+          >
+            <Icon class="list-plus-icon" name="plus" />
             Add Card
           </button>
         </Col>
-        <Col class="rightHalf" xs="2">
-          <Dropdown {isOpen} toggle={() => (isOpen = !isOpen)}>
+        <Col class="list-right-half" xs="2">
+          <Dropdown
+            class={isOpen ? "list-is-open" : ""}
+            toggle={() => (isOpen = !isOpen)}
+          >
             <DropdownToggle caret class="dropDownButton">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
@@ -100,23 +106,23 @@
 </div>
 
 <style>
-  .parent :global(.list) {
+  .list-parent :global(.list-list) {
     width: 250px;
     min-width: 250px;
   }
 
-  .parent :global(.cardTitleContainer) {
+  .list-parent :global(.card-card-title-container) {
     margin: 0px 0px 0px 0px;
     padding: 0%;
   }
 
-  .parent :global(.leftHalf) {
+  .list-parent :global(.list-left-half) {
     text-align: left;
     padding: 0;
     display: flex;
   }
 
-  .parent :global(.rightHalf) {
+  .list-parent :global(.list-right-half) {
     text-align: right;
     padding: 0;
     display: flex;
@@ -124,12 +130,12 @@
     align-items: flex-start;
   }
 
-  .parent :global(.listBody) {
+  .list-parent :global(.list-list-body) {
     padding: 0%;
     margin-top: 10px;
   }
 
-  .parent :global(.listFooter) {
+  .list-parent :global(.list-list-footer) {
     text-align: center;
     vertical-align: middle;
     padding-top: 0.2em;
@@ -139,7 +145,7 @@
     font-size: medium;
   }
 
-  .borderlessButton {
+  .borderless-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,12 +158,12 @@
     transition: transform 0.05s;
   }
 
-  .parent :global(.addCard) {
+  .list-parent :global(.list-add-card) {
     color: #40415a;
     font-size: 15px;
   }
 
-  .parent :global(.dropDownButton) {
+  .list-parent :global(.dropDownButton) {
     background-color: transparent;
     color: #40415a;
     vertical-align: middle;
@@ -168,30 +174,30 @@
     font-size: 1.5em;
   }
 
-  .parent :global(.plusIcon) {
+  .list-parent :global(.list-plus-icon) {
     color: #40415a;
     font-size: 1.5em;
   }
 
-  .parent :global(.newFolder) {
+  .list-parent :global(.list-new-folder) {
     color: #40415a;
     margin-top: 0.08em;
     font-size: 1.2em;
   }
 
-  .parent :global(.newFolder:active) {
+  .list-parent :global(.list-new-folder:active) {
     color: #f58f29;
   }
 
-  .parent :global(.plusIcon:active) {
+  .list-parent :global(.list-plus-icon:active) {
     color: #f58f29;
   }
 
-  .parent :global(.addCard:active) {
+  .list-parent :global(.list-add-card:active) {
     color: #f58f29;
   }
 
-  .parent :global(.isOpen) {
+  .list-parent :global(.list-is-open) {
     outline: none;
   }
 </style>

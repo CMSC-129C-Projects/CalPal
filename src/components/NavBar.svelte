@@ -1,13 +1,25 @@
 <script>
+  // import Menu from "./Menu.svelte";
+
+  import Sidebar from "./Sidebar.svelte";
+  let sidebar_show = false;
 </script>
 
 <div class="parent">
-  <button class="scaleOnHover borderlessButton">
+  <button class="scale-on-hover borderless-button">
     <img src="add_calendar.png" alt="Add Calendar" />
   </button>
-  <button class="scaleOnHover borderlessButton">
+  <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
+  <button
+    class="scaleOnHover borderlessButton"
+    on:click={() => (sidebar_show = !sidebar_show)}
+  >
+    <img src="menu_ellipses_vertical.png" alt="Menu" />
+  </button>
+  <!-- <button class="scaleOnHover borderlessButton"><Menu /></button> -->
+  <Sidebar bind:show={sidebar_show} />
 </div>
 
 <style>
@@ -20,7 +32,7 @@
     gap: 1em;
   }
 
-  .borderlessButton {
+  .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
@@ -31,7 +43,7 @@
     transform-origin: center center;
   }
 
-  .scaleOnHover:hover {
+  .scale-on-hover:hover {
     transform: scale(1.1);
   }
 
