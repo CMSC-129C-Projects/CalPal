@@ -10,9 +10,15 @@
 
   export let is_archived;
 
+  function deleteCard() {}
+
   let open = false;
+  let openDeleteModal = false;
   const toggle = () => {
     open = !open;
+  };
+  const toggleDeleteModal = () => {
+    openDeleteModal = !openDeleteModal;
   };
 </script>
 
@@ -22,6 +28,18 @@
       <Icon name="archive" />
       Unarchive Card
     </Button>
+    <Button outline color="danger" on:click={toggleDeleteModal}>
+      <Icon name="archive" />
+      Delete Card
+    </Button>
+    <Modal isOpen={openDeleteModal} {toggleDeleteModal}>
+      <ModalHeader {toggleDeleteModal}>Confirm</ModalHeader>
+      <ModalBody>Are you sure you want to delete card?</ModalBody>
+      <ModalFooter>
+        <Button color="secondary" on:click={toggleDeleteModal}>Cancel</Button>
+        <Button color="primary" on:click={deleteCard}>Delete</Button>
+      </ModalFooter>
+    </Modal>
     <Modal isOpen={open} {toggle}>
       <ModalHeader {toggle}>Confirm</ModalHeader>
       <ModalBody>Are you sure you want to unarchive card?</ModalBody>
