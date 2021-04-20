@@ -1,8 +1,15 @@
 <script>
   import { fly } from "svelte/transition";
   import { Button } from "sveltestrap/src";
+  import { CardBody } from "sveltestrap/src";
+  import { stores } from "@sapper/app";
+
+  import ViewCard from "./ViewCard.svelte";
+
+  const { session } = stores();
 
   export let show = false;
+  export let id;
 </script>
 
 {#if show}
@@ -12,6 +19,15 @@
         show = false;
       }}>Close</Button
     >
+    <CardBody class="archivedCardListBody">
+      {#each $session.lists as list, i (i)}
+        {#each list.cards.filter((c) => {
+          return !(typeof c.card_name === "undefined" || !c.is_archived);
+        }) as card, j (card)}
+          <ViewCard bind:card id="{id}-card-{j}" />
+        {/each}
+      {/each}
+    </CardBody>
   </nav>
 {/if}
 
