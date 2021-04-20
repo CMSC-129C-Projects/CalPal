@@ -1,6 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
-  import { Button } from "sveltestrap/src";
+  import { Button, Container } from "sveltestrap/src";
   import { CardBody } from "sveltestrap/src";
   import { stores } from "@sapper/app";
 
@@ -13,12 +13,7 @@
 </script>
 
 {#if show}
-  <nav transition:fly={{ x: 250, opacity: 1 }}>
-    <Button
-      on:click={() => {
-        show = false;
-      }}>Close</Button
-    >
+  <nav class="sidebar-area" transition:fly={{ x: 250, opacity: 1 }}>
     <CardBody>
       {#each $session.lists as list, i (i)}
         {#each list.cards.filter((c) => {
