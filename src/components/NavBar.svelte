@@ -13,7 +13,7 @@
     <img src="switch_board_view.png" alt="Board view" />
   </button>
   <button
-    class="scaleOnHover borderlessButton"
+    class="scale-on-hover borderless-button"
     on:click={() => (sidebar_show = !sidebar_show)}
   >
     <img src="menu_ellipses_vertical.png" alt="Menu" />
