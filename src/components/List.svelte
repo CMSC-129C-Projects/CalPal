@@ -105,6 +105,7 @@
         </Col>
         <Col class="list-right-half" xs="2">
           <Dropdown
+            isOpen={isDropdownOpen}
             class={isDropdownOpen ? "list-is-open" : ""}
             toggle={() => {
               isDropdownOpen = !isDropdownOpen;
