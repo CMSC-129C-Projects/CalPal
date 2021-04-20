@@ -1,5 +1,6 @@
 <script>
   import {
+    Button,
     Card,
     CardBody,
     CardFooter,
@@ -13,14 +14,31 @@
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
   } from "sveltestrap/src";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
 
-  let isOpen = false;
-
   export let list;
   export let id;
+
+  let isDropdownOpen = false;
+  let isModalOpen = false;
+
+  const toggleDropdown = () => {
+    isDropdownOpen = !isDropdownOpen;
+  };
+
+  const toggleModal = () => {
+    isModalOpen = !isModalOpen;
+  };
+
+  const deleteThisList = () => {
+    alert(`List ${list.list_name} deleted!`);
+  };
 
   function onArchiveClicked() {
     alert("Archive list?");
@@ -87,15 +105,35 @@
         </Col>
         <Col class="list-right-half" xs="2">
           <Dropdown
-            class={isOpen ? "list-is-open" : ""}
-            toggle={() => (isOpen = !isOpen)}
+            class={isDropdownOpen ? "list-is-open" : ""}
+            toggle={() => {
+              isDropdownOpen = !isDropdownOpen;
+            }}
           >
             <DropdownToggle caret class="list-drop-down-button">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem on:click={onArchiveClicked}>
-                Archive List
+              <DropdownItem header>Testing</DropdownItem>
+              <DropdownItem>
+                Delete List
+                <!--
+                <Modal isOpen={isModalOpen} toggle={toggleModal}>
+                  <ModalHeader>Deleting {list.list_name}</ModalHeader>
+                  <ModalBody>
+                    Are you sure you want to delete {list.list_name}?
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" on:click={deleteThisList()}>
+                      <Icon name="trash" />
+                      Delete
+                    </Button>
+                    <Button color="secondary" on:click={toggleModal}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+              -->
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
