@@ -19,7 +19,7 @@
         show = false;
       }}>Close</Button
     >
-    <CardBody class="archivedCardListBody">
+    <CardBody>
       {#each $session.lists as list, i (i)}
         {#each list.cards.filter((c) => {
           return !(typeof c.card_name === "undefined" || !c.is_archived);
