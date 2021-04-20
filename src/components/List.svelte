@@ -115,32 +115,25 @@
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem header>Testing</DropdownItem>
-              <DropdownItem>
-                Delete List
-                <!--
-                <Modal isOpen={isModalOpen} toggle={toggleModal}>
-                  <ModalHeader>Deleting {list.list_name}</ModalHeader>
-                  <ModalBody>
-                    Are you sure you want to delete {list.list_name}?
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" on:click={deleteThisList()}>
-                      <Icon name="trash" />
-                      Delete
-                    </Button>
-                    <Button color="secondary" on:click={toggleModal}>
-                      Cancel
-                    </Button>
-                  </ModalFooter>
-                </Modal>
-              -->
-              </DropdownItem>
+              <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Col>
       </Row>
     </CardFooter>
+    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <ModalHeader>Deleting list "{list.list_name}"</ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete "{list.list_name}"?
+      </ModalBody>
+      <ModalFooter>
+        <Button color="danger" on:click={() => deleteList()}>
+          <Icon name="trash" />
+          Delete
+        </Button>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
   </Card>
 </div>
 
