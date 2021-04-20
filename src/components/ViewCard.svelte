@@ -41,6 +41,7 @@
       <CardTitle
         bind:value={card.card_name}
         {id}
+        disabled={card.is_archived}
         untitledString={card.original_title
           ? card.original_title
           : "Untitled Card"}
@@ -62,6 +63,7 @@
           name="text"
           id="cardNotes"
           bind:value={card.description}
+          disabled={card.is_archived}
         />
       </FormGroup>
       <FormGroup class="cardAttachments">
@@ -69,7 +71,12 @@
           <Icon class="paperClip" name="paperclip" />
           Attachments
         </Label>
-        <CustomInput type="file" id="attachments" name="customFile" />
+        <CustomInput
+          type="file"
+          id="attachments"
+          name="customFile"
+          disabled={card.is_archived}
+        />
       </FormGroup>
       <Container class="container">
         <Row>
@@ -81,6 +88,7 @@
                 name="dueDate"
                 id="dueDate"
                 bind:value={card.due_date_time}
+                disabled={card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -92,6 +100,7 @@
                 name="time"
                 id="reminderTime"
                 placeholder="time placeholder"
+                disabled={card.due_date_time === ""}
               />
             </FormGroup>
           </Col>
@@ -127,10 +136,12 @@
     <ModalFooter>
       <Container class="container">
         <Row>
-          <Col class="leftHalf" xs="8">
-            <ColorPicker bind:color={card.color} />
+          <Col class="leftHalf" xs="4">
+            {#if !card.is_archived}
+              <ColorPicker bind:color={card.color} />
+            {/if}
           </Col>
-          <Col class="rightHalf" xs="4">
+          <Col class="rightHalf" xs="8">
             <ArchiveCard bind:is_archived={card.is_archived} />
           </Col>
         </Row>
