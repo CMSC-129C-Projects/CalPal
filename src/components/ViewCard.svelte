@@ -27,6 +27,11 @@
   const toggle = () => (open = !open);
 
   $: cardColor = card.color;
+  $: {
+    if (card.is_archived) {
+      cardColor = "#AAAAAA";
+    }
+  }
 </script>
 
 <div class="parent" style="--card-color: {cardColor}">

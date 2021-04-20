@@ -11,6 +11,11 @@
   export let card;
 
   $: cardColor = card.color;
+  $: {
+    if (card.is_archived) {
+      cardColor = "#AAAAAA";
+    }
+  }
 
   let dateToDisplay;
   $: {
