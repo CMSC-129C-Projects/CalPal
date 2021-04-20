@@ -1,4 +1,5 @@
 <script>
+  import { stores } from "@sapper/app";
   import {
     Button,
     Card,
@@ -22,6 +23,8 @@
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
 
+  const { session } = stores();
+
   export let list;
   export let id;
 
@@ -36,8 +39,20 @@
     isModalOpen = !isModalOpen;
   };
 
-  const deleteThisList = () => {
-    alert(`List ${list.list_name} deleted!`);
+  const deleteList = () => {
+    // TODO: Since we delete lists by their name, we have to
+    //       make sure that their names are unique.
+    //       To do this, we'll have to prevent the user from
+    //       naming them the same as an existing list.
+    //       For example, we could show a warning, or we could
+    //       automatically put an incrementing (1) next to the
+    //       name.
+    $session.lists = $session.lists.filter((l) => {
+      if (l.list_name === list.list_name) {
+        return false;
+      }
+      return true;
+    });
   };
 
   function onArchiveClicked() {
@@ -107,9 +122,7 @@
           <Dropdown
             isOpen={isDropdownOpen}
             class={isDropdownOpen ? "list-is-open" : ""}
-            toggle={() => {
-              isDropdownOpen = !isDropdownOpen;
-            }}
+            toggle={toggleDropdown}
           >
             <DropdownToggle caret class="list-drop-down-button">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
