@@ -90,7 +90,7 @@
             class={isOpen ? "list-is-open" : ""}
             toggle={() => (isOpen = !isOpen)}
           >
-            <DropdownToggle caret class="dropDownButton">
+            <DropdownToggle caret class="list-drop-down-button">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu right>
@@ -163,7 +163,7 @@
     font-size: 15px;
   }
 
-  .list-parent :global(.dropDownButton) {
+  .list-parent :global(.list-drop-down-button) {
     background-color: transparent;
     color: #40415a;
     vertical-align: middle;
