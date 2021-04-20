@@ -27,6 +27,11 @@
   const toggle = () => (open = !open);
 
   $: cardColor = card.color;
+  $: {
+    if (card.is_archived) {
+      cardColor = "#AAAAAA";
+    }
+  }
 </script>
 
 <div class="view-card-parent" style="--card-color: {cardColor}">
@@ -36,6 +41,7 @@
       <Title
         bind:value={card.card_name}
         {id}
+        disabled={card.is_archived}
         untitledString={card.original_title
           ? card.original_title
           : "Untitled Card"}
@@ -57,6 +63,7 @@
           name="text"
           id="cardNotes"
           bind:value={card.description}
+          disabled={card.is_archived}
         />
       </FormGroup>
       <FormGroup>
@@ -64,7 +71,12 @@
           <Icon name="paperclip" />
           Attachments
         </Label>
-        <CustomInput type="file" id="attachments" name="customFile" />
+        <CustomInput
+          type="file"
+          id="attachments"
+          name="customFile"
+          disabled={card.is_archived}
+        />
       </FormGroup>
       <Container>
         <Row>
@@ -76,27 +88,62 @@
                 name="dueDate"
                 id="dueDate"
                 bind:value={card.due_date_time}
+                disabled={card.is_archived}
               />
             </FormGroup>
           </Col>
           <Col xs="6">
             <FormGroup>
-              <Label for="reminderSet">Reminder Set</Label>
+              <Label for="dueTime">Time</Label>
               <Input
-                type="date"
-                name="reminderSet"
-                id="reminderSet"
-                bind:value={card.remind_date_time}
+                type="time"
+                name="dueTime"
+                id="dueTime"
                 disabled={card.due_date_time === ""}
               />
             </FormGroup>
           </Col>
         </Row>
+        <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="reminderDate">Reminder</Label>
+              <Input
+                type="date"
+                name="reminderDate"
+                id="reminderDate"
+                bind:value={card.remind_date_time}
+                disabled={card.due_date_time === ""}
+              />
+            </FormGroup>
+          </Col>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="reminderTime">Time</Label>
+              <Input
+                type="time"
+                name="reminderTime"
+                id="reminderTime"
+                disabled={card.remind_date_time === ""}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
       </Container>
-      <ColorPicker bind:color={card.color} />
     </ModalBody>
     <ModalFooter>
-      <ArchiveCard bind:is_archived={card.is_archived} />
+      <Container>
+        <Row>
+          <Col xs="4">
+            {#if !card.is_archived}
+              <ColorPicker bind:color={card.color} />
+            {/if}
+          </Col>
+          <Col xs="8">
+            <ArchiveCard bind:is_archived={card.is_archived} />
+          </Col>
+        </Row>
+      </Container>
     </ModalFooter>
   </Modal>
   <Reminder {card} />
