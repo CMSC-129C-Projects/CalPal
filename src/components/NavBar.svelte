@@ -6,10 +6,10 @@
 </script>
 
 <div class="parent">
-  <button class="scaleOnHover borderlessButton">
+  <button class="scale-on-hover borderless-button">
     <img src="add_calendar.png" alt="Add Calendar" />
   </button>
-  <button class="scaleOnHover borderlessButton">
+  <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
   <button
@@ -32,7 +32,7 @@
     gap: 1em;
   }
 
-  .borderlessButton {
+  .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
@@ -43,7 +43,7 @@
     transform-origin: center center;
   }
 
-  .scaleOnHover:hover {
+  .scale-on-hover:hover {
     transform: scale(1.1);
   }
 
