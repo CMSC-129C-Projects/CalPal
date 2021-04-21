@@ -21,7 +21,6 @@
   import formattedDate from "../routes/_date-format.js";
 
   export let card;
-  export let id;
 
   let open = false;
   const toggle = () => (open = !open);
@@ -35,12 +34,12 @@
 </script>
 
 <div class="view-card-parent" style="--card-color: {cardColor}">
-  <Card {card} {id} on:click={toggle} />
+  <Card {card} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="card-card-label" {toggle}>
       <Title
         bind:value={card.card_name}
-        {id}
+        id="card-{card._id}"
         disabled={card.is_archived}
         untitledString={card.original_title
           ? card.original_title
@@ -133,14 +132,14 @@
     </ModalBody>
     <ModalFooter>
       <Container>
-        <Row>
-          <Col xs="4">
+        <Row class="view-card-container">
+          <Col class="view-card-left-half" xs="4.5">
             {#if !card.is_archived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
-          <Col xs="8">
-            <ArchiveCard bind:is_archived={card.is_archived} />
+          <Col class="view-card-right-half" xs="7.5">
+            <ArchiveCard bind:card on:cardarchived />
           </Col>
         </Row>
       </Container>
@@ -152,5 +151,29 @@
 <style>
   .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
+  }
+  .view-card-parent :global(.view-card-container) {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .view-card-parent :global(.view-card-left-half) {
+    background-color: transparent;
+    display: flex;
+    border: none;
+    outline: none;
+    padding: 0%;
+    line-height: 0%;
+    flex-grow: 1;
+  }
+  .view-card-parent :global(.view-card-right-half) {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    align-items: center;
+    display: flex;
+    padding: 0%;
+    line-height: 0%;
   }
 </style>

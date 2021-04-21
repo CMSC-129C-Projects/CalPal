@@ -7,53 +7,50 @@
   const { session } = stores();
 
   function createNewList() {
-    const untitledListPattern = /^Untitled List( \([0-9]+\))?$/;
-
-    const getListNumberFromName = (listName) => {
-      if (listName === "Untitled List") {
-        return 0;
-      }
-
-      if (untitledListPattern.test(listName)) {
-        const wordsInName = listName.split(" ");
-        const numberString = wordsInName[2];
-        const listNumber = parseInt(numberString.slice(1, numberString.length));
-        return listNumber;
-      }
-
-      return null;
-    };
-
-    let maxListNumber = null;
-    $session.lists.forEach((l) => {
-      const listNumber = getListNumberFromName(l.list_name);
-      if (maxListNumber === null && l.list_name === "Untitled List") {
-        maxListNumber = 0;
-      } else if (listNumber > maxListNumber) {
-        maxListNumber = listNumber;
-      }
-    });
-
-    const listName =
-      maxListNumber === null
-        ? "Untitled List"
-        : `Untitled List (${maxListNumber + 1})`;
-
     $session.lists = [
       ...$session.lists,
       {
-        list_name: listName,
-        is_archived: false,
+        _id: $session.new_object_id,
+        list_name: "Untitled List",
         cards: [],
       },
     ];
   }
+
+  function handleCardArchived(event) {
+    const hasCard = (list) => {
+      return list.cards
+        .map((card) => {
+          return card._id;
+        })
+        .includes(event.detail);
+    };
+
+    const listContainingCard = $session.lists.find((list) => hasCard(list));
+
+    console.debug(`[Board.svelte] HERE`);
+    const card = listContainingCard.cards.find((c) => c._id === event.detail);
+    const cardIndex = listContainingCard.cards
+      .map((c) => {
+        return c._id;
+      })
+      .findIndex((c) => c === event.detail);
+    const beforeCards = listContainingCard.cards.slice(0, cardIndex);
+    const afterCards = listContainingCard.cards.slice(cardIndex + 1);
+
+    $session.lists.find((list) => hasCard(list)).cards = [
+      ...beforeCards,
+      ...afterCards,
+    ];
+
+    $session.archived_cards = [...$session.archived_cards, card];
+  }
 </script>
 
 <div class="board-flex-box-container">
-  {#each $session.lists as list, i (list)}
+  {#each $session.lists as list (list._id)}
     <div transition:fade={{ duration: 150 }}>
-      <List bind:list id="list-{i}-{list.list_name}" />
+      <List bind:list on:cardarchived={handleCardArchived} />
     </div>
   {/each}
   <AddListButton

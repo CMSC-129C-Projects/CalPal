@@ -1,4 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
+const ObjectID = require("mongodb").ObjectID;
 
 const uri = "mongodb://127.0.0.1:27017";
 
@@ -23,7 +24,7 @@ export async function getCardsOfUser(userId) {
   }
 }
 
-export async function updateCardsOfUser(userId, lists) {
+export async function updateCardsOfUser(userId, lists, archived_cards) {
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -38,6 +39,7 @@ export async function updateCardsOfUser(userId, lists) {
     const updatedDocument = {
       $set: {
         lists: lists,
+        archived_cards: archived_cards,
       },
     };
 
@@ -51,4 +53,8 @@ export async function updateCardsOfUser(userId, lists) {
   } finally {
     await client.close();
   }
+}
+
+export function newObjectIdString() {
+  return new ObjectID().toHexString();
 }

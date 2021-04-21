@@ -1,4 +1,6 @@
 <script>
+  import { stores } from "@sapper/app";
+  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     Button,
@@ -8,9 +10,10 @@
     ModalHeader,
   } from "sveltestrap/src";
 
-  export let is_archived;
+  const { session } = stores();
+  const dispatch = createEventDispatcher();
 
-  function deleteCard() {}
+  export let card;
 
   let open = false;
   let openDeleteModal = false;
@@ -20,6 +23,27 @@
   const toggleDeleteModal = () => {
     openDeleteModal = !openDeleteModal;
   };
+
+  $: is_archived = $session.archived_cards.map((c) => c._id).includes(card._id);
+
+  function notifyCardArchived(cardId) {
+    dispatch("cardarchived", cardId);
+  }
+
+  function unarchiveCard(cardIdToUnarchive) {
+    //
+  }
+
+  function deleteCard(cardIdToDelete) {
+    const cardIndex = $session.archived_cards
+      .map((c) => {
+        return c._id;
+      })
+      .findIndex(cardIdToDelete);
+    const cardsBefore = $session.archived_cards.slice(0, cardIndex);
+    const cardsAfter = $session.archived_cards.slice(cardIndex + 1);
+    $session.archived_cards = [...cardsBefore, ...cardsAfter];
+  }
 </script>
 
 <div class="parent">
@@ -48,7 +72,7 @@
         <Button
           color="primary"
           on:click={() => {
-            is_archived = !is_archived;
+            unarchiveCard(card._id);
             toggle();
           }}
         >
@@ -69,7 +93,7 @@
         <Button
           color="primary"
           on:click={() => {
-            is_archived = !is_archived;
+            notifyCardArchived(card._id);
             toggle();
           }}
         >

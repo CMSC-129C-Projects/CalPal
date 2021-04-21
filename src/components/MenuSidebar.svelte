@@ -1,22 +1,18 @@
 <script>
   import { fly } from "svelte/transition";
-  import { CardBody, Col, Container, Row } from "sveltestrap/src";
-  import { stores } from "@sapper/app";
-
-  import ViewCard from "./ViewCard.svelte";
-
-  const { session } = stores();
+  import { Col, Container, Row, Button } from "sveltestrap/src";
+  import Sidebar from "./Sidebar.svelte";
 
   export let show = false;
-  export let id;
+  let sidebar_show = false;
 </script>
 
 {#if show}
-  <nav class="sidebar-area" transition:fly={{ x: 350 }}>
+  <nav transition:fly={{ x: 250, opacity: 1 }}>
     <header>
       <Container>
         <Row>
-          <Col xs="10">Archived Cards</Col>
+          <Col xs="10">Menu</Col>
           <Col xs="2"
             ><button
               class="borderless-button"
@@ -29,16 +25,16 @@
       </Container>
     </header>
 
-    <CardBody>
-      {#each $session.archived_cards as archived_card (archived_card._id)}
-        <ViewCard
-          bind:card={archived_card}
-          id="{id}-archived-card-{archived_card._id}"
-        />
-      {/each}
-    </CardBody>
+    <button
+      on:click={() => {
+        sidebar_show = true;
+        show = false;
+      }}>Archived Cards</button
+    >
   </nav>
 {/if}
+
+<Sidebar bind:show={sidebar_show} />
 
 <style>
   nav {
@@ -53,13 +49,13 @@
     width: 20rem;
     z-index: 1030;
   }
-
   header {
-    border-bottom: 3px solid lightgray;
-    padding-bottom: 5px;
-    color: darkslategrey;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
+    /* padding: 1em; */
+    /* background-color: burlywood; */
+    align-items: center;
+    border-bottom: 3px solid darkgray;
     text-align: center;
   }
   .borderless-button {

@@ -26,7 +26,6 @@
   const { session } = stores();
 
   export let list;
-  export let id;
 
   let isDropdownOpen = false;
   let isModalOpen = false;
@@ -39,16 +38,9 @@
     isModalOpen = !isModalOpen;
   };
 
-  const deleteList = () => {
-    // TODO: Since we delete lists by their name, we have to
-    //       make sure that their names are unique.
-    //       To do this, we'll have to prevent the user from
-    //       naming them the same as an existing list.
-    //       For example, we could show a warning, or we could
-    //       automatically put an incrementing (1) next to the
-    //       name.
+  const deleteList = (listIdToDelete) => {
     $session.lists = $session.lists.filter((l) => {
-      if (l.list_name === list.list_name) {
+      if (l._id === listIdToDelete) {
         return false;
       }
       return true;
@@ -63,6 +55,7 @@
     list.cards = [
       ...list.cards,
       {
+        _id: $session.new_object_id,
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
@@ -72,7 +65,6 @@
         remind_date_time: "",
         description: "",
         color: "#ffffff",
-        is_archived: false,
       },
     ];
   }
@@ -87,7 +79,7 @@
             <CardTitle class="card-card-title-container">
               <Title
                 bind:value={list.list_name}
-                {id}
+                id="list-{list._id}"
                 untitledString="Untitled List"
               />
             </CardTitle>
@@ -103,8 +95,8 @@
     <CardBody class="list-list-body">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, i (card)}
-        <ViewCard bind:card id="{id}-card-{i}" />
+      }) as card (card._id)}
+        <ViewCard bind:card on:cardarchived />
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer">
@@ -140,7 +132,7 @@
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>
       <ModalFooter>
-        <Button color="danger" on:click={() => deleteList()}>
+        <Button color="danger" on:click={() => deleteList(list._id)}>
           <Icon name="trash" />
           Delete
         </Button>
