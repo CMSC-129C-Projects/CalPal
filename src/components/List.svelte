@@ -63,7 +63,7 @@
     list.cards = [
       ...list.cards,
       {
-        _id: objectId,
+        _id: $session.new_object_id,
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",

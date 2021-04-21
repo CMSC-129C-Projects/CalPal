@@ -6,13 +6,11 @@
 
   const { session } = stores();
 
-  export let newObjectId;
-
   function createNewList() {
     $session.lists = [
       ...$session.lists,
       {
-        _id: newObjectId,
+        _id: $session.new_object_id,
         list_name: "Untitled List",
         cards: [],
       },
