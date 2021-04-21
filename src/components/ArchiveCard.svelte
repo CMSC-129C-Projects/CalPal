@@ -24,7 +24,7 @@
     openDeleteModal = !openDeleteModal;
   };
 
-  $: is_archived = $session.archived_cards.includes(card._id);
+  $: is_archived = $session.archived_cards.map((c) => c._id).includes(card._id);
 
   function notifyCardArchived(cardId) {
     dispatch("cardarchived", cardId);
