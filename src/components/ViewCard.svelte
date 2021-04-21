@@ -56,28 +56,30 @@
           {formattedDate(new Date(card.original_date))}
         {/if}
       </div>
-      <FormGroup>
-        <Label for="cardNotes">NOTES</Label>
-        <Input
-          type="textarea"
-          name="text"
-          id="cardNotes"
-          bind:value={card.description}
-          disabled={card.is_archived}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="attachements">
-          <Icon name="paperclip" />
-          Attachments
-        </Label>
-        <CustomInput
-          type="file"
-          id="attachments"
-          name="customFile"
-          disabled={card.is_archived}
-        />
-      </FormGroup>
+      <Container>
+        <FormGroup>
+          <Label for="cardNotes">NOTES</Label>
+          <Input
+            type="textarea"
+            name="text"
+            id="cardNotes"
+            bind:value={card.description}
+            disabled={card.is_archived}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="attachements">
+            <Icon name="paperclip" />
+            Attachments
+          </Label>
+          <CustomInput
+            type="file"
+            id="attachments"
+            name="customFile"
+            disabled={card.is_archived}
+          />
+        </FormGroup>
+      </Container>
       <Container>
         <Row>
           <Col xs="6">
@@ -134,12 +136,12 @@
     <ModalFooter>
       <Container>
         <Row>
-          <Col xs="4">
+          <Col class="left-half" xs="6">
             {#if !card.is_archived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
-          <Col xs="8">
+          <Col class="archive-card-button-column" xs="6">
             <ArchiveCard bind:is_archived={card.is_archived} />
           </Col>
         </Row>
@@ -151,5 +153,10 @@
 <style>
   .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
+  }
+
+  .view-card-parent :global(.archive-card-button-column) {
+    display: flex;
+    justify-content: flex-end;
   }
 </style>
