@@ -21,7 +21,6 @@
   import formattedDate from "../routes/_date-format.js";
 
   export let card;
-  export let id;
 
   let open = false;
   const toggle = () => (open = !open);
@@ -35,12 +34,12 @@
 </script>
 
 <div class="view-card-parent" style="--card-color: {cardColor}">
-  <Card {card} {id} on:click={toggle} />
+  <Card {card} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="card-card-label" {toggle}>
       <Title
         bind:value={card.card_name}
-        {id}
+        id="card-{card._id}"
         disabled={card.is_archived}
         untitledString={card.original_title
           ? card.original_title
