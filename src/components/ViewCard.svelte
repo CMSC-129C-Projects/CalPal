@@ -139,7 +139,7 @@
             {/if}
           </Col>
           <Col xs="8">
-            <ArchiveCard bind:is_archived={card.is_archived} />
+            <ArchiveCard bind:card />
           </Col>
         </Row>
       </Container>
