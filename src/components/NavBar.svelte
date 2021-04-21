@@ -1,8 +1,6 @@
 <script>
-  // import Menu from "./Menu.svelte";
-
-  import Sidebar from "./Sidebar.svelte";
-  let sidebar_show = false;
+  import MenuSidebar from "./MenuSidebar.svelte";
+  let menu_show = false;
 </script>
 
 <div class="parent">
@@ -14,12 +12,11 @@
   </button>
   <button
     class="scale-on-hover borderless-button"
-    on:click={() => (sidebar_show = !sidebar_show)}
+    on:click={() => (menu_show = !menu_show)}
   >
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-  <!-- <button class="scaleOnHover borderlessButton"><Menu /></button> -->
-  <Sidebar bind:show={sidebar_show} />
+  <MenuSidebar bind:show={menu_show} />
 </div>
 
 <style>
