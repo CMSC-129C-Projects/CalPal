@@ -20,6 +20,37 @@
           }
         }
       });
+
+      const objectId = await this.fetch("cards/new-oid.json")
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            this.error(res.status, res.json().message);
+          }
+        })
+        .catch((err) => {
+          this.error(err);
+        });
+      console.debug(`[index.svelte] objectId: ${JSON.stringify(objectId)}`);
+
+      await this.fetch("cards/new-oid.json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ new_object_id: objectId }),
+      })
+        .then((res) => {
+          if (res.ok) {
+            session.new_object_id = objectId.new_object_id;
+          } else {
+            this.error(res.status, res.json().message);
+          }
+        })
+        .catch((err) => {
+          this.error(err);
+        });
     }
   }
 </script>
