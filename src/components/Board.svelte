@@ -4,11 +4,12 @@
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
   import Notify from "./Notify.svelte";
-  // import Reminder from "./Reminder.svelte";
+  import Reminder from "./Reminder.svelte";
 
   const { session } = stores();
 
-  // export let card;
+  //export let card;
+  export let id;
 
   function createNewList() {
     $session.lists = [
@@ -32,21 +33,14 @@
 </div>
 <div class="alert-area">
   <div class="alert-flexbox-container">
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
-    <Notify />
+    {#each $session.lists as list, i (i)}
+      {#each list.cards.filter((c) => {
+        return !(typeof c.card_name === "undefined" || c.is_archived);
+      }) as card, j (card)}
+        <Reminder bind:card id="{id}-card-{j}" />
+      {/each}
+    {/each}
   </div>
-  <!-- <Reminder {card} /> -->
 </div>
 
 <style>
