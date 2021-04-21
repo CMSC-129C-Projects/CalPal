@@ -96,7 +96,7 @@
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card (card._id)}
-        <ViewCard bind:card />
+        <ViewCard bind:card on:cardarchived />
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer">

@@ -1,5 +1,6 @@
 <script>
   import { stores } from "@sapper/app";
+  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     Button,
@@ -10,6 +11,7 @@
   } from "sveltestrap/src";
 
   const { session } = stores();
+  const dispatch = createEventDispatcher();
 
   export let card;
 
@@ -24,11 +26,8 @@
 
   $: is_archived = $session.archived_cards.includes(card._id);
 
-  // TODO: Fire an event when a Card is archived.
-  //       Let List handle the archiving because the Card itself
-  //       does not know which List it is a child of.
-  function archiveCard(cardIdToArchive) {
-    //
+  function notifyCardArchived(cardId) {
+    dispatch("cardarchived", cardId);
   }
 
   function unarchiveCard(cardIdToUnarchive) {
@@ -94,7 +93,7 @@
         <Button
           color="primary"
           on:click={() => {
-            archiveCard(card._id);
+            notifyCardArchived(card._id);
             toggle();
           }}
         >
