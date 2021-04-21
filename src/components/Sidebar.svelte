@@ -13,7 +13,9 @@
 </script>
 
 {#if show}
-  <nav class="sidebar-area" transition:fly={{ x: 250, opacity: 1 }}>
+  <nav class="sidebar-area" transition:fly={{ x: 350 }}>
+    <h1>Archived Cards</h1>
+
     <CardBody>
       {#each $session.lists as list, i (i)}
         {#each list.cards.filter((c) => {
@@ -34,9 +36,18 @@
     height: 100%;
     padding: 2rem 1rem 0.6rem;
     border-left: 1px solid #aaa;
-    background: #000;
+    background: rgb(240, 240, 240);
     overflow-y: auto;
     width: 20rem;
     z-index: 1030;
+  }
+
+  h1 {
+    border-bottom: 3px solid lightgray;
+    padding-bottom: 5px;
+    color: darkslategrey;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    text-align: center;
   }
 </style>
