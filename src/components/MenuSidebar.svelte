@@ -1,6 +1,14 @@
 <script>
   import { fly } from "svelte/transition";
-  import { Col, Container, Row, Button } from "sveltestrap/src";
+  import {
+    Col,
+    Container,
+    Row,
+    Card,
+    CardBody,
+    CardHeader,
+    Icon,
+  } from "sveltestrap/src";
   import Sidebar from "./Sidebar.svelte";
 
   export let show = false;
@@ -8,29 +16,33 @@
 </script>
 
 {#if show}
-  <nav transition:fly={{ x: 250, opacity: 1 }}>
-    <header>
-      <Container>
-        <Row>
-          <Col xs="10">Menu</Col>
-          <Col xs="2"
-            ><button
-              class="borderless-button"
-              on:click={() => {
-                show = false;
-              }}>x</button
-            >
-          </Col>
-        </Row>
-      </Container>
-    </header>
-
-    <button
-      on:click={() => {
-        sidebar_show = true;
-        show = false;
-      }}>Archived Cards</button
-    >
+  <nav class="sidebar" transition:fly={{ x: 300, opacity: 1 }}>
+    <Card>
+      <CardHeader>
+        <Container>
+          <Row>
+            <Col class="sidebar-sidebar-header" xs="10">Menu</Col>
+            <Col xs="2"
+              ><button
+                class="borderless-button sidebar-close-button"
+                on:click={() => {
+                  show = false;
+                }}>x</button
+              >
+            </Col>
+          </Row>
+        </Container>
+      </CardHeader>
+      <CardBody>
+        <button
+          class="borderless-button"
+          on:click={() => {
+            sidebar_show = true;
+            show = false;
+          }}><Icon name="archive-fill" /> Archived Cards</button
+        >
+      </CardBody>
+    </Card>
   </nav>
 {/if}
 
@@ -42,31 +54,36 @@
     top: 6.1em;
     right: 0;
     height: 100%;
-    padding: 1rem 1rem 0.6rem;
+    padding: 0;
     border-left: 1px solid #aaa;
-    background: rgb(240, 240, 240);
+    background: #fff;
     overflow-y: auto;
-    width: 20rem;
+    width: 18em;
     z-index: 1030;
   }
-  header {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-    /* padding: 1em; */
-    /* background-color: burlywood; */
-    align-items: center;
-    border-bottom: 3px solid darkgray;
-    text-align: center;
-  }
+
   .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
     line-height: 0%;
     padding: 0%;
-    font-size: 30px;
+    font-size: medium;
     transition: transform 0.05s;
     transform-origin: center center;
+    text-align: center;
+  }
+
+  .sidebar-close-button {
+    font-size: 30px;
+    text-align: center;
     color: lightgray;
+  }
+
+  .sidebar :global(.sidebar-sidebar-header) {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
   }
 </style>
