@@ -21,7 +21,7 @@
 <div class="board-flex-box-container">
   {#each $session.lists as list (list._id)}
     <div transition:fade={{ duration: 150 }}>
-      <List bind:list id="list-{list._id}" />
+      <List bind:list />
     </div>
   {/each}
   <AddListButton
