@@ -99,7 +99,7 @@
                 type="time"
                 name="dueTime"
                 id="dueTime"
-                disabled={card.due_date_time === ""}
+                disabled={card.due_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -113,7 +113,7 @@
                 name="reminderDate"
                 id="reminderDate"
                 bind:value={card.remind_date_time}
-                disabled={card.due_date_time === ""}
+                disabled={card.due_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -124,7 +124,7 @@
                 type="time"
                 name="reminderTime"
                 id="reminderTime"
-                disabled={card.remind_date_time === ""}
+                disabled={card.remind_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
