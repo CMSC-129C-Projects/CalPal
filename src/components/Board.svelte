@@ -72,6 +72,6 @@
     overflow-x: none;
     overflow-y: auto;
     /* background-color: lightsalmon; */
-    max-height: 500px;
+    max-height: 255px;
   }
 </style>
