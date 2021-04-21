@@ -56,22 +56,22 @@
   let isOpen = false;
 </script>
 
-<div class="parent">
+<div class="color-picker-parent">
   <Dropdown
     {isOpen}
     toggle={() => {
       isOpen = !isOpen;
     }}
   >
-    <DropdownToggle class="colorPickerButton" caret>Color</DropdownToggle>
-    <DropdownMenu class="drop-down-menu">
+    <DropdownToggle class="color-picker-button" caret>Color</DropdownToggle>
+    <DropdownMenu>
       <Container>
         {#each Object.entries(colors) as [_palette, paletteColors]}
           <Row>
             {#each Object.entries(paletteColors) as [_colorName, colorValue]}
               <Col>
                 <Button
-                  class="colors"
+                  class="color-picker-colors"
                   style="background-color: {colorValue}; border-color: {colorValue}"
                   on:click={() => chooseColor(colorValue)}
                 />
@@ -85,17 +85,13 @@
 </div>
 
 <style>
-  .parent :global(.colorPickerButton) {
+  .color-picker-parent :global(.color-picker-button) {
     background-color: transparent;
     color: black;
     box-shadow: none;
   }
 
-  .parent :global(.drop-down-menu) {
-    width: 300px;
-  }
-
-  .parent :global(.colors) {
+  .color-picker-parent :global(.color-picker-colors) {
     box-shadow: none;
   }
 </style>
