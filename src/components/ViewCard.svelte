@@ -48,15 +48,15 @@
       />
     </ModalHeader>
     <ModalBody>
-      <div>{card.original_title}</div>
-      <div>
-        {#if !card.original_date}
-          {formattedDate(new Date(card.due_date_time))}
-        {:else}
-          {formattedDate(new Date(card.original_date))}
-        {/if}
-      </div>
       <Container>
+        <div>{card.original_title}</div>
+        <div>
+          {#if !card.original_date}
+            {formattedDate(new Date(card.due_date_time))}
+          {:else}
+            {formattedDate(new Date(card.original_date))}
+          {/if}
+        </div>
         <FormGroup>
           <Label for="cardNotes">NOTES</Label>
           <Input
