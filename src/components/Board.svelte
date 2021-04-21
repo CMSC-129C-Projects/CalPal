@@ -6,44 +6,14 @@
 
   const { session } = stores();
 
+  export let newObjectId;
+
   function createNewList() {
-    const untitledListPattern = /^Untitled List( \([0-9]+\))?$/;
-
-    const getListNumberFromName = (listName) => {
-      if (listName === "Untitled List") {
-        return 0;
-      }
-
-      if (untitledListPattern.test(listName)) {
-        const wordsInName = listName.split(" ");
-        const numberString = wordsInName[2];
-        const listNumber = parseInt(numberString.slice(1, numberString.length));
-        return listNumber;
-      }
-
-      return null;
-    };
-
-    let maxListNumber = null;
-    $session.lists.forEach((l) => {
-      const listNumber = getListNumberFromName(l.list_name);
-      if (maxListNumber === null && l.list_name === "Untitled List") {
-        maxListNumber = 0;
-      } else if (listNumber > maxListNumber) {
-        maxListNumber = listNumber;
-      }
-    });
-
-    const listName =
-      maxListNumber === null
-        ? "Untitled List"
-        : `Untitled List (${maxListNumber + 1})`;
-
     $session.lists = [
       ...$session.lists,
       {
-        list_name: listName,
-        is_archived: false,
+        _id: newObjectId,
+        list_name: "Untitled List",
         cards: [],
       },
     ];
@@ -51,9 +21,9 @@
 </script>
 
 <div class="board-flex-box-container">
-  {#each $session.lists as list, i (list)}
+  {#each $session.lists as list (list._id)}
     <div transition:fade={{ duration: 150 }}>
-      <List bind:list id="list-{i}-{list.list_name}" />
+      <List bind:list id="list-{list._id}" />
     </div>
   {/each}
   <AddListButton

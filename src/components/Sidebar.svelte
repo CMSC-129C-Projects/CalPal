@@ -20,12 +20,11 @@
       }}>Close</Button
     >
     <CardBody>
-      {#each $session.lists as list, i (i)}
-        {#each list.cards.filter((c) => {
-          return !(typeof c.card_name === "undefined" || !c.is_archived);
-        }) as card, j (card)}
-          <ViewCard bind:card id="{id}-card-{j}" />
-        {/each}
+      {#each $session.archived_cards as archived_card (archived_card._id)}
+        <ViewCard
+          bind:card={archived_card}
+          id="{id}-archived-card-{archived_card._id}"
+        />
       {/each}
     </CardBody>
   </nav>

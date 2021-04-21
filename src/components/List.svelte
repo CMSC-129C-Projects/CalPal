@@ -63,6 +63,7 @@
     list.cards = [
       ...list.cards,
       {
+        _id: objectId,
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
@@ -72,7 +73,6 @@
         remind_date_time: "",
         description: "",
         color: "#ffffff",
-        is_archived: false,
       },
     ];
   }
@@ -103,8 +103,8 @@
     <CardBody class="list-list-body">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, i (card)}
-        <ViewCard bind:card id="{id}-card-{i}" />
+      }) as card (card._id)}
+        <ViewCard bind:card id="{id}-card-{card._id}" />
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer">

@@ -9,6 +9,7 @@
         },
         body: JSON.stringify({
           lists: session.lists,
+          archived_cards: session.archived_cards,
         }),
       }).then((res) => {
         if (res.ok) {

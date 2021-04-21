@@ -27,6 +27,7 @@
         console.debug(`[index.svelte] POST success!`);
         session.user_id = userData.user_id;
         session.lists = userData.lists;
+        session.archived_cards = userData.archived_cards;
       } else {
         console.debug(`[index.svelte] POST failed.`);
         this.error(post_res.status, post_res.message);

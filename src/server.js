@@ -27,7 +27,8 @@ polka() // You can also use Express
       session: (req, _res) => ({
         did_cards_load: req.session.did_cards_load,
         user_id: req.session.user_id,
-        cards: req.session.cards,
+        lists: req.session.lists,
+        archived_cards: req.session.archived_cards,
       }),
     })
   )
