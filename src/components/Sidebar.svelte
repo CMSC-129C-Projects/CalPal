@@ -17,6 +17,9 @@
 
   export let show_sidebar;
   export let id;
+  export function closeSidebar() {
+    show_sidebar = false;
+  }
 </script>
 
 {#if show_sidebar}
@@ -27,11 +30,8 @@
           <Row>
             <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
             <Col xs="1"
-              ><button
-                class="borderless-button"
-                on:click={() => {
-                  show_sidebar = false;
-                }}>x</button
+              ><button class="borderless-button" on:click={closeSidebar}
+                >x</button
               >
             </Col>
           </Row>
