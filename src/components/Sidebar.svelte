@@ -1,6 +1,14 @@
 <script>
   import { fly } from "svelte/transition";
-  import { CardBody, Col, Container, Row } from "sveltestrap/src";
+  import {
+    Col,
+    Container,
+    Row,
+    Card,
+    CardHeader,
+    CardBody,
+    Icon,
+  } from "sveltestrap/src";
   import { stores } from "@sapper/app";
 
   import ViewCard from "./ViewCard.svelte";
@@ -12,32 +20,33 @@
 </script>
 
 {#if show}
-  <nav class="sidebar-area" transition:fly={{ x: 350 }}>
-    <header>
-      <Container>
-        <Row>
-          <Col xs="10">Archived Cards</Col>
-          <Col xs="2"
-            ><button
-              class="borderless-button"
-              on:click={() => {
-                show = false;
-              }}>x</button
-            >
-          </Col>
-        </Row>
-      </Container>
-    </header>
-
-    <CardBody>
-      {#each $session.lists as list, i (i)}
-        {#each list.cards.filter((c) => {
-          return !(typeof c.card_name === "undefined" || !c.is_archived);
-        }) as card, j (card)}
-          <ViewCard bind:card id="{id}-card-{j}" />
+  <nav class="sidebar" transition:fly={{ x: 350 }}>
+    <Card>
+      <CardHeader>
+        <Container>
+          <Row>
+            <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
+            <Col xs="1"
+              ><button
+                class="borderless-button"
+                on:click={() => {
+                  show = false;
+                }}>x</button
+              >
+            </Col>
+          </Row>
+        </Container>
+      </CardHeader>
+      <CardBody>
+        {#each $session.lists as list, i (i)}
+          {#each list.cards.filter((c) => {
+            return !(typeof c.card_name === "undefined" || !c.is_archived);
+          }) as card, j (card)}
+            <ViewCard bind:card id="{id}-card-{j}" />
+          {/each}
         {/each}
-      {/each}
-    </CardBody>
+      </CardBody>
+    </Card>
   </nav>
 {/if}
 
@@ -47,22 +56,14 @@
     top: 6.1em;
     right: 0;
     height: 100%;
-    padding: 1rem 1rem 0.6rem;
+    /* padding: 1rem 1rem 0.6rem; */
     border-left: 1px solid #aaa;
-    background: rgb(240, 240, 240);
+    background: #fff;
     overflow-y: auto;
-    width: 20rem;
+    width: 18em;
     z-index: 1030;
   }
 
-  header {
-    border-bottom: 3px solid lightgray;
-    padding-bottom: 5px;
-    color: darkslategrey;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-    text-align: center;
-  }
   .borderless-button {
     background-color: transparent;
     border: none;
@@ -73,5 +74,12 @@
     transition: transform 0.05s;
     transform-origin: center center;
     color: lightgray;
+  }
+
+  .sidebar :global(.sidebar-sidebar-header) {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
   }
 </style>
