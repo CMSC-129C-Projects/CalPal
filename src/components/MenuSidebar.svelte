@@ -12,6 +12,10 @@
   import Sidebar from "./Sidebar.svelte";
 
   export let show_menu;
+  function openArchivedCards() {
+    sidebar_show = true;
+    show_menu = false;
+  }
   let sidebar_show = false;
 </script>
 
@@ -34,12 +38,8 @@
         </Container>
       </CardHeader>
       <CardBody>
-        <button
-          class="borderless-button"
-          on:click={() => {
-            sidebar_show = true;
-            show_menu = false;
-          }}><Icon name="archive-fill" /> Archived Cards</button
+        <button class="borderless-button" on:click={openArchivedCards}
+          ><Icon name="archive-fill" /> Archived Cards</button
         >
       </CardBody>
     </Card>
