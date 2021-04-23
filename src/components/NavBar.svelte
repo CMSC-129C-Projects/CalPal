@@ -1,12 +1,10 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
-  import Sidebar from "./Sidebar.svelte";
-  let menu_show = false;
-  let toggle;
 
-  function toggleSidebar() {
-    menu_show = !menu_show;
-    //show = !show;
+  let menu_toggle = false;
+
+  function handleMenuButton() {
+    menu_toggle = !menu_toggle;
   }
 </script>
 
@@ -17,16 +15,10 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <!-- <button
-    class="scale-on-hover borderless-button"
-    on:click={() => (menu_show = !menu_show)}
-  >
-    <img src="menu_ellipses_vertical.png" alt="Menu" />
-  </button> -->
-  <button class="scale-on-hover borderless-button" on:click={toggleSidebar}>
+  <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-  <MenuSidebar bind:show_menu={menu_show} />
+  <MenuSidebar bind:show_menu={menu_toggle} />
 </div>
 
 <style>
