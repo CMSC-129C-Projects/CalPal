@@ -1,6 +1,12 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
   let menu_show = false;
+  export let sidebar_show;
+
+  function toggleSidebar() {
+    if (sidebar_show) sidebar_show = !sidebar_show;
+    else menu_show = !menu_show;
+  }
 </script>
 
 <div class="parent">
@@ -10,10 +16,13 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <button
+  <!-- <button
     class="scale-on-hover borderless-button"
     on:click={() => (menu_show = !menu_show)}
   >
+    <img src="menu_ellipses_vertical.png" alt="Menu" />
+  </button> -->
+  <button class="scale-on-hover borderless-button" on:click={toggleSidebar}>
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
   <MenuSidebar bind:show={menu_show} />
