@@ -15,11 +15,11 @@
 
   const { session } = stores();
 
-  export let show = false;
+  export let show_sidebar;
   export let id;
 </script>
 
-{#if show}
+{#if show_sidebar}
   <nav class="sidebar" transition:fly={{ x: 350 }}>
     <Card>
       <CardHeader>
@@ -30,7 +30,7 @@
               ><button
                 class="borderless-button"
                 on:click={() => {
-                  show = false;
+                  show_sidebar = false;
                 }}>x</button
               >
             </Col>

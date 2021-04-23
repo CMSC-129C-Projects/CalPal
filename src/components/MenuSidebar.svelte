@@ -11,11 +11,11 @@
   } from "sveltestrap/src";
   import Sidebar from "./Sidebar.svelte";
 
-  export let show = false;
+  export let show_menu;
   let sidebar_show = false;
 </script>
 
-{#if show}
+{#if show_menu}
   <nav class="sidebar" transition:fly={{ x: 300, opacity: 1 }}>
     <Card>
       <CardHeader>
@@ -26,7 +26,7 @@
               ><button
                 class="borderless-button sidebar-close-button"
                 on:click={() => {
-                  show = false;
+                  show_menu = false;
                 }}>x</button
               >
             </Col>
@@ -38,7 +38,7 @@
           class="borderless-button"
           on:click={() => {
             sidebar_show = true;
-            show = false;
+            show_menu = false;
           }}><Icon name="archive-fill" /> Archived Cards</button
         >
       </CardBody>
@@ -46,7 +46,7 @@
   </nav>
 {/if}
 
-<Sidebar bind:show={sidebar_show} />
+<Sidebar bind:show_sidebar={sidebar_show} />
 
 <style>
   nav {
