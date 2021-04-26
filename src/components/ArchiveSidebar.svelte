@@ -8,7 +8,6 @@
     Card,
     CardHeader,
     CardBody,
-    Icon,
   } from "sveltestrap/src";
   import ViewCard from "./ViewCard.svelte";
 
