@@ -9,13 +9,7 @@
   import formattedDate from "../routes/_date-format.js";
 
   export let card;
-
-  $: cardColor = card.color;
-  $: {
-    if (card.is_archived) {
-      cardColor = "#AAAAAA";
-    }
-  }
+  export let cardColor;
 
   let dateToDisplay;
   $: {

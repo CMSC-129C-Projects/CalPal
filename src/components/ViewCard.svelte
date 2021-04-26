@@ -1,4 +1,5 @@
 <script>
+  import { stores } from "@sapper/app";
   import {
     Modal,
     ModalBody,
@@ -19,27 +20,32 @@
   import ArchiveCard from "./ArchiveCard.svelte";
   import formattedDate from "../routes/_date-format.js";
 
+  const { session } = stores();
+
   export let card;
 
   let open = false;
   const toggle = () => (open = !open);
 
-  $: cardColor = card.color;
+  $: is_archived = $session.archived_cards.some((c) => c._id === card._id);
+
+  let cardColor;
   $: {
-    if (card.is_archived) {
+    cardColor = card.color;
+    if (is_archived) {
       cardColor = "#AAAAAA";
     }
   }
 </script>
 
 <div class="view-card-parent" style="--card-color: {cardColor}">
-  <Card {card} on:click={toggle} />
+  <Card {card} {cardColor} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader class="card-card-label" {toggle}>
       <Title
         bind:value={card.card_name}
         id="card-{card._id}"
-        disabled={card.is_archived}
+        disabled={is_archived}
         untitledString={card.original_title
           ? card.original_title
           : "Untitled Card"}
@@ -62,7 +68,7 @@
             name="text"
             id="cardNotes"
             bind:value={card.description}
-            disabled={card.is_archived}
+            disabled={is_archived}
           />
         </FormGroup>
         <FormGroup>
@@ -74,7 +80,7 @@
             type="file"
             id="attachments"
             name="customFile"
-            disabled={card.is_archived}
+            disabled={is_archived}
           />
         </FormGroup>
       </Container>
@@ -88,7 +94,7 @@
                 name="dueDate"
                 id="dueDate"
                 bind:value={card.due_date_time}
-                disabled={card.is_archived}
+                disabled={is_archived}
               />
             </FormGroup>
           </Col>
@@ -99,7 +105,7 @@
                 type="time"
                 name="dueTime"
                 id="dueTime"
-                disabled={card.due_date_time === "" || card.is_archived}
+                disabled={card.due_date_time === "" || is_archived}
               />
             </FormGroup>
           </Col>
@@ -113,7 +119,7 @@
                 name="reminderDate"
                 id="reminderDate"
                 bind:value={card.remind_date_time}
-                disabled={card.due_date_time === "" || card.is_archived}
+                disabled={card.due_date_time === "" || is_archived}
               />
             </FormGroup>
           </Col>
@@ -124,7 +130,7 @@
                 type="time"
                 name="reminderTime"
                 id="reminderTime"
-                disabled={card.remind_date_time === "" || card.is_archived}
+                disabled={card.remind_date_time === "" || is_archived}
               />
             </FormGroup>
           </Col>
@@ -135,7 +141,7 @@
       <Container>
         <Row class="view-card-container">
           <Col class="view-card-left-half" xs="4.5">
-            {#if !card.is_archived}
+            {#if !is_archived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
