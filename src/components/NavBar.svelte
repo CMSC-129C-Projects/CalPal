@@ -1,8 +1,19 @@
 <script>
-  // import Menu from "./Menu.svelte";
+  import MenuSidebar from "./MenuSidebar.svelte";
+  import ArchiveSidebar from "./ArchiveSidebar.svelte";
 
-  import Sidebar from "./Sidebar.svelte";
-  let sidebar_show = false;
+  let is_menu_sidebar_shown;
+  let is_archive_sidebar_shown;
+
+  function handleMenuButton() {
+    if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (!is_menu_sidebar_shown && is_archive_sidebar_shown) {
+      is_archive_sidebar_shown = !is_archive_sidebar_shown;
+    }
+  }
 </script>
 
 <div class="parent">
@@ -12,14 +23,11 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <button
-    class="scale-on-hover borderless-button"
-    on:click={() => (sidebar_show = !sidebar_show)}
-  >
+  <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-  <!-- <button class="scaleOnHover borderlessButton"><Menu /></button> -->
-  <Sidebar bind:show={sidebar_show} />
+  <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
+  <ArchiveSidebar bind:is_archive_sidebar_shown />
 </div>
 
 <style>
