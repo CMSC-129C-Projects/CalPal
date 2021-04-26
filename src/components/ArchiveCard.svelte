@@ -1,4 +1,6 @@
 <script>
+  import { stores } from "@sapper/app";
+  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     Button,
@@ -8,9 +10,10 @@
     ModalHeader,
   } from "sveltestrap/src";
 
-  export let is_archived;
+  const { session } = stores();
+  const dispatch = createEventDispatcher();
 
-  function deleteCard() {}
+  export let card;
 
   let open = false;
   let openDeleteModal = false;
@@ -20,6 +23,32 @@
   const toggleDeleteModal = () => {
     openDeleteModal = !openDeleteModal;
   };
+
+  $: is_archived = $session.archived_cards.map((c) => c._id).includes(card._id);
+
+  function notifyCardArchived(cardId) {
+    dispatch("cardarchived", cardId);
+  }
+
+  function notifyCardUnarchived(cardId) {
+    dispatch("cardunarchived", cardId);
+  }
+
+  function deleteCard(cardIdToDelete) {
+    const cardIndex = $session.archived_cards.findIndex(
+      (card) => card._id === cardIdToDelete
+    );
+    console.debug(`[ArchiveCard.svelte] cardIndex: ${cardIndex}`);
+    const cardsBefore = $session.archived_cards.slice(0, cardIndex);
+    const cardsAfter = $session.archived_cards.slice(cardIndex + 1);
+    console.debug(
+      `[ArchiveCard.svelte] cardsBefore: ${JSON.stringify(cardsBefore)}`
+    );
+    console.debug(
+      `[ArchiveCard.svelte] cardsAfter: ${JSON.stringify(cardsAfter)}`
+    );
+    $session.archived_cards = [...cardsBefore, ...cardsAfter];
+  }
 </script>
 
 <div class="parent">
@@ -37,7 +66,9 @@
       <ModalBody>Are you sure you want to delete card?</ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleDeleteModal}>Cancel</Button>
-        <Button color="primary" on:click={deleteCard}>Delete</Button>
+        <Button color="primary" on:click={() => deleteCard(card._id)}>
+          Delete
+        </Button>
       </ModalFooter>
     </Modal>
     <Modal isOpen={open} {toggle}>
@@ -48,7 +79,7 @@
         <Button
           color="primary"
           on:click={() => {
-            is_archived = !is_archived;
+            notifyCardUnarchived(card._id);
             toggle();
           }}
         >
@@ -69,7 +100,7 @@
         <Button
           color="primary"
           on:click={() => {
-            is_archived = !is_archived;
+            notifyCardArchived(card._id);
             toggle();
           }}
         >

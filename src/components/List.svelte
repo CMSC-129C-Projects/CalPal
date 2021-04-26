@@ -1,5 +1,7 @@
 <script>
+  import { stores } from "@sapper/app";
   import {
+    Button,
     Card,
     CardBody,
     CardFooter,
@@ -13,14 +15,37 @@
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
   } from "sveltestrap/src";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
 
-  let isOpen = false;
+  const { session } = stores();
 
   export let list;
-  export let id;
+
+  let isDropdownOpen = false;
+  let isModalOpen = false;
+
+  const toggleDropdown = () => {
+    isDropdownOpen = !isDropdownOpen;
+  };
+
+  const toggleModal = () => {
+    isModalOpen = !isModalOpen;
+  };
+
+  const deleteList = (listIdToDelete) => {
+    $session.lists = $session.lists.filter((l) => {
+      if (l._id === listIdToDelete) {
+        return false;
+      }
+      return true;
+    });
+  };
 
   function onArchiveClicked() {
     alert("Archive list?");
@@ -30,16 +55,16 @@
     list.cards = [
       ...list.cards,
       {
+        _id: $session.new_object_id,
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
         original_date: "",
-        date_created: "",
+        date_created: new Date(Date.now()),
         due_date_time: "",
         remind_date_time: "",
         description: "",
         color: "#ffffff",
-        is_archived: false,
       },
     ];
   }
@@ -54,7 +79,7 @@
             <CardTitle class="card-card-title-container">
               <Title
                 bind:value={list.list_name}
-                {id}
+                id="list-{list._id}"
                 untitledString="Untitled List"
               />
             </CardTitle>
@@ -70,8 +95,16 @@
     <CardBody class="list-list-body">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, i (card)}
-        <ViewCard bind:card id="{id}-card-{i}" />
+      }) as card (card._id)}
+        <ViewCard
+          bind:card
+          on:cardarchived
+          on:cardunarchived={() => {
+            console.debug(
+              `[List.svelte] Received 'cardunarchived', forwarding...`
+            );
+          }}
+        />
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer">
@@ -87,21 +120,33 @@
         </Col>
         <Col class="list-right-half" xs="2">
           <Dropdown
-            class={isOpen ? "list-is-open" : ""}
-            toggle={() => (isOpen = !isOpen)}
+            isOpen={isDropdownOpen}
+            class={isDropdownOpen ? "list-is-open" : ""}
+            toggle={toggleDropdown}
           >
             <DropdownToggle caret class="list-drop-down-button">
               <!-- <Icon class="threeDots" name="three-dots" /> -->
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem on:click={onArchiveClicked}>
-                Archive List
-              </DropdownItem>
+              <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Col>
       </Row>
     </CardFooter>
+    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <ModalHeader>Deleting list "{list.list_name}"</ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete "{list.list_name}"?
+      </ModalBody>
+      <ModalFooter>
+        <Button color="danger" on:click={() => deleteList(list._id)}>
+          <Icon name="trash" />
+          Delete
+        </Button>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
   </Card>
 </div>
 
