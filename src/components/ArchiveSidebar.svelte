@@ -15,15 +15,14 @@
 
   const { session } = stores();
 
-  export let show_sidebar;
   export let id;
+  export let is_archive_sidebar_shown;
   export function closeSidebar() {
-    show_sidebar = false;
+    is_archive_sidebar_shown = false;
   }
-  $: console.debug("this is the archive side bar", show_sidebar);
 </script>
 
-{#if show_sidebar}
+{#if is_archive_sidebar_shown}
   <nav class="sidebar" transition:fly={{ x: 350 }}>
     <Card>
       <CardHeader>

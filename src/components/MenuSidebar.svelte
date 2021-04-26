@@ -9,19 +9,17 @@
     CardHeader,
     Icon,
   } from "sveltestrap/src";
-  import Sidebar from "./Sidebar.svelte";
+  import ArchiveSidebar from "./ArchiveSidebar.svelte";
 
-  export let show_menu;
-  export let show_sidebar;
+  export let is_menu_sidebar_shown;
+  export let is_archive_sidebar_shown;
   function openArchivedCards() {
-    show_sidebar = true;
-    show_menu = false;
+    is_archive_sidebar_shown = true;
+    is_menu_sidebar_shown = false;
   }
-
-  $: console.debug("this is the menu side bar", show_menu);
 </script>
 
-{#if show_menu}
+{#if is_menu_sidebar_shown}
   <nav class="sidebar" transition:fly={{ x: 300, opacity: 1 }}>
     <Card>
       <CardHeader>
@@ -32,7 +30,7 @@
               ><button
                 class="borderless-button sidebar-close-button"
                 on:click={() => {
-                  show_menu = !show_menu;
+                  is_menu_sidebar_shown = !is_menu_sidebar_shown;
                 }}>x</button
               >
             </Col>
@@ -48,7 +46,7 @@
   </nav>
 {/if}
 
-<Sidebar bind:show_sidebar />
+<ArchiveSidebar bind:is_archive_sidebar_shown />
 
 <style>
   nav {

@@ -1,17 +1,17 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
-  import Sidebar from "./Sidebar.svelte";
+  import ArchiveSidebar from "./ArchiveSidebar.svelte";
 
-  let show_menu;
-  let show_sidebar;
+  let is_menu_sidebar_shown;
+  let is_archive_sidebar_shown;
 
   function handleMenuButton() {
-    if (!show_menu && !show_sidebar) {
-      show_menu = !show_menu;
-    } else if (show_menu && !show_sidebar) {
-      show_menu = !show_menu;
-    } else if (!show_menu && show_sidebar) {
-      show_sidebar = !show_sidebar;
+    if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (!is_menu_sidebar_shown && is_archive_sidebar_shown) {
+      is_archive_sidebar_shown = !is_archive_sidebar_shown;
     }
   }
 </script>
@@ -26,8 +26,8 @@
   <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-  <MenuSidebar bind:show_menu bind:show_sidebar />
-  <Sidebar bind:show_sidebar />
+  <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
+  <ArchiveSidebar bind:is_archive_sidebar_shown />
 </div>
 
 <style>
