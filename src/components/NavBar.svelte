@@ -1,10 +1,18 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
+  import Sidebar from "./Sidebar.svelte";
 
-  let menu_toggle = false;
+  let show_menu;
+  let show_sidebar;
 
   function handleMenuButton() {
-    menu_toggle = !menu_toggle;
+    if (!show_menu && !show_sidebar) {
+      show_menu = !show_menu;
+    } else if (show_menu && !show_sidebar) {
+      show_menu = !show_menu;
+    } else if (!show_menu && show_sidebar) {
+      show_sidebar = !show_sidebar;
+    }
   }
 </script>
 
@@ -18,7 +26,8 @@
   <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-  <MenuSidebar bind:show_menu={menu_toggle} />
+  <MenuSidebar bind:show_menu bind:show_sidebar />
+  <Sidebar bind:show_sidebar />
 </div>
 
 <style>

@@ -20,6 +20,7 @@
   export function closeSidebar() {
     show_sidebar = false;
   }
+  $: console.debug("this is the archive side bar", show_sidebar);
 </script>
 
 {#if show_sidebar}

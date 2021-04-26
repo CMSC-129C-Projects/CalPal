@@ -12,11 +12,13 @@
   import Sidebar from "./Sidebar.svelte";
 
   export let show_menu;
-  let archived_toggle = false;
+  export let show_sidebar;
   function openArchivedCards() {
-    archived_toggle = true;
+    show_sidebar = true;
     show_menu = false;
   }
+
+  $: console.debug("this is the menu side bar", show_menu);
 </script>
 
 {#if show_menu}
@@ -46,7 +48,7 @@
   </nav>
 {/if}
 
-<Sidebar bind:show_sidebar={archived_toggle} />
+<Sidebar bind:show_sidebar />
 
 <style>
   nav {
