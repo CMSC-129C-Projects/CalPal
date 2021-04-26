@@ -21,7 +21,7 @@
 
   function handleCardUnarchived(event) {
     console.debug(`[Sidebar.svelte] Handling 'cardunarchived'...`);
-    if ($session.lists.length === 0) {
+    if ($session.archived_cards === null || $session.lists.length === 0) {
       throw new Error(`There are no lists to place the unarchived card into`);
     }
 
