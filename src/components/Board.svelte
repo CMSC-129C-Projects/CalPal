@@ -45,44 +45,12 @@
 
     $session.archived_cards = [...$session.archived_cards, card];
   }
-
-  function handleCardUnarchived(event) {
-    console.debug(`[Board.svelte] Handling 'cardunarchived'...`);
-    if ($session.lists.length === 0) {
-      throw new Error(`There are no lists to place the unarchived card into`);
-    }
-
-    let cardToUnarchive;
-    const cardIndex = $session.archived_cards.findIndex((card) => {
-      if (card._id === event.detail) {
-        cardToUnarchive = card;
-        return true;
-      }
-      return false;
-    });
-
-    if (typeof cardToUnarchive === "undefined") {
-      throw new Error(
-        `Couldn't find card ${event.detail} in the list of archived cards`
-      );
-    }
-
-    $session.lists[0] = [...$session.lists[0], cardToUnarchive];
-
-    const beforeCards = $session.archived_cards.slice(0, cardIndex);
-    const afterCards = $session.archived_cards.slice(cardIndex + 1);
-    $session.archived_cards = [...beforeCards, ...afterCards];
-  }
 </script>
 
 <div class="board-flex-box-container">
   {#each $session.lists as list (list._id)}
     <div transition:fade={{ duration: 150 }}>
-      <List
-        bind:list
-        on:cardarchived={handleCardArchived}
-        on:cardunarchived={handleCardUnarchived}
-      />
+      <List bind:list on:cardarchived={handleCardArchived} />
     </div>
   {/each}
   <AddListButton

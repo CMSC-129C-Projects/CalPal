@@ -104,7 +104,6 @@
               `[List.svelte] Received 'cardunarchived', forwarding...`
             );
           }}
-          on:cardunarchived
         />
       {/each}
     </CardBody>

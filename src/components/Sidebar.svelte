@@ -8,7 +8,34 @@
   const { session } = stores();
 
   export let show = false;
-  export let id;
+
+  function handleCardUnarchived(event) {
+    console.debug(`[Sidebar.svelte] Handling 'cardunarchived'...`);
+    if ($session.lists.length === 0) {
+      throw new Error(`There are no lists to place the unarchived card into`);
+    }
+
+    let cardToUnarchive;
+    const cardIndex = $session.archived_cards.findIndex((card) => {
+      if (card._id === event.detail) {
+        cardToUnarchive = card;
+        return true;
+      }
+      return false;
+    });
+
+    if (typeof cardToUnarchive === "undefined") {
+      throw new Error(
+        `Couldn't find card ${event.detail} in the list of archived cards`
+      );
+    }
+
+    $session.lists[0].cards = [...$session.lists[0].cards, cardToUnarchive];
+
+    const beforeCards = $session.archived_cards.slice(0, cardIndex);
+    const afterCards = $session.archived_cards.slice(cardIndex + 1);
+    $session.archived_cards = [...beforeCards, ...afterCards];
+  }
 </script>
 
 {#if show}
@@ -22,8 +49,10 @@
               class="borderless-button"
               on:click={() => {
                 show = false;
-              }}>x</button
+              }}
             >
+              x
+            </button>
           </Col>
         </Row>
       </Container>
@@ -33,7 +62,7 @@
       {#each $session.archived_cards as archived_card (archived_card._id)}
         <ViewCard
           bind:card={archived_card}
-          id="{id}-archived-card-{archived_card._id}"
+          on:cardunarchived={handleCardUnarchived}
         />
       {/each}
     </CardBody>
