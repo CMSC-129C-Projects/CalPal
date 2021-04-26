@@ -5,12 +5,16 @@
   export let value;
   export let id;
   export let untitledString = "";
+  export let disabled;
 
   let isSelected = false;
 
   $: isUntitled = value === untitledString;
 
   async function handleOnClick(_event) {
+    if (disabled) {
+      return;
+    }
     isSelected = true;
     await tick();
 
