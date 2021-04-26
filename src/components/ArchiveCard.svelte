@@ -14,6 +14,7 @@
   const dispatch = createEventDispatcher();
 
   export let card;
+  export let isArchived;
 
   let open = false;
   let openDeleteModal = false;
@@ -23,8 +24,6 @@
   const toggleDeleteModal = () => {
     openDeleteModal = !openDeleteModal;
   };
-
-  $: is_archived = $session.archived_cards.map((c) => c._id).includes(card._id);
 
   function notifyCardArchived(cardId) {
     dispatch("cardarchived", cardId);
@@ -52,7 +51,7 @@
 </script>
 
 <div class="parent">
-  {#if is_archived}
+  {#if isArchived}
     <Button outline color="warning" on:click={toggle}>
       <Icon name="archive" />
       Unarchive Card

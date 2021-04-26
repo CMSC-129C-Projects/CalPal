@@ -27,12 +27,16 @@
   let open = false;
   const toggle = () => (open = !open);
 
-  $: is_archived = $session.archived_cards.some((c) => c._id === card._id);
+  // TODO: When toggling isArchived, all footer elements appear at
+  //       the same time for a moment as the Card does its fade
+  //       animation. Find a way to make it so the new footer
+  //       elements don't show up while the animation is occurring.
+  $: isArchived = $session.archived_cards.some((c) => c._id === card._id);
 
   let cardColor;
   $: {
     cardColor = card.color;
-    if (is_archived) {
+    if (isArchived) {
       cardColor = "#AAAAAA";
     }
   }
@@ -45,7 +49,7 @@
       <Title
         bind:value={card.card_name}
         id="card-{card._id}"
-        disabled={is_archived}
+        disabled={isArchived}
         untitledString={card.original_title
           ? card.original_title
           : "Untitled Card"}
@@ -68,7 +72,7 @@
             name="text"
             id="cardNotes"
             bind:value={card.description}
-            disabled={is_archived}
+            disabled={isArchived}
           />
         </FormGroup>
         <FormGroup>
@@ -80,7 +84,7 @@
             type="file"
             id="attachments"
             name="customFile"
-            disabled={is_archived}
+            disabled={isArchived}
           />
         </FormGroup>
       </Container>
@@ -94,7 +98,7 @@
                 name="dueDate"
                 id="dueDate"
                 bind:value={card.due_date_time}
-                disabled={is_archived}
+                disabled={isArchived}
               />
             </FormGroup>
           </Col>
@@ -105,7 +109,7 @@
                 type="time"
                 name="dueTime"
                 id="dueTime"
-                disabled={card.due_date_time === "" || is_archived}
+                disabled={card.due_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -119,7 +123,7 @@
                 name="reminderDate"
                 id="reminderDate"
                 bind:value={card.remind_date_time}
-                disabled={card.due_date_time === "" || is_archived}
+                disabled={card.due_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -130,7 +134,7 @@
                 type="time"
                 name="reminderTime"
                 id="reminderTime"
-                disabled={card.remind_date_time === "" || is_archived}
+                disabled={card.remind_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -141,12 +145,17 @@
       <Container>
         <Row class="view-card-container">
           <Col class="view-card-left-half" xs="4.5">
-            {#if !is_archived}
+            {#if !isArchived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
           <Col class="view-card-right-half" xs="7.5">
-            <ArchiveCard bind:card on:cardarchived on:cardunarchived />
+            <ArchiveCard
+              bind:card
+              {isArchived}
+              on:cardarchived
+              on:cardunarchived
+            />
           </Col>
         </Row>
       </Container>
