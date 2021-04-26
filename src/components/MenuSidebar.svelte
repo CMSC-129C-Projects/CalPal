@@ -13,6 +13,7 @@
 
   export let is_menu_sidebar_shown;
   export let is_archive_sidebar_shown;
+
   function openArchivedCards() {
     is_archive_sidebar_shown = true;
     is_menu_sidebar_shown = false;
@@ -26,21 +27,24 @@
         <Container>
           <Row>
             <Col class="sidebar-sidebar-header" xs="10">Menu</Col>
-            <Col xs="2"
-              ><button
+            <Col xs="2">
+              <button
                 class="borderless-button sidebar-close-button"
                 on:click={() => {
                   is_menu_sidebar_shown = !is_menu_sidebar_shown;
-                }}>x</button
+                }}
               >
+                x
+              </button>
             </Col>
           </Row>
         </Container>
       </CardHeader>
       <CardBody>
-        <button class="borderless-button" on:click={openArchivedCards}
-          ><Icon name="archive-fill" /> Archived Cards</button
-        >
+        <button class="borderless-button" on:click={openArchivedCards}>
+          <Icon name="archive-fill" />
+          Archived Cards
+        </button>
       </CardBody>
     </Card>
   </nav>

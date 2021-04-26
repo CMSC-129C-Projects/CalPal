@@ -1,4 +1,5 @@
 <script>
+  import { stores } from "@sapper/app";
   import { fly } from "svelte/transition";
   import {
     Col,
@@ -9,15 +10,14 @@
     CardBody,
     Icon,
   } from "sveltestrap/src";
-  import { stores } from "@sapper/app";
-
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
 
   export let id;
   export let is_archive_sidebar_shown;
-  export function closeSidebar() {
+
+  function closeSidebar() {
     is_archive_sidebar_shown = false;
   }
 </script>
@@ -29,10 +29,10 @@
         <Container>
           <Row>
             <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
-            <Col xs="1"
-              ><button class="borderless-button" on:click={closeSidebar}
-                >x</button
-              >
+            <Col xs="1">
+              <button class="borderless-button" on:click={closeSidebar}>
+                x
+              </button>
             </Col>
           </Row>
         </Container>
@@ -56,7 +56,6 @@
     top: 6.1em;
     right: 0;
     height: 100%;
-    /* padding: 1rem 1rem 0.6rem; */
     border-left: 1px solid #aaa;
     background: #fff;
     overflow-y: auto;
