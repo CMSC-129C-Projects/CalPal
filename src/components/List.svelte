@@ -96,7 +96,16 @@
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card (card._id)}
-        <ViewCard bind:card on:cardarchived />
+        <ViewCard
+          bind:card
+          on:cardarchived
+          on:cardunarchived={() => {
+            console.debug(
+              `[List.svelte] Received 'cardunarchived', forwarding...`
+            );
+          }}
+          on:cardunarchived
+        />
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer">

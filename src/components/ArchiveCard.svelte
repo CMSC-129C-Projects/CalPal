@@ -30,18 +30,23 @@
     dispatch("cardarchived", cardId);
   }
 
-  function unarchiveCard(cardIdToUnarchive) {
-    //
+  function notifyCardUnarchived(cardId) {
+    dispatch("cardunarchived", cardId);
   }
 
   function deleteCard(cardIdToDelete) {
-    const cardIndex = $session.archived_cards
-      .map((c) => {
-        return c._id;
-      })
-      .findIndex(cardIdToDelete);
+    const cardIndex = $session.archived_cards.findIndex(
+      (card) => card._id === cardIdToDelete
+    );
+    console.debug(`[ArchiveCard.svelte] cardIndex: ${cardIndex}`);
     const cardsBefore = $session.archived_cards.slice(0, cardIndex);
     const cardsAfter = $session.archived_cards.slice(cardIndex + 1);
+    console.debug(
+      `[ArchiveCard.svelte] cardsBefore: ${JSON.stringify(cardsBefore)}`
+    );
+    console.debug(
+      `[ArchiveCard.svelte] cardsAfter: ${JSON.stringify(cardsAfter)}`
+    );
     $session.archived_cards = [...cardsBefore, ...cardsAfter];
   }
 </script>
@@ -61,7 +66,9 @@
       <ModalBody>Are you sure you want to delete card?</ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleDeleteModal}>Cancel</Button>
-        <Button color="primary" on:click={deleteCard}>Delete</Button>
+        <Button color="primary" on:click={() => deleteCard(card._id)}>
+          Delete
+        </Button>
       </ModalFooter>
     </Modal>
     <Modal isOpen={open} {toggle}>
@@ -72,7 +79,7 @@
         <Button
           color="primary"
           on:click={() => {
-            unarchiveCard(card._id);
+            notifyCardUnarchived(card._id);
             toggle();
           }}
         >
