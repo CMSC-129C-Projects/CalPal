@@ -13,11 +13,38 @@
 
   const { session } = stores();
 
-  export let id;
   export let is_archive_sidebar_shown;
 
   function closeSidebar() {
     is_archive_sidebar_shown = false;
+  }
+
+  function handleCardUnarchived(event) {
+    console.debug(`[Sidebar.svelte] Handling 'cardunarchived'...`);
+    if ($session.lists.length === 0) {
+      throw new Error(`There are no lists to place the unarchived card into`);
+    }
+
+    let cardToUnarchive;
+    const cardIndex = $session.archived_cards.findIndex((card) => {
+      if (card._id === event.detail) {
+        cardToUnarchive = card;
+        return true;
+      }
+      return false;
+    });
+
+    if (typeof cardToUnarchive === "undefined") {
+      throw new Error(
+        `Couldn't find card ${event.detail} in the list of archived cards`
+      );
+    }
+
+    $session.lists[0].cards = [...$session.lists[0].cards, cardToUnarchive];
+
+    const beforeCards = $session.archived_cards.slice(0, cardIndex);
+    const afterCards = $session.archived_cards.slice(cardIndex + 1);
+    $session.archived_cards = [...beforeCards, ...afterCards];
   }
 </script>
 
@@ -37,12 +64,8 @@
         </Container>
       </CardHeader>
       <CardBody>
-        {#each $session.lists as list, i (i)}
-          {#each list.cards.filter((c) => {
-            return !(typeof c.card_name === "undefined" || !c.is_archived);
-          }) as card, j (card)}
-            <ViewCard bind:card id="{id}-card-{j}" />
-          {/each}
+        {#each $session.archived_cards as card (card._id)}
+          <ViewCard bind:card on:cardunarchived={handleCardUnarchived} />
         {/each}
       </CardBody>
     </Card>
