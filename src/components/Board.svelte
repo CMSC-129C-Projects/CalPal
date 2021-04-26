@@ -3,12 +3,10 @@
   import { fade } from "svelte/transition";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
-  import Notify from "./Notify.svelte";
   import Reminder from "./Reminder.svelte";
 
   const { session } = stores();
 
-  //export let card;
   export let id;
 
   function createNewList() {
@@ -57,13 +55,10 @@
     position: fixed;
     bottom: 20px;
     left: 10px;
-    /* padding: 20px; */
     margin: none;
     width: 400px;
-    /* background-color: lightseagreen; */
     opacity: 0.85;
     color: rgba(255, 255, 255, 0.9);
-    /* right: 0; */
   }
 
   .alert-flexbox-container {
@@ -71,7 +66,6 @@
     flex-direction: column;
     overflow-x: none;
     overflow-y: auto;
-    /* background-color: lightsalmon; */
     max-height: 255px;
   }
 </style>

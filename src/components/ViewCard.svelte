@@ -16,7 +16,6 @@
   import Card from "./Card.svelte";
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
-  //import Reminder from "./Reminder.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
   import formattedDate from "../routes/_date-format.js";
 

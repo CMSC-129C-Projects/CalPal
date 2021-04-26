@@ -17,20 +17,25 @@
   {#if card.remind_date_time != "" && card.due_date_time != ""}
     {#if Date.now() >= new Date(card.remind_date_time)}
       {#if new Date(Date.now()).toDateString() === new Date(card.due_date_time).toDateString()}
-        <Alert color="danger" isOpen={visible} toggle={() => (visible = false)}
-          >{cardName} is due today, {dueDate}.</Alert
-        >
+        <Alert color="danger" isOpen={visible} toggle={() => (visible = false)}>
+          {cardName} is due today, {dueDate}.
+        </Alert>
       {:else if Date.now() < new Date(card.due_date_time)}
-        <Alert color="warning" isOpen={visible} toggle={() => (visible = false)}
-          >{cardName} is due on {dueDate}</Alert
+        <Alert
+          color="warning"
+          isOpen={visible}
+          toggle={() => (visible = false)}
         >
+          {cardName} is due on {dueDate}
+        </Alert>
       {:else}
         <Alert
           color="secondary"
           isOpen={visible}
           toggle={() => (visible = false)}
-          >{cardName} was due on {dueDate}</Alert
         >
+          {cardName} was due on {dueDate}
+        </Alert>
       {/if}
     {/if}
   {/if}
