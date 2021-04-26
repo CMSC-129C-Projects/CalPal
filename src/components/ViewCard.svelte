@@ -99,7 +99,7 @@
                 type="time"
                 name="dueTime"
                 id="dueTime"
-                disabled={card.due_date_time === ""}
+                disabled={card.due_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -113,7 +113,7 @@
                 name="reminderDate"
                 id="reminderDate"
                 bind:value={card.remind_date_time}
-                disabled={card.due_date_time === ""}
+                disabled={card.due_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -124,7 +124,7 @@
                 type="time"
                 name="reminderTime"
                 id="reminderTime"
-                disabled={card.remind_date_time === ""}
+                disabled={card.remind_date_time === "" || card.is_archived}
               />
             </FormGroup>
           </Col>
@@ -133,13 +133,13 @@
     </ModalBody>
     <ModalFooter>
       <Container>
-        <Row>
-          <Col xs="4">
+        <Row class="view-card-container">
+          <Col class="view-card-left-half" xs="4.5">
             {#if !card.is_archived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
-          <Col xs="8">
+          <Col class="view-card-right-half" xs="7.5">
             <ArchiveCard bind:is_archived={card.is_archived} />
           </Col>
         </Row>
@@ -152,5 +152,29 @@
 <style>
   .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
+  }
+  .view-card-parent :global(.view-card-container) {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .view-card-parent :global(.view-card-left-half) {
+    background-color: transparent;
+    display: flex;
+    border: none;
+    outline: none;
+    padding: 0%;
+    line-height: 0%;
+    flex-grow: 1;
+  }
+  .view-card-parent :global(.view-card-right-half) {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    align-items: center;
+    display: flex;
+    padding: 0%;
+    line-height: 0%;
   }
 </style>
