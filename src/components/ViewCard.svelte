@@ -167,7 +167,6 @@
     border: none;
     outline: none;
     padding: 0%;
-    line-height: 0%;
     flex-grow: 1;
   }
 
@@ -178,6 +177,5 @@
     align-items: center;
     display: flex;
     padding: 0%;
-    line-height: 0%;
   }
 </style>
