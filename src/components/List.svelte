@@ -60,7 +60,7 @@
         original_title: "",
         original_calendar: "",
         original_date: "",
-        date_created: "",
+        date_created: new Date(Date.now()),
         due_date_time: "",
         remind_date_time: "",
         description: "",
