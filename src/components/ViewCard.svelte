@@ -153,12 +153,14 @@
   .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
   }
+
   .view-card-parent :global(.view-card-container) {
     background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: flex-end;
   }
+
   .view-card-parent :global(.view-card-left-half) {
     background-color: transparent;
     display: flex;
@@ -168,6 +170,7 @@
     line-height: 0%;
     flex-grow: 1;
   }
+
   .view-card-parent :global(.view-card-right-half) {
     background-color: transparent;
     border: none;
