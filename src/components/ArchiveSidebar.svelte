@@ -1,39 +1,35 @@
 <script>
+  import { stores } from "@sapper/app";
   import { fly } from "svelte/transition";
   import {
     Col,
     Container,
     Row,
     Card,
-    CardBody,
     CardHeader,
-    Icon,
+    CardBody,
   } from "sveltestrap/src";
-  import ArchiveSidebar from "./ArchiveSidebar.svelte";
+  import ViewCard from "./ViewCard.svelte";
 
-  export let is_menu_sidebar_shown;
+  const { session } = stores();
+
+  export let id;
   export let is_archive_sidebar_shown;
 
-  function openArchivedCards() {
-    is_archive_sidebar_shown = true;
-    is_menu_sidebar_shown = false;
+  function closeSidebar() {
+    is_archive_sidebar_shown = false;
   }
 </script>
 
-{#if is_menu_sidebar_shown}
-  <nav class="sidebar" transition:fly={{ x: 300, opacity: 1 }}>
+{#if is_archive_sidebar_shown}
+  <nav class="sidebar" transition:fly={{ x: 350 }}>
     <Card>
       <CardHeader>
         <Container>
           <Row>
-            <Col class="sidebar-sidebar-header" xs="10">Menu</Col>
-            <Col xs="2">
-              <button
-                class="borderless-button sidebar-close-button"
-                on:click={() => {
-                  is_menu_sidebar_shown = !is_menu_sidebar_shown;
-                }}
-              >
+            <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
+            <Col xs="1">
+              <button class="borderless-button" on:click={closeSidebar}>
                 x
               </button>
             </Col>
@@ -41,16 +37,17 @@
         </Container>
       </CardHeader>
       <CardBody>
-        <button class="borderless-button" on:click={openArchivedCards}>
-          <Icon name="archive-fill" />
-          Archived Cards
-        </button>
+        {#each $session.lists as list, i (i)}
+          {#each list.cards.filter((c) => {
+            return !(typeof c.card_name === "undefined" || !c.is_archived);
+          }) as card, j (card)}
+            <ViewCard bind:card id="{id}-card-{j}" />
+          {/each}
+        {/each}
       </CardBody>
     </Card>
   </nav>
 {/if}
-
-<ArchiveSidebar bind:is_archive_sidebar_shown />
 
 <style>
   nav {
@@ -58,7 +55,6 @@
     top: 6.1em;
     right: 0;
     height: 100%;
-    padding: 0;
     border-left: 1px solid #aaa;
     background: #fff;
     overflow-y: auto;
@@ -72,15 +68,9 @@
     outline: none;
     line-height: 0%;
     padding: 0%;
-    font-size: medium;
+    font-size: 30px;
     transition: transform 0.05s;
     transform-origin: center center;
-    text-align: center;
-  }
-
-  .sidebar-close-button {
-    font-size: 30px;
-    text-align: center;
     color: lightgray;
   }
 
