@@ -58,3 +58,24 @@ export async function updateCardsOfUser(userId, lists, archived_cards) {
 export function newObjectIdString() {
   return new ObjectID().toHexString();
 }
+
+export async function getAttachmentsOfCard(cardId) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  try {
+    await client.connect();
+
+    const database = client.db("calpal");
+    const cards = database.collection("attachments");
+
+    const attachments = await cards.find({ card_id: cardId }).toArray();
+
+    return attachments;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+}
