@@ -1,6 +1,6 @@
 <script>
   import { CustomInput, Label, Icon } from "sveltestrap/src";
-  let attachments = [],
+  export let attachments = [],
     name = "attachments",
     accept = ".svg, .jpg, .png, .gif, .doc, .docx, .pdf, .txt",
     error = false,
@@ -82,8 +82,93 @@
 {/if}
 
 <style>
-  .is-image {
-    max-width: 100px;
-    max-height: 100px;
+  /* .is-image {
+    height: auto;
+    width: 100%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  } */
+  label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    color: black;
+    padding: 0 1rem 0 0rem;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 25px;
+  }
+  label:hover {
+    background-color: lightgray;
+  }
+  label.more {
+    padding: 0;
+  }
+  label.error {
+    color: red;
+  }
+
+  label input[type="file"] {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 0;
+    overflow: hidden;
+    display: none;
+  }
+  ul {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  ul li {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.25rem 0;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    color: black;
+    text-decoration: none;
+    background: whitesmoke;
+    border-radius: 25px;
+    box-sizing: border-box;
+    background-size: 45px;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  ul li.is-image {
+    padding-left: 50px;
+  }
+  ul li.is-image span {
+    width: calc(280px - 50px - 2rem);
+  }
+
+  ul li span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: calc(280px - 2rem);
+    font-size: 0.81rem;
+    display: block;
+  }
+
+  ul li button {
+    width: 1rem;
+    position: absolute;
+    right: 0.5rem;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
   }
 </style>
