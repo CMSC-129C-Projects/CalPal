@@ -1,4 +1,5 @@
 <script>
+  import { CustomInput, Label, Icon } from "sveltestrap/src";
   let attachments = [],
     name = "attachments",
     accept = ".svg, .jpg, .png, .gif, .doc, .docx, .pdf, .txt",
@@ -37,10 +38,10 @@
   }
 </script>
 
-<label class:more={attachments.length} class:error class:disabled>
-  <!-- Add Attachment -->
-  <!-- {#if !attachments.length}Files{/if} -->
-  <input
+<!-- <label class:more={attachments.length} class:error class:disabled> -->
+<!-- Add Attachment -->
+<!-- {#if !attachments.length}Files{/if} -->
+<!-- <input
     type="file"
     {name}
     {accept}
@@ -48,8 +49,21 @@
     on:change={previewFiles}
     {multiple}
     {disabled}
-  />
-</label>
+  /> -->
+<Label for="attachments">
+  <Icon name="paperclip" />
+  Attachments
+</Label>
+<CustomInput
+  type="file"
+  {name}
+  {accept}
+  on:input
+  on:change={previewFiles}
+  {multiple}
+  {disabled}
+/>
+<!-- </label> -->
 
 {#if attachments.length}
   <ul id="preview">
