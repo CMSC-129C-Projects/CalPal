@@ -57,13 +57,11 @@
       const timeString = `${dateTimeStrings.hours}:${dateTimeStrings.minutes}`;
 
       if (date.toISOString().split("T").length === 1) {
-        console.debug(`[ViewCard.svelte] No time. Returning date only.`);
         return {
           date: dateString,
           time: "",
         };
       } else {
-        console.debug(`[ViewCard.svelte] Returning date and time.`);
         return {
           date: dateString,
           time: timeString,
@@ -76,13 +74,6 @@
   let remindDateTime = initializeDateTimeFromString(card.remind_date_time);
 
   $: {
-    console.debug(
-      `[ViewCard.svelte] dueDateTime: ${JSON.stringify(dueDateTime)}`
-    );
-    console.debug(
-      `[ViewCard.svelte] remindDateTime: ${JSON.stringify(remindDateTime)}`
-    );
-
     if (dueDateTime.date === "") {
       dueDateTime.time = "";
       remindDateTime.date = "";
@@ -96,11 +87,6 @@
       const newDueDateTime = new Date(
         `${dueDateTime.date} ${dueDateTime.time}`
       );
-      if (newDueDateTime.toString() === "Invalid Date") {
-        console.error(
-          `[ViewCard.svelte] Could not create new date with '${dueDateTime.date} ${dueDateTime.time}'`
-        );
-      }
       card.due_date_time = newDueDateTime;
       card.remind_date_time = new Date(
         `${remindDateTime.date} ${remindDateTime.time}`
