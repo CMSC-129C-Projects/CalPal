@@ -19,6 +19,7 @@
   import ColorPicker from "./ColorPicker.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
   import formattedDate from "../routes/_date-format.js";
+  import Attachment from "./Attachment.svelte";
 
   const { session } = stores();
 
@@ -76,7 +77,7 @@
           />
         </FormGroup>
         <FormGroup>
-          <Label for="attachements">
+          <!-- <Label for="attachements">
             <Icon name="paperclip" />
             Attachments
           </Label>
@@ -85,7 +86,8 @@
             id="attachments"
             name="customFile"
             disabled={isArchived}
-          />
+          /> -->
+          <Attachment />
         </FormGroup>
       </Container>
       <Container>
