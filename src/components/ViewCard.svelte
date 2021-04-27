@@ -1,4 +1,5 @@
 <script>
+  import { stores } from "@sapper/app";
   import {
     Modal,
     ModalBody,
@@ -14,105 +15,126 @@
     Row,
   } from "sveltestrap/src";
   import Card from "./Card.svelte";
-  import CardTitle from "./CardTitle.svelte";
+  import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
-  import Reminder from "./Reminder.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
   import formattedDate from "../routes/_date-format.js";
 
+  const { session } = stores();
+
   export let card;
-  export let id;
 
   let open = false;
   const toggle = () => (open = !open);
 
-  $: cardColor = card.color;
+  // TODO: When toggling isArchived, all footer elements appear at
+  //       the same time for a moment as the Card does its fade
+  //       animation. Find a way to make it so the new footer
+  //       elements don't show up while the animation is occurring.
+  $: isArchived = $session.archived_cards.some((c) => c._id === card._id);
+
+  let cardColor;
+  $: {
+    cardColor = card.color;
+    if (isArchived) {
+      cardColor = "#AAAAAA";
+    }
+  }
 </script>
 
-<div class="parent" style="--card-color: {cardColor}">
-  <Card {card} {id} on:click={toggle} />
+<div class="view-card-parent" style="--card-color: {cardColor}">
+  <Card {card} {cardColor} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="cardLabel" {toggle}>
-      <CardTitle
+    <ModalHeader class="card-card-label" {toggle}>
+      <Title
         bind:value={card.card_name}
-        {id}
+        id="card-{card._id}"
+        disabled={isArchived}
         untitledString={card.original_title
           ? card.original_title
           : "Untitled Card"}
       />
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.original_title}</div>
-      <div class="eventDate">
-        {#if !card.original_date}
-          {formattedDate(new Date(card.due_date_time))}
-        {:else}
-          {formattedDate(new Date(card.original_date))}
-        {/if}
-      </div>
-      <FormGroup class="cardNotes">
-        <Label for="cardNotes">NOTES</Label>
-        <Input
-          type="textarea"
-          name="text"
-          id="cardNotes"
-          bind:value={card.description}
-        />
-      </FormGroup>
-      <FormGroup class="cardAttachments">
-        <Label for="attachements">
-          <Icon class="paperClip" name="paperclip" />
-          Attachments
-        </Label>
-        <CustomInput type="file" id="attachments" name="customFile" />
-      </FormGroup>
-      <Container class="container">
+      <Container>
+        <div>{card.original_title}</div>
+        <div>
+          {#if !card.original_date}
+            {formattedDate(new Date(card.due_date_time))}
+          {:else}
+            {formattedDate(new Date(card.original_date))}
+          {/if}
+        </div>
+        <FormGroup>
+          <Label for="cardNotes">NOTES</Label>
+          <Input
+            type="textarea"
+            name="text"
+            id="cardNotes"
+            bind:value={card.description}
+            disabled={isArchived}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="attachements">
+            <Icon name="paperclip" />
+            Attachments
+          </Label>
+          <CustomInput
+            type="file"
+            id="attachments"
+            name="customFile"
+            disabled={isArchived}
+          />
+        </FormGroup>
+      </Container>
+      <Container>
         <Row>
-          <Col class="leftHalfDate" xs="6">
-            <FormGroup class="dueDate">
+          <Col xs="6">
+            <FormGroup>
               <Label for="dueDate">Due Date</Label>
               <Input
                 type="date"
                 name="dueDate"
                 id="dueDate"
                 bind:value={card.due_date_time}
+                disabled={isArchived}
               />
             </FormGroup>
           </Col>
-          <Col class="rightHalfDate" xs="6">
+          <Col xs="6">
             <FormGroup>
-              <Label for="exampleTime">Time</Label>
+              <Label for="dueTime">Time</Label>
               <Input
                 type="time"
-                name="time"
-                id="reminderTime"
-                placeholder="time placeholder"
+                name="dueTime"
+                id="dueTime"
+                disabled={card.due_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
         </Row>
         <Row>
-          <Col class="leftHalfDate" xs="6">
-            <FormGroup class="reminderSet">
-              <Label for="reminderSet">Reminder</Label>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="reminderDate">Reminder</Label>
               <Input
                 type="date"
-                name="reminderSet"
-                id="reminderSet"
+                name="reminderDate"
+                id="reminderDate"
                 bind:value={card.remind_date_time}
-                disabled={card.due_date_time === ""}
+                disabled={card.due_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
-          <Col class="rightHalfDate" xs="6">
+          <Col xs="6">
             <FormGroup>
-              <Label for="exampleTime">Time</Label>
+              <Label for="reminderTime">Time</Label>
               <Input
                 type="time"
-                name="time"
+                name="reminderTime"
                 id="reminderTime"
-                placeholder="time placeholder"
-                disabled={card.remind_date_time === ""}
+                disabled={card.remind_date_time === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -120,32 +142,54 @@
       </Container>
     </ModalBody>
     <ModalFooter>
-      <Container class="container">
-        <Row>
-          <Col class="leftHalf" xs="8">
-            <ColorPicker bind:color={card.color} />
+      <Container>
+        <Row class="view-card-container">
+          <Col class="view-card-left-half" xs="4.5">
+            {#if !isArchived}
+              <ColorPicker bind:color={card.color} />
+            {/if}
           </Col>
-          <Col class="rightHalf" xs="4">
-            <ArchiveCard bind:is_archived={card.is_archived} />
+          <Col class="view-card-right-half" xs="7.5">
+            <ArchiveCard
+              bind:card
+              {isArchived}
+              on:cardarchived
+              on:cardunarchived
+            />
           </Col>
         </Row>
       </Container>
     </ModalFooter>
   </Modal>
-  <Reminder {card} />
 </div>
 
 <style>
-  .parent :global(.cardLabel) {
+  .view-card-parent :global(.card-card-label) {
     background-color: var(--card-color, transparent);
   }
 
-  .parent :global(.archiveCard) {
+  .view-card-parent :global(.view-card-container) {
     background-color: transparent;
-    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
-  .parent :global(.colorBar) {
-    width: 50px;
+  .view-card-parent :global(.view-card-left-half) {
+    background-color: transparent;
+    display: flex;
+    border: none;
+    outline: none;
+    padding: 0%;
+    flex-grow: 1;
+  }
+
+  .view-card-parent :global(.view-card-right-half) {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    align-items: center;
+    display: flex;
+    padding: 0%;
   }
 </style>

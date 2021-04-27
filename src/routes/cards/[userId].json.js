@@ -17,6 +17,7 @@ export async function get(req, res, next) {
 export async function post(req, res) {
   req.session.user_id = req.body.user_id;
   req.session.lists = req.body.lists;
+  req.session.archived_cards = req.body.archived_cards;
 
   res.writeHead(200, {
     "Content-Type": "application/json",
