@@ -55,7 +55,6 @@
     attachments.splice(i, 1);
     attachments = attachments;
   }
-  $: console.debug(JSON.stringify(attachments));
 </script>
 
 <!-- <label class:more={attachments.length} class:error class:disabled> -->
