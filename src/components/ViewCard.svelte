@@ -87,7 +87,7 @@
             name="customFile"
             disabled={isArchived}
           /> -->
-          <Attachment />
+          <Attachment cardId={card._id} />
         </FormGroup>
       </Container>
       <Container>

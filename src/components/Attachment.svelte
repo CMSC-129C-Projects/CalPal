@@ -1,11 +1,30 @@
 <script>
+  import { onMount } from "svelte";
   import { CustomInput, Label, Icon } from "sveltestrap/src";
+
+  export let cardId;
   export let attachments = [],
     name = "attachments",
     accept = ".svg, .jpg, .png, .gif, .doc, .docx, .pdf, .txt",
     error = false,
     multiple = "true",
     disabled = false;
+
+  // TOOD: Figure out how to sync this whenever changes to the
+  //       attachments are made.
+  if (process.browser) {
+    onMount(async () => {
+      attachments = await fetch(`cards/attachments/${cardId}.json`).then(
+        (res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            return [];
+          }
+        }
+      );
+    });
+  }
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
