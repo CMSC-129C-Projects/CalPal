@@ -7,9 +7,9 @@
     multiple = "true",
     disabled = false;
 
-  const image = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
-  const style = (file) =>
-    image(file.filename) ? `background-image: url('${file.path}');` : "";
+  const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
+  const imagePreviewStyle = (file) =>
+    isImage(file.filename) ? `background-image: url('${file.path}');` : "";
 
   function previewFiles(e) {
     error = false;
@@ -36,6 +36,7 @@
     attachments.splice(i, 1);
     attachments = attachments;
   }
+  $: console.debug(JSON.stringify(attachments));
 </script>
 
 <!-- <label class:more={attachments.length} class:error class:disabled> -->
@@ -68,10 +69,21 @@
 {#if attachments.length}
   <ul id="preview">
     {#each attachments as file, i (file.filename)}
-      <li href={file.path} class:image style={style(file)}>
+      <li
+        href={file.path}
+        class:is-image={isImage}
+        style={imagePreviewStyle(file)}
+      >
         <span>{file.filename}</span>
         <button on:click={() => deleteAttachment(i)}> Delete </button>
       </li>
     {/each}
   </ul>
 {/if}
+
+<style>
+  .is-image {
+    max-width: 100px;
+    max-height: 100px;
+  }
+</style>
