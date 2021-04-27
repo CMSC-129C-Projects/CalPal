@@ -23,15 +23,14 @@
   const { session } = stores();
 
   export let card;
-
-  let open = false;
-  const toggle = () => (open = !open);
-
   // TODO: When toggling isArchived, all footer elements appear at
   //       the same time for a moment as the Card does its fade
   //       animation. Find a way to make it so the new footer
   //       elements don't show up while the animation is occurring.
-  $: isArchived = $session.archived_cards.some((c) => c._id === card._id);
+  export let isArchived = false;
+
+  let open = false;
+  const toggle = () => (open = !open);
 
   let cardColor;
   $: {
