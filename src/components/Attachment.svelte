@@ -10,14 +10,17 @@
     multiple = "true",
     disabled = false;
 
-  // TOOD: Figure out how to sync this whenever changes to the
-  //       attachments are made.
   if (process.browser) {
+    // TODO: Make this easier to read.
     onMount(async () => {
       attachments = await fetch(`cards/attachments/${cardId}.json`).then(
         (res) => {
           if (res.ok) {
-            return res.json();
+            return res.json().then((listOfAttachmentDocuments) => {
+              return listOfAttachmentDocuments.map(
+                (attachmentDocument) => attachmentDocument.data
+              );
+            });
           } else {
             return [];
           }
@@ -30,6 +33,46 @@
   const imagePreviewStyle = (file) =>
     isImage(file.filename) ? `background-image: url('${file.path}');` : "";
 
+  async function addAttachmentToDatabase(e) {
+    // TODO: Limit filesize.
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    let fileData;
+    reader.onload = async (e) => {
+      console.debug(`[Attachment.svelte] e.target.result: ${e.target.result}`);
+      fileData = e.target.result;
+
+      const newAttachment = {
+        filename: file.name,
+        path: fileData,
+        encoding: "base64",
+        contentType: file.type,
+        size: file.size,
+      };
+      console.debug(`[Attachment.svelte] file: ${JSON.stringify(file)}`);
+
+      await fetch(`cards/attachments/${cardId}.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ attachment: newAttachment }),
+      })
+        .then((res) => {
+          if (res.ok) {
+            console.debug(
+              `[Attachment.svelte] Successfully inserted attachment '${newAttachment.filename}' into card ${cardId}`
+            );
+          } else {
+            console.error(res.status, res.json().message);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+    reader.readAsDataURL(file);
+  }
   function previewFiles(e) {
     error = false;
     function readAndPreview(file) {
@@ -77,7 +120,7 @@
   type="file"
   {name}
   {accept}
-  on:input
+  on:input={addAttachmentToDatabase}
   on:change={previewFiles}
   {multiple}
   {disabled}
@@ -86,7 +129,7 @@
 
 {#if attachments.length}
   <ul id="preview">
-    {#each attachments as file, i (file.filename)}
+    {#each attachments as file, i}
       <li
         href={file.path}
         class:is-image={isImage}
