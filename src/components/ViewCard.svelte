@@ -1,5 +1,4 @@
 <script>
-  import { stores } from "@sapper/app";
   import {
     Modal,
     ModalBody,
@@ -18,27 +17,53 @@
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
-  import formattedDate from "../routes/_date-format.js";
   import Attachment from "./Attachment.svelte";
-
-  const { session } = stores();
+  import {
+    formattedDate,
+    getDateAndTimeStringsFromDate,
+  } from "../routes/_date-format.js";
 
   export let card;
-
-  let open = false;
-  const toggle = () => (open = !open);
-
   // TODO: When toggling isArchived, all footer elements appear at
   //       the same time for a moment as the Card does its fade
   //       animation. Find a way to make it so the new footer
   //       elements don't show up while the animation is occurring.
-  $: isArchived = $session.archived_cards.some((c) => c._id === card._id);
+  export let isArchived = false;
+
+  let open = false;
+  const toggle = () => (open = !open);
 
   let cardColor;
   $: {
     cardColor = card.color;
     if (isArchived) {
       cardColor = "#AAAAAA";
+    }
+  }
+
+  let dueDateTime = getDateAndTimeStringsFromDate(new Date(card.due_date_time));
+  let remindDateTime = getDateAndTimeStringsFromDate(
+    new Date(card.remind_date_time)
+  );
+
+  $: {
+    if (dueDateTime.date === "") {
+      dueDateTime.time = "";
+      remindDateTime.date = "";
+      remindDateTime.time = "";
+      card.due_date_time = "";
+      card.remind_date_time = "";
+    } else if (remindDateTime.date === "") {
+      remindDateTime.time = "";
+      card.remind_date_time = "";
+    } else {
+      const newDueDateTime = new Date(
+        `${dueDateTime.date} ${dueDateTime.time}`
+      );
+      card.due_date_time = newDueDateTime;
+      card.remind_date_time = new Date(
+        `${remindDateTime.date} ${remindDateTime.time}`
+      );
     }
   }
 </script>
@@ -99,7 +124,7 @@
                 type="date"
                 name="dueDate"
                 id="dueDate"
-                bind:value={card.due_date_time}
+                bind:value={dueDateTime.date}
                 disabled={isArchived}
               />
             </FormGroup>
@@ -111,7 +136,8 @@
                 type="time"
                 name="dueTime"
                 id="dueTime"
-                disabled={card.due_date_time === "" || isArchived}
+                bind:value={dueDateTime.time}
+                disabled={dueDateTime.date === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -124,8 +150,8 @@
                 type="date"
                 name="reminderDate"
                 id="reminderDate"
-                bind:value={card.remind_date_time}
-                disabled={card.due_date_time === "" || isArchived}
+                bind:value={remindDateTime.date}
+                disabled={dueDateTime.date === "" || isArchived}
               />
             </FormGroup>
           </Col>
@@ -136,7 +162,8 @@
                 type="time"
                 name="reminderTime"
                 id="reminderTime"
-                disabled={card.remind_date_time === "" || isArchived}
+                bind:value={remindDateTime.time}
+                disabled={remindDateTime.date === "" || isArchived}
               />
             </FormGroup>
           </Col>

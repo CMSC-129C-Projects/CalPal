@@ -65,7 +65,11 @@
       </CardHeader>
       <CardBody>
         {#each $session.archived_cards as card (card._id)}
-          <ViewCard bind:card on:cardunarchived={handleCardUnarchived} />
+          <ViewCard
+            bind:card
+            on:cardunarchived={handleCardUnarchived}
+            isArchived
+          />
         {/each}
       </CardBody>
     </Card>
