@@ -68,9 +68,11 @@ export async function getAttachmentsOfCard(cardId) {
     await client.connect();
 
     const database = client.db("calpal");
-    const cards = database.collection("attachments");
+    const attachmentsCollection = database.collection("attachments");
 
-    const attachments = await cards.find({ card_id: cardId }).toArray();
+    const attachments = await attachmentsCollection
+      .find({ card_id: cardId })
+      .toArray();
 
     return attachments;
   } catch (e) {
