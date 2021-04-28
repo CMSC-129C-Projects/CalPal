@@ -80,7 +80,7 @@ export async function getAttachmentsOfCard(cardId) {
   }
 }
 
-export async function insertAttachmentToCard(userId, cardId, newAttachment) {
+export async function insertAttachmentToCard(cardId, newAttachment) {
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -90,7 +90,6 @@ export async function insertAttachmentToCard(userId, cardId, newAttachment) {
 
     const attachmentsCollection = client.db("calpal").collection("attachments");
     const newDocument = {
-      user_id: userId,
       card_id: cardId,
       data: newAttachment,
     };
