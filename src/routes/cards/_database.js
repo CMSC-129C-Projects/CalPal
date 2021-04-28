@@ -79,3 +79,28 @@ export async function getAttachmentsOfCard(cardId) {
     await client.close();
   }
 }
+
+export async function insertAttachmentToCard(userId, cardId, newAttachment) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  try {
+    await client.connect();
+
+    const attachmentsCollection = client.db("calpal").collection("attachments");
+    const newDocument = {
+      user_id: userId,
+      card_id: cardId,
+      data: newAttachment,
+    };
+
+    const result = await attachmentsCollection.insertOne(newDocument);
+
+    return result;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+}
