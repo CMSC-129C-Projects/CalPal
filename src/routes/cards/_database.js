@@ -82,6 +82,7 @@ export async function getAttachmentsOfCard(cardId) {
   }
 }
 
+// TODO: Handle multiple attachments
 export async function insertAttachmentToCard(cardId, newAttachment) {
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
