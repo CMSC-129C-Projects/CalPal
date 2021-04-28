@@ -18,7 +18,10 @@
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
-  import formattedDate from "../routes/_date-format.js";
+  import {
+    formattedDate,
+    getDateAndTimeStringsFromDate,
+  } from "../routes/_date-format.js";
 
   const { session } = stores();
 
@@ -40,38 +43,10 @@
     }
   }
 
-  const initializeDateTimeFromString = (dateString) => {
-    const date = new Date(dateString);
-
-    if (date.toString() === "Invalid Date") {
-      return { date: "", time: "" };
-    } else {
-      const dateTimeStrings = {
-        year: date.getFullYear(),
-        month: (date.getMonth() + 1).toString().padStart(2, "0"),
-        date: date.getDate().toString().padStart(2, "0"),
-        hours: date.getHours().toString().padStart(2, "0"),
-        minutes: date.getMinutes().toString().padStart(2, "0"),
-      };
-      const dateString = `${dateTimeStrings.year}-${dateTimeStrings.month}-${dateTimeStrings.date}`;
-      const timeString = `${dateTimeStrings.hours}:${dateTimeStrings.minutes}`;
-
-      if (date.toISOString().split("T").length === 1) {
-        return {
-          date: dateString,
-          time: "",
-        };
-      } else {
-        return {
-          date: dateString,
-          time: timeString,
-        };
-      }
-    }
-  };
-
-  let dueDateTime = initializeDateTimeFromString(card.due_date_time);
-  let remindDateTime = initializeDateTimeFromString(card.remind_date_time);
+  let dueDateTime = getDateAndTimeStringsFromDate(new Date(card.due_date_time));
+  let remindDateTime = getDateAndTimeStringsFromDate(
+    new Date(card.remind_date_time)
+  );
 
   $: {
     if (dueDateTime.date === "") {
