@@ -47,10 +47,6 @@
     });
   };
 
-  function onArchiveClicked() {
-    alert("Archive list?");
-  }
-
   function addCard() {
     list.cards = [
       ...list.cards,

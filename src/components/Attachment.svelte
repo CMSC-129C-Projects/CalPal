@@ -57,8 +57,7 @@
         body: JSON.stringify({ attachment: newAttachment }),
       })
         .then((res) => {
-          if (res.ok) {
-          } else {
+          if (!res.ok) {
             console.error(res.status, res.json().message);
           }
         })
