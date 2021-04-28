@@ -6,7 +6,7 @@
     CardSubtitle,
     CardTitle,
   } from "sveltestrap/src";
-  import formattedDate from "../routes/_date-format.js";
+  import { formattedDate } from "../routes/_date-format.js";
 
   export let card;
   export let cardColor;
