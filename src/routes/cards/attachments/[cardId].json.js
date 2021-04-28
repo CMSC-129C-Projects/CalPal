@@ -19,8 +19,6 @@ export async function post(req, res) {
   const { cardId } = req.params;
   const newAttachment = req.body.attachment;
 
-  console.debug(`[[cardId].json.js] newAttachment: ${newAttachment}`);
-
   const result = await insertAttachmentToCard(cardId, newAttachment);
 
   res.writeHead(200, {

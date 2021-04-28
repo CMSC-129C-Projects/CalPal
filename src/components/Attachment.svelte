@@ -39,7 +39,6 @@
     const reader = new FileReader();
     let fileData;
     reader.onload = async (e) => {
-      console.debug(`[Attachment.svelte] e.target.result: ${e.target.result}`);
       fileData = e.target.result;
 
       const newAttachment = {
@@ -49,7 +48,6 @@
         contentType: file.type,
         size: file.size,
       };
-      console.debug(`[Attachment.svelte] file: ${JSON.stringify(file)}`);
 
       await fetch(`cards/attachments/${cardId}.json`, {
         method: "POST",
@@ -60,9 +58,6 @@
       })
         .then((res) => {
           if (res.ok) {
-            console.debug(
-              `[Attachment.svelte] Successfully inserted attachment '${newAttachment.filename}' into card ${cardId}`
-            );
           } else {
             console.error(res.status, res.json().message);
           }
@@ -73,12 +68,12 @@
     };
     reader.readAsDataURL(file);
   }
+
   function previewFiles(e) {
     error = false;
     function readAndPreview(file) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        console.log(file);
         attachments = [
           ...attachments,
           {
@@ -94,6 +89,7 @@
     }
     e.target.files && [].forEach.call(e.target.files, readAndPreview);
   }
+
   function deleteAttachment(i) {
     attachments.splice(i, 1);
     attachments = attachments;
