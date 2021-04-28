@@ -22,7 +22,7 @@ polka() // You can also use Express
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
-    json(),
+    json({ limit: "5mb" }),
     sapper.middleware({
       session: (req, _res) => ({
         did_cards_load: req.session.did_cards_load,
