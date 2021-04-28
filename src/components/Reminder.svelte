@@ -1,6 +1,6 @@
 <script>
   import { Alert } from "sveltestrap/src";
-  import formattedDate from "../routes/_date-format.js";
+  import { formattedDate } from "../routes/_date-format.js";
 
   export let card;
 
