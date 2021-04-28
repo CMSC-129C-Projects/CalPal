@@ -7,8 +7,6 @@
     FormGroup,
     Input,
     Label,
-    Icon,
-    CustomInput,
     Col,
     Container,
     Row,
@@ -102,16 +100,6 @@
           />
         </FormGroup>
         <FormGroup>
-          <!-- <Label for="attachements">
-            <Icon name="paperclip" />
-            Attachments
-          </Label>
-          <CustomInput
-            type="file"
-            id="attachments"
-            name="customFile"
-            disabled={isArchived}
-          /> -->
           <Attachment cardId={card._id} />
         </FormGroup>
       </Container>
