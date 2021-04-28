@@ -1,5 +1,4 @@
 <script>
-  import { stores } from "@sapper/app";
   import {
     Modal,
     ModalBody,
@@ -22,8 +21,6 @@
     formattedDate,
     getDateAndTimeStringsFromDate,
   } from "../routes/_date-format.js";
-
-  const { session } = stores();
 
   export let card;
   // TODO: When toggling isArchived, all footer elements appear at
