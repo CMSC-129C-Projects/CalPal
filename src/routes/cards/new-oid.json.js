@@ -8,13 +8,3 @@ export async function get(_req, res, _next) {
   });
   res.end(JSON.stringify({ new_object_id: objectId }));
 }
-
-export async function post(req, res) {
-  req.session.new_object_id = req.body.new_object_id;
-
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
-
-  res.end();
-}
