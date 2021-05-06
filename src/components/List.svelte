@@ -22,6 +22,7 @@
   } from "sveltestrap/src";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
+  import getObjectId from "../routes/_object-id.js";
 
   const { session } = stores();
 
@@ -47,11 +48,12 @@
     });
   };
 
-  function addCard() {
+  async function addCard() {
+    const objectId = await getObjectId();
     list.cards = [
       ...list.cards,
       {
-        _id: $session.new_object_id,
+        _id: objectId,
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",

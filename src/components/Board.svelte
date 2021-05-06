@@ -4,16 +4,18 @@
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
   import Reminder from "./Reminder.svelte";
+  import getObjectId from "../routes/_object-id.js";
 
   const { session } = stores();
 
   export let id;
 
-  function createNewList() {
+  async function createNewList() {
+    const objectId = await getObjectId();
     $session.lists = [
       ...$session.lists,
       {
-        _id: $session.new_object_id,
+        _id: objectId,
         list_name: "Untitled List",
         cards: [],
       },

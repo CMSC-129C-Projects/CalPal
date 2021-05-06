@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { CustomInput, Label, Icon } from "sveltestrap/src";
+  import getObjectId from "../routes/_object-id.js";
 
   export let cardId;
   export let attachments = [],
@@ -27,16 +28,6 @@
       ? `background-image: url('${file.data.path}');`
       : "";
 
-  const getNewObjectId = async () => {
-    const res = await fetch(`cards/new-oid.json`);
-    if (!res.ok) {
-      return;
-    }
-
-    const result = await res.json();
-    return result.new_object_id;
-  };
-
   async function addAttachmentToDatabase(attachment) {
     await fetch(`cards/attachments.json`, {
       method: "POST",
@@ -60,7 +51,7 @@
     function readAndPreview(file) {
       const reader = new FileReader();
       reader.onload = async function (e) {
-        const attachmentId = await getNewObjectId();
+        const attachmentId = await getObjectId();
         const newAttachment = {
           _id: attachmentId,
           card_id: cardId,
