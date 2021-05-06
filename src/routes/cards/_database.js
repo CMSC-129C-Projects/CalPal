@@ -75,6 +75,5 @@ export async function deleteAttachment(attachmentId) {
   const db = await getDb();
   const result = db.collection("attachments").deleteOne({ _id: attachmentId });
 
-  console.debug(`[_database.js] result: ${result}`);
   return result;
 }
