@@ -27,56 +27,54 @@
       ? `background-image: url('${file.data.path}');`
       : "";
 
-  async function addAttachmentToDatabase(e) {
-    // TODO: Limit filesize.
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    let fileData;
-    reader.onload = async (e) => {
-      fileData = e.target.result;
+  const getNewObjectId = async () => {
+    const res = await fetch(`cards/new-oid.json`);
+    if (!res.ok) {
+      return;
+    }
 
-      const newAttachment = {
-        filename: file.name,
-        path: fileData,
-        encoding: "base64",
-        contentType: file.type,
-        size: file.size,
-      };
+    const result = await res.json();
+    return result.new_object_id;
+  };
 
-      await fetch(`cards/attachments/${cardId}.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ attachment: newAttachment }),
+  async function addAttachmentToDatabase(attachment) {
+    await fetch(`cards/attachments.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ attachment: attachment }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          console.error(res.status, res.json().message);
+        }
       })
-        .then((res) => {
-          if (!res.ok) {
-            console.error(res.status, res.json().message);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    };
-    reader.readAsDataURL(file);
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function previewFiles(e) {
     error = false;
     function readAndPreview(file) {
       const reader = new FileReader();
-      reader.onload = function (e) {
-        attachments = [
-          ...attachments,
-          {
+      reader.onload = async function (e) {
+        const attachmentId = await getNewObjectId();
+        const newAttachment = {
+          _id: attachmentId,
+          card_id: cardId,
+          data: {
             filename: file.name,
             path: e.target.result,
             encoding: "base64",
             contentType: file.type,
             size: file.size,
           },
-        ];
+        };
+
+        attachments = [...attachments, newAttachment];
+        addAttachmentToDatabase(newAttachment);
       };
       reader.readAsDataURL(file);
     }
@@ -112,7 +110,6 @@
   type="file"
   {name}
   {accept}
-  on:input={addAttachmentToDatabase}
   on:change={previewFiles}
   {multiple}
   {disabled}
@@ -123,6 +120,7 @@
   <ul id="preview">
     {#each attachments as file (file._id)}
       <li class:is-image={isImage} style={imagePreviewStyle(file)}>
+        <p>id: ({file._id})</p>
         <a href={file.data.path} target="_blank">{file.data.filename}</a>
         <button on:click={() => deleteAttachment(file._id)}> Delete </button>
       </li>
