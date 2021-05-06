@@ -29,7 +29,6 @@ polka() // You can also use Express
         user_id: req.session.user_id,
         lists: req.session.lists,
         archived_cards: req.session.archived_cards,
-        new_object_id: req.session.new_object_id,
       }),
     })
   )
