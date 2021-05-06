@@ -106,3 +106,25 @@ export async function insertAttachmentToCard(cardId, newAttachment) {
     await client.close();
   }
 }
+
+export async function deleteAttachment(attachmentId) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  try {
+    await client.connect();
+
+    const result = await client
+      .db("calpal")
+      .collection("attachments")
+      .deleteOne({ _id: attachmentId });
+
+    console.debug(`[_database.js] result: ${result}`);
+    return result;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    await client.close();
+  }
+}

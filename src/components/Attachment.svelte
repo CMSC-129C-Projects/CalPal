@@ -83,9 +83,12 @@
     e.target.files && [].forEach.call(e.target.files, readAndPreview);
   }
 
-  function deleteAttachment(i) {
-    attachments.splice(i, 1);
-    attachments = attachments;
+  async function deleteAttachment(attachmentId) {
+    attachments = attachments.filter((a) => a._id !== attachmentId);
+
+    await fetch(`cards/attachments/delete/${attachmentId}`, {
+      method: "DELETE",
+    });
   }
 </script>
 
