@@ -11,27 +11,21 @@
     disabled = false;
 
   if (process.browser) {
-    // TODO: Make this easier to read.
     onMount(async () => {
-      attachments = await fetch(`cards/attachments/${cardId}.json`).then(
-        (res) => {
-          if (res.ok) {
-            return res.json().then((listOfAttachmentDocuments) => {
-              return listOfAttachmentDocuments.map(
-                (attachmentDocument) => attachmentDocument.data
-              );
-            });
-          } else {
-            return [];
-          }
-        }
-      );
+      const res = await fetch(`cards/attachments/${cardId}.json`);
+      if (!res.ok) {
+        return;
+      }
+
+      attachments = await res.json();
     });
   }
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
-    isImage(file.filename) ? `background-image: url('${file.path}');` : "";
+    isImage(file.data.filename)
+      ? `background-image: url('${file.data.path}');`
+      : "";
 
   async function addAttachmentToDatabase(e) {
     // TODO: Limit filesize.
@@ -124,14 +118,10 @@
 
 {#if attachments.length}
   <ul id="preview">
-    {#each attachments as file, i}
-      <li
-        href={file.path}
-        class:is-image={isImage}
-        style={imagePreviewStyle(file)}
-      >
-        <span>{file.filename}</span>
-        <button on:click={() => deleteAttachment(i)}> Delete </button>
+    {#each attachments as file (file._id)}
+      <li class:is-image={isImage} style={imagePreviewStyle(file)}>
+        <a href={file.data.path} target="_blank">{file.data.filename}</a>
+        <button on:click={() => deleteAttachment(file._id)}> Delete </button>
       </li>
     {/each}
   </ul>
