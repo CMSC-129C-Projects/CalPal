@@ -7,8 +7,6 @@
     FormGroup,
     Input,
     Label,
-    Icon,
-    CustomInput,
     Col,
     Container,
     Row,
@@ -17,6 +15,7 @@
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
   import ArchiveCard from "./ArchiveCard.svelte";
+  import Attachment from "./Attachment.svelte";
   import {
     formattedDate,
     getDateAndTimeStringsFromDate,
@@ -101,16 +100,7 @@
           />
         </FormGroup>
         <FormGroup>
-          <Label for="attachements">
-            <Icon name="paperclip" />
-            Attachments
-          </Label>
-          <CustomInput
-            type="file"
-            id="attachments"
-            name="customFile"
-            disabled={isArchived}
-          />
+          <Attachment cardId={card._id} />
         </FormGroup>
       </Container>
       <Container>
