@@ -90,18 +90,6 @@
   }
 </script>
 
-<!-- <label class:more={attachments.length} class:error class:disabled> -->
-<!-- Add Attachment -->
-<!-- {#if !attachments.length}Files{/if} -->
-<!-- <input
-    type="file"
-    {name}
-    {accept}
-    on:input
-    on:change={previewFiles}
-    {multiple}
-    {disabled}
-  /> -->
 <Label for="attachments">
   <Icon name="paperclip" />
   Attachments
@@ -114,7 +102,6 @@
   {multiple}
   {disabled}
 />
-<!-- </label> -->
 
 {#if attachments.length}
   <ul id="preview">
@@ -128,12 +115,6 @@
 {/if}
 
 <style>
-  /* .is-image {
-    height: auto;
-    width: 100%;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-  } */
   label {
     position: relative;
     display: inline-flex;
