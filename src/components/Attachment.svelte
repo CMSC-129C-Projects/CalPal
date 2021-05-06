@@ -120,7 +120,6 @@
   <ul id="preview">
     {#each attachments as file (file._id)}
       <li class:is-image={isImage} style={imagePreviewStyle(file)}>
-        <p>id: ({file._id})</p>
         <a href={file.data.path} target="_blank">{file.data.filename}</a>
         <button on:click={() => deleteAttachment(file._id)}> Delete </button>
       </li>
