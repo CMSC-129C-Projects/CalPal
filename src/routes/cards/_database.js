@@ -62,15 +62,11 @@ export async function getAttachmentsOfCard(cardId) {
 }
 
 // TODO: Handle multiple attachments
-export async function insertAttachmentToCard(cardId, newAttachment) {
+export async function insertAttachment(newAttachment) {
   const db = await getDb();
   const attachmentsCollection = db.collection("attachments");
-  const newDocument = {
-    card_id: cardId,
-    data: newAttachment,
-  };
 
-  const result = await attachmentsCollection.insertOne(newDocument);
+  const result = await attachmentsCollection.insertOne(newAttachment);
 
   return result;
 }
