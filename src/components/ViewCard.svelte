@@ -56,11 +56,11 @@
       card.remind_date_time = "";
     } else {
       const newDueDateTime = new Date(
-        `${dueDateTime.date} ${dueDateTime.time}`
+        `${dueDateTime.date} ${dueDateTime.time}`.trim()
       );
       card.due_date_time = newDueDateTime;
       card.remind_date_time = new Date(
-        `${remindDateTime.date} ${remindDateTime.time}`
+        `${remindDateTime.date} ${remindDateTime.time}`.trim()
       );
     }
   }
