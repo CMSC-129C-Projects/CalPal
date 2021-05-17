@@ -4,6 +4,7 @@
 
   let is_menu_sidebar_shown;
   let is_archive_sidebar_shown;
+  let is_board_shown;
 
   function handleMenuButton() {
     if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
@@ -14,13 +15,17 @@
       is_archive_sidebar_shown = !is_archive_sidebar_shown;
     }
   }
+
+  function handleViewButton() {
+    is_board_shown = !is_board_shown;
+  }
 </script>
 
 <div class="parent">
   <button class="scale-on-hover borderless-button">
     <img src="add_calendar.png" alt="Add Calendar" />
   </button>
-  <button class="scale-on-hover borderless-button">
+  <button class="scale-on-hover borderless-button" on:click={handleViewButton}>
     <img src="switch_board_view.png" alt="Board view" />
   </button>
   <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
