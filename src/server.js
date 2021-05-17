@@ -22,13 +22,14 @@ polka() // You can also use Express
   .use(
     compression({ threshold: 0 }),
     sirv("static", { dev }),
-    json(),
+    json({ limit: "5mb" }),
     sapper.middleware({
-      session: (req, res) => ({
+      session: (req, _res) => ({
         did_cards_load: req.session.did_cards_load,
         user_id: req.session.user_id,
-        cards: req.session.cards
-      })
+        lists: req.session.lists,
+        archived_cards: req.session.archived_cards,
+      }),
     })
   )
   .listen(PORT, err => {

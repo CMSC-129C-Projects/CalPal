@@ -5,12 +5,16 @@
   export let value;
   export let id;
   export let untitledString = "";
+  export let disabled;
 
   let isSelected = false;
 
   $: isUntitled = value === untitledString;
 
-  async function handleOnClick(event) {
+  async function handleOnClick(_event) {
+    if (disabled) {
+      return;
+    }
     isSelected = true;
     await tick();
 
@@ -48,6 +52,7 @@
       type="textarea"
       maxlength="64"
       inputStyle
+      {disabled}
       bind:value
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}

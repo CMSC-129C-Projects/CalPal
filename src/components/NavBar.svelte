@@ -1,14 +1,33 @@
 <script>
-  import { Icon } from "sveltestrap/src";
+  import MenuSidebar from "./MenuSidebar.svelte";
+  import ArchiveSidebar from "./ArchiveSidebar.svelte";
+
+  let is_menu_sidebar_shown;
+  let is_archive_sidebar_shown;
+
+  function handleMenuButton() {
+    if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (is_menu_sidebar_shown && !is_archive_sidebar_shown) {
+      is_menu_sidebar_shown = !is_menu_sidebar_shown;
+    } else if (!is_menu_sidebar_shown && is_archive_sidebar_shown) {
+      is_archive_sidebar_shown = !is_archive_sidebar_shown;
+    }
+  }
 </script>
 
 <div class="parent">
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="calendar" name="calendar3" /></button
-  >
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="plus" name="plus-square-dotted" /></button
-  >
+  <button class="scale-on-hover borderless-button">
+    <img src="add_calendar.png" alt="Add Calendar" />
+  </button>
+  <button class="scale-on-hover borderless-button">
+    <img src="switch_board_view.png" alt="Board view" />
+  </button>
+  <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
+    <img src="menu_ellipses_vertical.png" alt="Menu" />
+  </button>
+  <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
+  <ArchiveSidebar bind:is_archive_sidebar_shown />
 </div>
 
 <style>
@@ -19,10 +38,9 @@
     align-items: center;
     justify-content: flex-end;
     gap: 1em;
-    /* margin-top: -0.3em; */
   }
 
-  .borderlessButton {
+  .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
@@ -33,23 +51,12 @@
     transform-origin: center center;
   }
 
-  .scaleOnHover:hover {
+  .scale-on-hover:hover {
     transform: scale(1.1);
   }
 
-  .parent :global(.calendar) {
-    color: #40415a;
-  }
-
-  .parent :global(.plus) {
-    color: #40415a;
-  }
-
-  .parent :global(.calendar:active) {
-    color: #f58f29;
-  }
-
-  .parent :global(.plus:active) {
-    color: #f58f29;
+  img {
+    width: 45px;
+    height: 45px;
   }
 </style>
