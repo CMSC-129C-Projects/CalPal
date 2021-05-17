@@ -27,6 +27,7 @@
 <script>
   import { stores } from "@sapper/app";
   import Board from "../components/Board.svelte";
+  import Calendar from "../components/Calendar.svelte";
 
   const { session } = stores();
 </script>
