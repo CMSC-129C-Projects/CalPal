@@ -18,8 +18,10 @@ jobs:
       - name: Install Node.js dependencies
         run: npm ci
 
-      - name: Run linters
+      - name: Run ESLint
+        run: eslint --fix --quiet src --ext .js,.svelte
+
+      - name: Run Prettier
         uses: wearerequired/lint-action@v1.9.0
         with:
-          eslint: true
           prettier: true
