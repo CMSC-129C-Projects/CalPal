@@ -1,6 +1,7 @@
 <script>
   import { Col, Row } from "sveltestrap/src";
   import NavBar from "./NavBar.svelte";
+  let is_board_shown;
 </script>
 
 <div class="header-parent">
@@ -13,7 +14,7 @@
       </p>
     </Col>
     <Col xs="4" />
-    <Col xs="4"><NavBar /></Col>
+    <Col xs="4"><NavBar bind:is_board_shown /></Col>
   </Row>
 </div>
 

@@ -40,12 +40,14 @@
 
 <script>
   import Header from "../components/Header.svelte";
+
+  let is_board_shown = true;
 </script>
 
 <main>
   <div class="fill">
-    <Header />
-    <slot />
+    <Header bind:is_board_shown />
+    <slot {is_board_shown} />
   </div>
 </main>
 

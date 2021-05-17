@@ -32,7 +32,7 @@
 
   const { session } = stores();
 
-  let is_board_shown;
+  export let is_board_shown;
 </script>
 
 <svelte:head>
