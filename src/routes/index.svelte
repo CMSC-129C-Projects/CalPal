@@ -28,8 +28,11 @@
   import { stores } from "@sapper/app";
   import Board from "../components/Board.svelte";
   import Calendar from "../components/Calendar.svelte";
+  import NavBar from "../components/Calendar.svelte";
 
   const { session } = stores();
+
+  let is_board_shown;
 </script>
 
 <svelte:head>
@@ -38,10 +41,15 @@
 
 <div class="parent">
   {#if $session}
-    <Board />
+    {#if is_board_shown}
+      <Board />
+    {:else}
+      <Calendar />
+    {/if}
   {:else}
     <p>Could not get cards.</p>
   {/if}
+  <!-- <NavBar bind:is_board_shown /> -->
 </div>
 
 <style>

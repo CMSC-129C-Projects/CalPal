@@ -4,7 +4,7 @@
 
   let is_menu_sidebar_shown;
   let is_archive_sidebar_shown;
-  let is_board_shown;
+  export let is_board_shown;
 
   function handleMenuButton() {
     if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
