@@ -1,5 +1,6 @@
 <script>
   import { Col, Container, Row } from "sveltestrap";
+  import { GoogleAuth } from "@beyonk/svelte-social-auth";
 </script>
 
 <div class="sign-in-parent">
@@ -12,7 +13,10 @@
           </Col>
         </Row>
         <Row>
-          <div class="g-signin2" data-onsuccess="onSignIn" />
+          <GoogleAuth
+            clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
+            on:auth-success={(e) => console.debug(e.detail.user)}
+          />
         </Row>
       </Col>
     </Row>
