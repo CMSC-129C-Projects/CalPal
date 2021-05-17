@@ -7,20 +7,20 @@ const ASSETS = `cache${timestamp}`;
 const to_cache = shell.concat(files);
 const staticAssets = new Set(to_cache);
 
-self.addEventListener("install", event => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(ASSETS)
-      .then(cache => cache.addAll(to_cache))
+      .then((cache) => cache.addAll(to_cache))
       .then(() => {
         self.skipWaiting();
       })
   );
 });
 
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(async keys => {
+    caches.keys().then(async (keys) => {
       // delete old caches
       for (const key of keys) {
         if (key !== ASSETS) await caches.delete(key);
@@ -50,7 +50,7 @@ async function fetchAndCache(request) {
   }
 }
 
-self.addEventListener("fetch", event => {
+self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET" || event.request.headers.has("range"))
     return;
 
