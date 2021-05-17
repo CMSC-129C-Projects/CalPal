@@ -15,8 +15,8 @@ polka() // You can also use Express
       resave: true,
       saveUninitialized: true,
       cookie: {
-        maxAge: 31536000,
-      },
+        maxAge: 31536000
+      }
     })
   )
   .use(
@@ -27,10 +27,10 @@ polka() // You can also use Express
       session: (req, res) => ({
         did_cards_load: req.session.did_cards_load,
         user_id: req.session.user_id,
-        cards: req.session.cards,
-      }),
+        cards: req.session.cards
+      })
     })
   )
-  .listen(PORT, (err) => {
+  .listen(PORT, err => {
     if (err) console.log("error", err);
   });
