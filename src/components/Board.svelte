@@ -78,12 +78,12 @@
 
 <style>
   .board-flex-box-container {
+    flex: 1;
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     padding: 8px;
     gap: 8px;
-    height: 100%;
   }
 
   .alert-area {
