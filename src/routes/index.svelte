@@ -29,12 +29,9 @@
   import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
   import Calendar from "../components/Calendar.svelte";
-  //import { getContext } from "svelte";
 
   const { session } = stores();
-  // const is_board_shown_store = getContext("is_board_shown");
 
-  // $: is_board_shown = $is_board_shown_store;
   let is_board_shown = true;
 </script>
 
