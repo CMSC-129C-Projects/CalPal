@@ -3,12 +3,12 @@
   import { fade } from "svelte/transition";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
-  import Reminder from "./Reminder.svelte";
+  //import Reminder from "./Reminder.svelte";
   import getObjectId from "../routes/_object-id.js";
 
   const { session } = stores();
 
-  export let id;
+  //export let id;
 
   async function createNewList() {
     const objectId = await getObjectId();
@@ -64,7 +64,8 @@
     }}
   />
 </div>
-<div class="alert-area">
+
+<!-- <div class="alert-area">
   <div class="alert-flexbox-container">
     {#each $session.lists as list, i (i)}
       {#each list.cards.filter((c) => {
@@ -74,8 +75,7 @@
       {/each}
     {/each}
   </div>
-</div>
-
+</div> -->
 <style>
   .board-flex-box-container {
     flex: 1;
@@ -86,7 +86,7 @@
     gap: 8px;
   }
 
-  .alert-area {
+  /* .alert-area {
     position: fixed;
     bottom: 20px;
     left: 10px;
@@ -102,5 +102,5 @@
     overflow-x: none;
     overflow-y: auto;
     max-height: 255px;
-  }
+  } */
 </style>
