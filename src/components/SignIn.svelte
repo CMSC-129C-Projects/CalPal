@@ -2,6 +2,8 @@
   import { Col, Container, Row } from "sveltestrap/src";
   import { Card, CardBody } from "sveltestrap/src";
   import { GoogleAuth } from "@beyonk/svelte-social-auth";
+
+  export let isNavBarVisible;
 </script>
 
 <div class="sign-in-div">
@@ -18,8 +20,8 @@
             <GoogleAuth
               clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
               on:auth-success={(e) => console.debug(e.detail.user)}
-            /></Col
-          >
+            />
+          </Col>
         </Row>
       </Container>
     </CardBody>

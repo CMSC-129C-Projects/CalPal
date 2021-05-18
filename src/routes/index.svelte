@@ -31,6 +31,8 @@
   import SignIn from "../components/SignIn.svelte";
 
   const { session } = stores();
+
+  let isNavBarVisible = false;
 </script>
 
 <svelte:head>
@@ -43,7 +45,7 @@
     <Board />
   {:else}
     <div class="index-sign-in">
-      <SignIn />
+      <SignIn bind:isNavBarVisible />
     </div>
   {/if}
 </div>
