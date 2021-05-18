@@ -1,37 +1,36 @@
 <script>
-  import { Col, Container, Row } from "sveltestrap";
+  import { Col, Container, Row } from "sveltestrap/src";
+  import { Card, CardBody } from "sveltestrap/src";
   import { GoogleAuth } from "@beyonk/svelte-social-auth";
 </script>
 
-<div class="sign-in-parent">
-  <Container class="sign-in-container">
-    <Row>
-      <Col sm="12" md={{ size: 6, offset: 3 }}>
+<div class="sign-in-div">
+  <Card body color="light" class="sign-in-card">
+    <CardBody class="sign-in-body">
+      <Container>
         <Row>
-          <Col class="sign-in-col" sm="12" md={{ size: 6, offset: 3 }}
-            >Log into CalPal
-          </Col>
+          <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}
+            >Log into CalPal</Col
+          >
         </Row>
         <Row>
-          <GoogleAuth
-            clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
-            on:auth-success={(e) => console.debug(e.detail.user)}
-          />
+          <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
+            <GoogleAuth
+              clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
+              on:auth-success={(e) => console.debug(e.detail.user)}
+            /></Col
+          >
         </Row>
-      </Col>
-    </Row>
-  </Container>
+      </Container>
+    </CardBody>
+  </Card>
 </div>
 
 <style>
-  .sign-in-parent :global(.sign-in-container) {
-    /* background-color: lightcoral; */
+  .sign-in-div {
+    display: flex;
+    justify-content: center;
     text-align: center;
-  }
-
-  .sign-in-parent :global(.sign-in-col) {
-    background-color: lightgray;
-    font-size: 1.5em;
-    color: dodgerblue;
+    width: 50%;
   }
 </style>
