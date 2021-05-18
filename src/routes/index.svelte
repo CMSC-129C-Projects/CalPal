@@ -27,6 +27,7 @@
 <script>
   import { stores } from "@sapper/app";
   import Board from "../components/Board.svelte";
+  import SignIn from "../components/SignIn.svelte";
 
   const { session } = stores();
 </script>
@@ -35,20 +36,25 @@
   <title>CalPal</title>
 </svelte:head>
 
-<div class="parent">
-  {#if $session}
+<div class="index-parent">
+  {#if $session.userToken}
     <Board />
   {:else}
-    <p>Could not get cards.</p>
+    <div class="index-sign-in">
+      <SignIn />
+    </div>
   {/if}
 </div>
 
 <style>
-  .parent {
+  .index-parent {
     height: inherit;
   }
 
-  p {
-    text-align: center;
+  .index-sign-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
   }
 </style>
