@@ -26,6 +26,7 @@
 
 <script>
   import { stores } from "@sapper/app";
+  import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
   import Calendar from "../components/Calendar.svelte";
   import { getContext } from "svelte";
@@ -40,7 +41,8 @@
   <title>CalPal</title>
 </svelte:head>
 
-<div class="parent">
+<div class="index-parent">
+  <Header />
   {#if $session}
     {#if is_board_shown}
       <Board />
@@ -53,7 +55,9 @@
 </div>
 
 <style>
-  .parent {
+  .index-parent {
+    display: flex;
+    flex-direction: column;
     height: inherit;
   }
 

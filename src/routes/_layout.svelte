@@ -38,24 +38,8 @@
   }
 </script>
 
-<script>
-  import Header from "../components/Header.svelte";
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
-
-  let is_board_shown = true;
-
-  const is_board_shown_store = writable(is_board_shown);
-  $: $is_board_shown_store = is_board_shown;
-
-  setContext("is_board_shown", is_board_shown_store);
-</script>
-
 <main>
-  <div class="fill">
-    <Header bind:is_board_shown />
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style>
@@ -66,11 +50,5 @@
     margin: 0 auto;
     box-sizing: border-box;
     height: 100vh;
-  }
-
-  .fill {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
   }
 </style>

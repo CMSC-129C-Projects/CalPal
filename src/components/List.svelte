@@ -149,9 +149,14 @@
 </div>
 
 <style>
+  .list-parent {
+    height: 100%;
+  }
+
   .list-parent :global(.list-list) {
     width: 250px;
     min-width: 250px;
+    max-height: 100%;
   }
 
   .list-parent :global(.card-card-title-container) {
@@ -176,6 +181,9 @@
   .list-parent :global(.list-list-body) {
     padding: 0%;
     margin-top: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100%;
   }
 
   .list-parent :global(.list-list-footer) {
