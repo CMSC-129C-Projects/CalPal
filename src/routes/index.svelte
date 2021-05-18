@@ -30,6 +30,21 @@
   import Board from "../components/Board.svelte";
 
   const { session } = stores();
+
+  const getCardsFromUrl = async () => {
+    const url = `https://vle.upcebu.edu.ph/calendar/export_execute.php?userid=838&authtoken=e87b053d9db022747e689dc55896cf1d58185a73&preset_what=all&preset_time=weeknow`;
+    // const url = `https://calendar.google.com/calendar/embed?src=c_classroom4d0ef89c%40group.calendar.google.com&ctz=Asia%2FManila`;
+    const encodedUrl = encodeURIComponent(url);
+    console.debug(`[index.svelte] encodedUrl: ${encodedUrl}`);
+
+    const response = await fetch(`/api/ical/parse.json?url=${encodedUrl}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.debug(result);
+  };
 </script>
 
 <svelte:head>
@@ -37,6 +52,13 @@
 </svelte:head>
 
 <div class="index-parent">
+  <button
+    on:click={() => {
+      getCardsFromUrl();
+    }}
+  >
+    Get cards from URL
+  </button>
   <Header />
   {#if $session}
     <Board />
