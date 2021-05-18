@@ -41,7 +41,7 @@
 
 <div class="index-parent">
   <Header {isNavBarVisible} />
-  {#if $session.userToken}
+  {#if $session && isNavBarVisible}
     <Board />
   {:else}
     <div class="index-sign-in">

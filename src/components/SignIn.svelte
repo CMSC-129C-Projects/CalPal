@@ -21,6 +21,13 @@
               clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
               on:auth-success={(e) => console.debug(e.detail.user)}
             />
+            <button
+              on:click={() => {
+                isNavBarVisible = !isNavBarVisible;
+              }}
+            >
+              Test
+            </button>
           </Col>
         </Row>
       </Container>
