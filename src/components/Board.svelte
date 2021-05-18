@@ -54,7 +54,7 @@
 
 <div class="board-flex-box-container">
   {#each $session.lists as list (list._id)}
-    <div transition:fade={{ duration: 150 }}>
+    <div transition:fade|local={{ duration: 150 }}>
       <List bind:list on:cardarchived={handleCardArchived} />
     </div>
   {/each}
