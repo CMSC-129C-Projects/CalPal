@@ -26,6 +26,7 @@
 
 <script>
   import { stores } from "@sapper/app";
+  import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
   import SignIn from "../components/SignIn.svelte";
 
@@ -37,6 +38,7 @@
 </svelte:head>
 
 <div class="index-parent">
+  <Header {isNavBarVisible} />
   {#if $session.userToken}
     <Board />
   {:else}
