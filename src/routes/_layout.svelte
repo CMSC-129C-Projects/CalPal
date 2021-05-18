@@ -39,9 +39,7 @@
 </script>
 
 <main>
-  <div class="fill">
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style>
@@ -52,11 +50,5 @@
     margin: 0 auto;
     box-sizing: border-box;
     height: 100vh;
-  }
-
-  .fill {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
   }
 </style>

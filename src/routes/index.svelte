@@ -52,6 +52,8 @@
 
 <style>
   .index-parent {
+    display: flex;
+    flex-direction: column;
     height: inherit;
   }
 
