@@ -24,6 +24,7 @@ jobs:
           eslint: true
           prettier: true
           eslint_dir: src
+          eslint_args: -c ../.eslintrc.json
           eslint_extensions: js,svelte
           prettier_dir: src
           prettier_args: '"./**"'
