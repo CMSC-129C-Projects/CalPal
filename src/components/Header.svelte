@@ -1,7 +1,7 @@
 <script>
   import { Col, Row } from "sveltestrap/src";
   import NavBar from "./NavBar.svelte";
-  let is_board_shown;
+  export let is_board_shown;
 </script>
 
 <div class="header-parent">

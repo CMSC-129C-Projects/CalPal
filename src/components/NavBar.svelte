@@ -4,7 +4,7 @@
 
   let is_menu_sidebar_shown;
   let is_archive_sidebar_shown;
-  let is_board_shown;
+  export let is_board_shown;
 
   function handleMenuButton() {
     if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
@@ -18,7 +18,9 @@
 
   function handleViewButton() {
     is_board_shown = !is_board_shown;
+    //console.debug("this was clicked");
   }
+  $: console.debug("navbar", is_board_shown);
 </script>
 
 <div class="parent">
