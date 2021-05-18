@@ -31,9 +31,6 @@
   import { getContext } from "svelte";
 
   const { session } = stores();
-
-  //let is_board_shown = getContext("is_board_shown");
-  //$$props.is_board_shown;
   const is_board_shown_store = getContext("is_board_shown");
 
   $: is_board_shown = $is_board_shown_store;

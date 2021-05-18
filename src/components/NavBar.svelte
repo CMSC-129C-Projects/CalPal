@@ -18,9 +18,7 @@
 
   function handleViewButton() {
     is_board_shown = !is_board_shown;
-    //console.debug("this was clicked");
   }
-  $: console.debug("navbar", is_board_shown);
 </script>
 
 <div class="parent">

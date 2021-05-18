@@ -44,19 +44,17 @@
   import { writable } from "svelte/store";
 
   let is_board_shown = true;
-  //let is_board_shown = writable(true);
 
   const is_board_shown_store = writable(is_board_shown);
   $: $is_board_shown_store = is_board_shown;
 
   setContext("is_board_shown", is_board_shown_store);
-  $: console.debug("layout", is_board_shown);
 </script>
 
 <main>
   <div class="fill">
     <Header bind:is_board_shown />
-    <slot is_board_shown />
+    <slot />
   </div>
 </main>
 
