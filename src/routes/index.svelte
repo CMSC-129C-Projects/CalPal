@@ -29,12 +29,13 @@
   import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
   import Calendar from "../components/Calendar.svelte";
-  import { getContext } from "svelte";
+  //import { getContext } from "svelte";
 
   const { session } = stores();
-  const is_board_shown_store = getContext("is_board_shown");
+  // const is_board_shown_store = getContext("is_board_shown");
 
-  $: is_board_shown = $is_board_shown_store;
+  // $: is_board_shown = $is_board_shown_store;
+  let is_board_shown = true;
 </script>
 
 <svelte:head>
@@ -42,7 +43,7 @@
 </svelte:head>
 
 <div class="index-parent">
-  <Header />
+  <Header bind:is_board_shown />
   {#if $session}
     {#if is_board_shown}
       <Board />
