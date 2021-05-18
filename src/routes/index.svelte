@@ -26,6 +26,7 @@
 
 <script>
   import { stores } from "@sapper/app";
+  import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
 
   const { session } = stores();
@@ -35,7 +36,8 @@
   <title>CalPal</title>
 </svelte:head>
 
-<div class="parent">
+<div class="index-parent">
+  <Header />
   {#if $session}
     <Board />
   {:else}
@@ -44,7 +46,7 @@
 </div>
 
 <style>
-  .parent {
+  .index-parent {
     height: inherit;
   }
 

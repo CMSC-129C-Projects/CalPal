@@ -38,13 +38,8 @@
   }
 </script>
 
-<script>
-  import Header from "../components/Header.svelte";
-</script>
-
 <main>
   <div class="fill">
-    <Header />
     <slot />
   </div>
 </main>
