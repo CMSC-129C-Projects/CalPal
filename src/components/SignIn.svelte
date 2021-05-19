@@ -14,16 +14,23 @@
       >
       <Row>
         <Col class="section-body"
-          >CalPal is a productivity tool which lets you manage your tasks,
-          schedules, whatever whatever</Col
-        >
+          ><p>
+            CalPal is a productivity tool which lets you manage your tasks and
+            schedules
+          </p>
+          <p>Turn your calendar events into card automatically</p>
+          <p>Look ahead into your schedule with calendar view</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col class="section-body-login">Please Log in to get started.</Col>
       </Row>
     </Container>
   </div>
 
   <div class="flex-item-right">
     <div class="sign-in-div">
-      <Card body color="light" class="sign-in-card">
+      <Card body color="transparent" class="sign-in-card">
         <CardBody class="sign-in-body">
           <Container>
             <Row>
@@ -74,16 +81,26 @@
   }
 
   .flex-item-left :global(.section-header) {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 50px;
+    color: white;
+    padding: 10px;
+    padding-top: 20px;
+  }
+
+  .flex-item-left :global(.section-body) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 20px;
     color: white;
     padding: 10px;
   }
 
-  .flex-item-left :global(.section-body) {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+  .flex-item-left :global(.section-body-login) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 30px;
     color: white;
+    padding: 10px;
+    padding-top: 20px;
   }
 
   .flex-item-right {
@@ -104,5 +121,17 @@
     justify-content: center;
     text-align: center;
     /* width: 50%; */
+  }
+
+  .sign-in-div :global(.log-in-text) {
+    padding: 20px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    color: dodgerblue;
+    /* width: 50%; */
+  }
+
+  .sign-in-div :global(.sign-in-card) {
+    border: none;
   }
 </style>
