@@ -161,13 +161,13 @@
     <ModalFooter>
       <Container>
         <Row>
-          <Col>
-            {#if !isArchived}
+          {#if !isArchived}
+            <Col>
               <ColorPicker bind:color={card.color} />
-            {/if}
-          </Col>
+            </Col>
+          {/if}
           <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
-          <Col style="display: flex; flex-direction: row-reverse;" xs="6">
+          <Col style="display: flex; flex-direction: row-reverse;">
             <ArchiveCard
               bind:card
               {isArchived}
