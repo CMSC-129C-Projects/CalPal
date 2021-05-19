@@ -160,13 +160,14 @@
     </ModalBody>
     <ModalFooter>
       <Container>
-        <Row class="view-card-container">
-          <Col class="view-card-left-half" xs="4.5">
+        <Row>
+          <Col>
             {#if !isArchived}
               <ColorPicker bind:color={card.color} />
             {/if}
           </Col>
-          <Col class="view-card-right-half" xs="7.5">
+          <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
+          <Col style="display: flex; flex-direction: row-reverse;" xs="6">
             <ArchiveCard
               bind:card
               {isArchived}
@@ -179,30 +180,3 @@
     </ModalFooter>
   </Modal>
 </div>
-
-<style>
-  .view-card-parent :global(.view-card-container) {
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .view-card-parent :global(.view-card-left-half) {
-    background-color: transparent;
-    display: flex;
-    border: none;
-    outline: none;
-    padding: 0%;
-    flex-grow: 1;
-  }
-
-  .view-card-parent :global(.view-card-right-half) {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    align-items: center;
-    display: flex;
-    padding: 0%;
-  }
-</style>
