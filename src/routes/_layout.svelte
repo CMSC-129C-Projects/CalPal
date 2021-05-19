@@ -38,15 +38,8 @@
   }
 </script>
 
-<script>
-  import Header from "../components/Header.svelte";
-</script>
-
 <main>
-  <div class="fill">
-    <Header />
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style>
@@ -57,11 +50,5 @@
     margin: 0 auto;
     box-sizing: border-box;
     height: 100vh;
-  }
-
-  .fill {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
   }
 </style>

@@ -17,7 +17,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "import/no-unresolved": [2, { "ignore": ["^@sapper"] }]
   },
   "plugins": ["import", "svelte3"]
 }
