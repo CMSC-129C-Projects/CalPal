@@ -167,7 +167,7 @@
             </Col>
           {/if}
           <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
-          <Col style="display: flex; flex-direction: row-reverse;">
+          <Col style="display: flex; justify-content: flex-end;">
             <ArchiveCard
               bind:card
               {isArchived}

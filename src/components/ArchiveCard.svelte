@@ -52,27 +52,32 @@
 
 <div class="parent">
   {#if isArchived}
-    <Button outline color="warning" on:click={toggle}>
+    <Button outline color="primary" on:click={toggle}>
       <Icon name="archive" />
-      Unarchive Card
+      Unarchive
     </Button>
     <Button outline color="danger" on:click={toggleDeleteModal}>
-      <Icon name="archive" />
-      Delete Card
+      <Icon name="trash" />
+      Delete
     </Button>
     <Modal isOpen={openDeleteModal} {toggleDeleteModal}>
-      <ModalHeader {toggleDeleteModal}>Confirm</ModalHeader>
-      <ModalBody>Are you sure you want to delete card?</ModalBody>
+      <ModalHeader {toggleDeleteModal}>Deleting card</ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete "{card.card_name}"?
+      </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleDeleteModal}>Cancel</Button>
-        <Button color="primary" on:click={() => deleteCard(card._id)}>
+        <Button color="danger" on:click={() => deleteCard(card._id)}>
+          <Icon name="trash" />
           Delete
         </Button>
       </ModalFooter>
     </Modal>
     <Modal isOpen={open} {toggle}>
-      <ModalHeader {toggle}>Confirm</ModalHeader>
-      <ModalBody>Are you sure you want to unarchive card?</ModalBody>
+      <ModalHeader {toggle}>Unarchiving card</ModalHeader>
+      <ModalBody>
+        Are you sure you want to unarchive "{card.card_name}"?
+      </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggle}>Cancel</Button>
         <Button
@@ -82,22 +87,25 @@
             toggle();
           }}
         >
+          <Icon name="archive" />
           Unarchive
         </Button>
       </ModalFooter>
     </Modal>
   {:else}
-    <Button outline color="danger" on:click={toggle}>
+    <Button outline color="warning" on:click={toggle}>
       <Icon name="archive" />
-      Archive Card
+      Archive
     </Button>
     <Modal isOpen={open} {toggle}>
-      <ModalHeader {toggle}>Confirm</ModalHeader>
-      <ModalBody>Are you sure you want to archive card?</ModalBody>
+      <ModalHeader {toggle}>Archiving card</ModalHeader>
+      <ModalBody>
+        Are you sure you want to archive "{card.card_name}"?
+      </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggle}>Cancel</Button>
         <Button
-          color="primary"
+          color="warning"
           on:click={() => {
             notifyCardArchived(card._id);
             toggle();
@@ -109,6 +117,3 @@
     </Modal>
   {/if}
 </div>
-
-<style>
-</style>
