@@ -17,6 +17,7 @@
   const { session } = stores();
 
   let open = false;
+  let calendarName = "";
   let inputUrl = "";
 
   const toggle = () => (open = !open);
@@ -86,6 +87,7 @@
                 name="calendar-name"
                 id="add-calendar-name"
                 placeholder="e.g. My Google Calendar"
+                bind:value={calendarName}
               />
             </FormGroup>
           </Col>
