@@ -10,12 +10,17 @@
   <div class="flex-item-left">
     <Container>
       <Row>
-        <p class="overflow">
-          <Col xs="4"><img src="CalPal_logo.png" alt="CalPal Logo" /></Col>
-        </p>
+        <Col xs="4"><img src="CalPal_logo.png" alt="CalPal Logo" /></Col>
       </Row>
       <Row>
-        <Col class="section-header">Welcome to CalPal!</Col>
+        <Col class="section-header">
+          <p class="overflow">
+            Welcome to
+            <span class="calpal cal">Cal</span><span class="calpal pal"
+              >Pal</span
+            >!
+          </p>
+        </Col>
       </Row>
       <Row>
         <Col class="section-body"
@@ -27,6 +32,8 @@
           <p>Look ahead into your schedule with calendar view</p>
         </Col>
       </Row>
+      <!-- the image goes here -->
+      <Row />
       <Row>
         <Col class="section-body-login">Please Log in to get started.</Col>
       </Row>
@@ -80,6 +87,22 @@
     /* padding-top: 20px; */
   }
 
+  .calpal {
+    font-size: 50px;
+    font-family: "Nunito", sans-serif;
+    position: relative;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+      1px 1px 0 white;
+  }
+
+  .cal {
+    color: #00b0f0;
+  }
+
+  .pal {
+    color: #f58f29;
+  }
+
   .flex-container {
     display: flex;
     flex-wrap: wrap;
@@ -100,23 +123,24 @@
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 50px;
     color: white;
-    padding: 10px;
     padding-top: 20px;
+    padding-left: 30px;
   }
 
   .flex-item-left :global(.section-body) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 20px;
     color: white;
-    padding: 10px;
+    padding-left: 30px;
   }
 
   .flex-item-left :global(.section-body-login) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 30px;
     color: white;
-    padding: 10px;
     padding-top: 20px;
+    padding-right: 5px;
+    text-align: center;
   }
 
   img {
