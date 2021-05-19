@@ -10,8 +10,13 @@
   <div class="flex-item-left">
     <Container>
       <Row>
-        <Col class="section-header">Welcome to CalPal!</Col></Row
-      >
+        <p class="overflow">
+          <Col xs="4"><img src="CalPal_logo.png" alt="CalPal Logo" /></Col>
+        </p>
+      </Row>
+      <Row>
+        <Col class="section-header">Welcome to CalPal!</Col>
+      </Row>
       <Row>
         <Col class="section-body"
           ><p>
@@ -65,6 +70,16 @@
     box-sizing: border-box;
   }
 
+  .overflow {
+    white-space: nowrap;
+  }
+
+  img {
+    width: 70px;
+    height: 70px;
+    /* padding-top: 20px; */
+  }
+
   .flex-container {
     display: flex;
     flex-wrap: wrap;
@@ -75,8 +90,9 @@
   }
 
   .flex-item-left {
-    background-color: dodgerblue;
-    padding: 40px;
+    background-color: #78c0e0;
+    padding-top: 20px;
+    padding-left: 5px;
     flex: 35%;
   }
 
@@ -132,7 +148,7 @@
     padding: 20px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 30px;
-    color: dodgerblue;
+    color: black;
     /* width: 50%; */
   }
 
