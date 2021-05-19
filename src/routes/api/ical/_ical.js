@@ -5,7 +5,7 @@ export async function getCardsFromUrl(calendarUrl) {
   const cardsFromEvents = Object.entries(events).map(([_, e]) => {
     return {
       _id: e.uid,
-      card_name: "",
+      card_name: e.summary,
       original_title: e.summary,
       original_calendar: calendarUrl,
       original_date: e.start,
