@@ -40,8 +40,9 @@
 </svelte:head>
 
 <div class="index-parent">
-  <Header {isNavBarVisible} />
+  <!-- <Header {isNavBarVisible} /> -->
   {#if $session && isNavBarVisible}
+    <Header {isNavBarVisible} />
     <Board />
   {:else}
     <div class="index-sign-in">
