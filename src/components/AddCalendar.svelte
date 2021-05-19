@@ -73,27 +73,34 @@
     </ModalHeader>
     <ModalBody>
       <Container>
-        <Row>
+        <Row class="add-calendar-message">
           <Col>Input a shared calendar URL.</Col>
         </Row>
         <br />
         <Row>
           <Col>
             <FormGroup>
-              <Row>
-                <Col xs="1" class="add-calendar-left">
-                  <Label for="add-calendar-link">URL:</Label>
-                </Col>
-                <Col xs="11">
-                  <Input
-                    type="url"
-                    name="url"
-                    id="add-calendar-url"
-                    placeholder="Calendar URL"
-                    bind:value={inputUrl}
-                  />
-                </Col>
-              </Row>
+              <Label for="add-calendar-name">Calendar Name:</Label>
+              <Input
+                type="plaintext"
+                name="calendar-name"
+                id="add-calendar-name"
+                placeholder="e.g. My Google Calendar"
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Label for="add-calendar-link">URL:</Label>
+              <Input
+                type="url"
+                name="url"
+                id="add-calendar-url"
+                placeholder="Calendar URL"
+                bind:value={inputUrl}
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -133,8 +140,8 @@
     font-family: "Nunito", sans-serif;
   }
 
-  .add-calendar-parent :global(.add-calendar-left) {
-    padding-top: 5px;
+  .add-calendar-parent :global(.add-calendar-message) {
+    font-weight: 500;
   }
 
   .add-calendar-parent :global(.add-calendar-footer) {
