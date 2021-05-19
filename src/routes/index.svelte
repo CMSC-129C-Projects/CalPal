@@ -30,43 +30,6 @@
   import Board from "../components/Board.svelte";
 
   const { session } = stores();
-
-  const getCardsFromUrl = async () => {
-    const url = `https://vle.upcebu.edu.ph/calendar/export_execute.php?userid=838&authtoken=e87b053d9db022747e689dc55896cf1d58185a73&preset_what=all&preset_time=weeknow`;
-    const encodedUrl = encodeURIComponent(url);
-    console.debug(`[index.svelte] encodedUrl: ${encodedUrl}`);
-
-    const response = await fetch(`/api/ical/parse.json?url=${encodedUrl}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const result = await response.json();
-    console.debug(result);
-
-    const insertCardsIntoList = (cards) => {
-      const isCardAlreadyInLists = (card) => {
-        for (const list of $session.lists) {
-          if (list.cards.find((c) => c._id === card._id)) {
-            return true;
-          }
-        }
-
-        if ($session.archived_cards.find((c) => c._id === card._id)) {
-          return true;
-        }
-
-        return false;
-      };
-
-      cards = cards.filter((c) => !isCardAlreadyInLists(c));
-      if ($session.lists && $session.lists.length > 0) {
-        $session.lists[0].cards = [...$session.lists[0].cards, ...cards];
-      }
-    };
-
-    insertCardsIntoList(result);
-  };
 </script>
 
 <svelte:head>
@@ -74,13 +37,6 @@
 </svelte:head>
 
 <div class="index-parent">
-  <button
-    on:click={() => {
-      getCardsFromUrl();
-    }}
-  >
-    Get cards from URL
-  </button>
   <Header />
   {#if $session}
     <Board />
