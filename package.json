@@ -17,7 +17,7 @@
     "mongodb": "^3.6.5",
     "polka": "next",
     "sirv": "^1.0.0",
-    "sveltestrap": "^3.14.1"
+    "sveltestrap": "^5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
