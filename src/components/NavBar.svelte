@@ -20,9 +20,6 @@
 <div class="parent">
   <AddCalendar />
   <button class="scale-on-hover borderless-button">
-    <img src="add_calendar.png" alt="Add Calendar" />
-  </button>
-  <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
   <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
