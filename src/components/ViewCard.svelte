@@ -66,10 +66,10 @@
   }
 </script>
 
-<div class="view-card-parent" style="--card-color: {cardColor}">
+<div class="view-card-parent">
   <Card {card} {cardColor} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="card-card-label" {toggle}>
+    <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
         bind:value={card.card_name}
         id="card-{card._id}"
@@ -181,10 +181,6 @@
 </div>
 
 <style>
-  .view-card-parent :global(.card-card-label) {
-    background-color: var(--card-color, transparent);
-  }
-
   .view-card-parent :global(.view-card-container) {
     background-color: transparent;
     display: flex;
