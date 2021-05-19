@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { CustomInput, Label, Icon } from "sveltestrap/src";
+  import { Input, Label, Icon } from "sveltestrap/src";
   import getObjectId from "../routes/_object-id.js";
 
   export let cardId;
@@ -85,7 +85,7 @@
   <Icon name="paperclip" />
   Attachments
 </Label>
-<CustomInput
+<Input
   type="file"
   {name}
   {accept}
