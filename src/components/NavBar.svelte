@@ -1,6 +1,8 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
+  import AddCalender from "./AddCalendar.svelte";
+  import AddCalendar from "./AddCalendar.svelte";
 
   let is_menu_sidebar_shown;
   let is_archive_sidebar_shown;
@@ -17,6 +19,7 @@
 </script>
 
 <div class="parent">
+  <AddCalendar />
   <button class="scale-on-hover borderless-button">
     <img src="add_calendar.png" alt="Add Calendar" />
   </button>
