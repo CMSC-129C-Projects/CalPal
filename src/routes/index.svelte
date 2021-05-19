@@ -32,7 +32,7 @@
 
   const { session } = stores();
 
-  let isNavBarVisible = false;
+  let isSignedIn = false;
 </script>
 
 <svelte:head>
@@ -41,12 +41,12 @@
 
 <div class="index-parent">
   <!-- <Header {isNavBarVisible} /> -->
-  {#if $session && isNavBarVisible}
-    <Header {isNavBarVisible} />
+  {#if $session && isSignedIn}
+    <Header {isSignedIn} />
     <Board />
   {:else}
     <div class="index-sign-in">
-      <SignIn bind:isNavBarVisible />
+      <SignIn bind:isSignedIn />
     </div>
   {/if}
 </div>

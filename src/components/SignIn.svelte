@@ -3,7 +3,7 @@
   import { Card, CardBody } from "sveltestrap/src";
   import { GoogleAuth } from "@beyonk/svelte-social-auth";
 
-  export let isNavBarVisible;
+  export let isSignedIn;
 </script>
 
 <div class="flex-container">
@@ -46,7 +46,7 @@
                 />
                 <button
                   on:click={() => {
-                    isNavBarVisible = !isNavBarVisible;
+                    isSignedIn = !isSignedIn;
                   }}
                 >
                   Test
