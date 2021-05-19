@@ -39,7 +39,7 @@
               >
             </Row>
             <Row>
-              <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
+              <Col class="log-in-text" sm="8" md={{ size: 6, offset: 3 }}>
                 <GoogleAuth
                   clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
                   on:auth-success={(e) => console.debug(e.detail.user)}
@@ -77,7 +77,7 @@
   .flex-item-left {
     background-color: dodgerblue;
     padding: 40px;
-    flex: 40%;
+    flex: 35%;
   }
 
   .flex-item-left :global(.section-header) {
@@ -103,10 +103,15 @@
     padding-top: 20px;
   }
 
+  img {
+    object-fit: contain;
+    justify-content: center;
+  }
+
   .flex-item-right {
     /* background-color: lightgray; */
     padding: 40px;
-    flex: 60%;
+    flex: 65%;
     align-self: center;
   }
 
