@@ -1,7 +1,6 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
-  import AddCalender from "./AddCalendar.svelte";
   import AddCalendar from "./AddCalendar.svelte";
 
   let is_menu_sidebar_shown;
