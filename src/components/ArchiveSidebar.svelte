@@ -50,15 +50,11 @@
   <Icon name="archive-fill" />
   Archived Cards
 </button>
-<div class="archive-sidebar-parent">
+<div>
   <Offcanvas scroll isOpen={open} placement="end" {toggle}>
-    <div slot="header">
-      <Row>
-        <Col xs="2">
-          <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
-        </Col>
-        <Col xs="10">Archived Cards</Col>
-      </Row>
+    <div slot="header" class="archive-sidebar-header-title">
+      <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
+      Archived Cards
     </div>
     <Container>
       <Row>
@@ -87,5 +83,11 @@
     transition: transform 0.05s;
     transform-origin: center center;
     text-align: center;
+  }
+
+  .archive-sidebar-header-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 </style>
