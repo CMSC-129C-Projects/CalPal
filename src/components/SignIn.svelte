@@ -34,7 +34,9 @@
             CalPal is a productivity tool which lets you manage your tasks and
             schedules
           </p>
-          <p>Turn your calendar events into card automatically</p>
+          <p>
+            Sync multiple calendars and turn your events into card automatically
+          </p>
           <p>Look ahead into your schedule with calendar view</p>
         </Col>
       </Row>
@@ -64,7 +66,7 @@
               >
             </Row>
             <Row>
-              <Col class="log-in-text" sm="8" md={{ size: 6, offset: 3 }}>
+              <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
                 <GoogleAuth
                   clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
                   on:auth-success={(e) => console.debug(e.detail.user)}
