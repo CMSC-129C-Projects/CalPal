@@ -34,13 +34,6 @@
         </Col>
       </Row>
     </Container>
-    <!-- <div class="image-container">
-      <img
-        src="div_illustration.png"
-        class="div-illustration"
-        alt="The CalPal team"
-      />
-    </div> -->
     <Container>
       <Row>
         <Col class="section-body-login">Please Log in to get started.</Col>
@@ -83,34 +76,6 @@
       class="div-illustration"
       alt="The CalPal team"
     />
-    <!-- <div class="sign-in-div">
-      <Card body color="transparent" class="sign-in-card">
-        <CardBody class="sign-in-body">
-          <Container>
-            <Row>
-              <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}
-                >Log into CalPal</Col
-              >
-            </Row>
-            <Row>
-              <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
-                <GoogleAuth
-                  clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
-                  on:auth-success={(e) => console.debug(e.detail.user)}
-                />
-                <button
-                  on:click={() => {
-                    isSignedIn = !isSignedIn;
-                  }}
-                >
-                  Test
-                </button>
-              </Col>
-            </Row>
-          </Container>
-        </CardBody>
-      </Card>
-    </div> -->
   </div>
 </div>
 
@@ -126,13 +91,11 @@
   .calpal-logo {
     width: 70px;
     height: 70px;
-    /* padding-top: 20px;  */
   }
 
   .div-illustration {
     width: 70%;
     height: auto;
-    /* padding-top: 20px;  */
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -161,7 +124,6 @@
     flex-wrap: wrap;
     height: 100%;
     width: 100%;
-    /* background-color: red; */
     font-size: 30px;
   }
 
@@ -203,7 +165,6 @@
   }
 
   .flex-item-right {
-    /* background-color: lightgray; */
     padding: 40px;
     flex: 65%;
     align-self: center;
@@ -219,7 +180,6 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    /* width: 50%; */
   }
 
   .sign-in-div :global(.log-in-text) {
@@ -227,7 +187,6 @@
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 30px;
     color: black;
-    /* width: 50%; */
   }
 
   .sign-in-div :global(.sign-in-card) {
