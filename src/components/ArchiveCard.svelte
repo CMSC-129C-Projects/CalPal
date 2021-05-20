@@ -111,6 +111,7 @@
             toggle();
           }}
         >
+          <Icon name="archive" />
           Archive
         </Button>
       </ModalFooter>
