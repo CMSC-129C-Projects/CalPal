@@ -1,6 +1,7 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
+  import Sidebar from "./Sidebar.svelte";
 
   let is_menu_sidebar_shown;
   let is_archive_sidebar_shown;
@@ -23,11 +24,9 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
-    <img src="menu_ellipses_vertical.png" alt="Menu" />
-  </button>
-  <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
-  <ArchiveSidebar bind:is_archive_sidebar_shown />
+  <Sidebar />
+  <!-- <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
+  <ArchiveSidebar bind:is_archive_sidebar_shown /> -->
 </div>
 
 <style>
