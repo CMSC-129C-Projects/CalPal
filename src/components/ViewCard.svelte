@@ -100,7 +100,7 @@
           />
         </FormGroup>
         <FormGroup>
-          <Attachment cardId={card._id} />
+          <Attachment cardId={card._id} disabled={isArchived}/>
         </FormGroup>
       </Container>
       <Container>
