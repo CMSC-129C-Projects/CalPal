@@ -11,22 +11,15 @@
     <Container>
       <Row>
         <Col xs="4"
-          ><img
-            src="CalPal_logo.png"
-            class="calpal-logo"
-            alt="CalPal Logo"
-          /></Col
-        >
-      </Row>
-      <Row>
-        <Col class="section-header">
-          <p class="overflow">
-            Welcome to
-            <span class="calpal cal">Cal</span><span class="calpal pal"
-              >Pal</span
-            >!
+          ><p class="overflow">
+            <img src="CalPal_logo.png" class="calpal-logo" alt="CalPal Logo" />
+            <span class="calpal cal">Cal</span>
+            <span class="calpal pal">Pal</span>
           </p>
         </Col>
+      </Row>
+      <Row>
+        <Col class="section-header">Welcome to CalPal!</Col>
       </Row>
       <Row>
         <Col class="section-body"
@@ -41,22 +34,56 @@
         </Col>
       </Row>
     </Container>
-    <div class="image-container">
+    <!-- <div class="image-container">
       <img
         src="div_illustration.png"
         class="div-illustration"
         alt="The CalPal team"
       />
-    </div>
+    </div> -->
     <Container>
       <Row>
         <Col class="section-body-login">Please Log in to get started.</Col>
       </Row>
+
+      <div class="sign-in-div">
+        <Card body color="transparent" class="sign-in-card">
+          <CardBody class="sign-in-body">
+            <Container>
+              <Row>
+                <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}
+                  >Log into CalPal</Col
+                >
+              </Row>
+              <Row>
+                <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
+                  <GoogleAuth
+                    clientId="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
+                    on:auth-success={(e) => console.debug(e.detail.user)}
+                  />
+                  <button
+                    on:click={() => {
+                      isSignedIn = !isSignedIn;
+                    }}
+                  >
+                    Test
+                  </button>
+                </Col>
+              </Row>
+            </Container>
+          </CardBody>
+        </Card>
+      </div>
     </Container>
   </div>
 
   <div class="flex-item-right">
-    <div class="sign-in-div">
+    <img
+      src="div_illustration.png"
+      class="div-illustration"
+      alt="The CalPal team"
+    />
+    <!-- <div class="sign-in-div">
       <Card body color="transparent" class="sign-in-card">
         <CardBody class="sign-in-body">
           <Container>
@@ -83,7 +110,7 @@
           </Container>
         </CardBody>
       </Card>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -115,6 +142,8 @@
     font-size: 50px;
     font-family: "Nunito", sans-serif;
     position: relative;
+    top: 0.3em;
+    left: -0.1em;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
       1px 1px 0 white;
   }
@@ -139,7 +168,8 @@
   .flex-item-left {
     background-color: #78c0e0;
     padding-top: 20px;
-    padding-left: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
     flex: 35%;
   }
 
