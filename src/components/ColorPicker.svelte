@@ -7,7 +7,7 @@
     Container,
     Row,
     Button,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
 
   export let color;
 

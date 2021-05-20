@@ -19,7 +19,7 @@
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
   import getObjectId from "../routes/_object-id.js";

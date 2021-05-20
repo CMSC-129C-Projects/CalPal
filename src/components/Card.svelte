@@ -5,7 +5,7 @@
     CardBody,
     CardSubtitle,
     CardTitle,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import { formattedDate } from "../routes/_date-format.js";
 
   export let card;

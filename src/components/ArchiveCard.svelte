@@ -8,7 +8,7 @@
     ModalBody,
     ModalFooter,
     ModalHeader,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
 
   const { session } = stores();
   const dispatch = createEventDispatcher();

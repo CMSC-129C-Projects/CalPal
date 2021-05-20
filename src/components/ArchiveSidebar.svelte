@@ -8,7 +8,7 @@
     Card,
     CardHeader,
     CardBody,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
