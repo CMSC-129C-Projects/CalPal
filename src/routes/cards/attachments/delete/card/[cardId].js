@@ -1,4 +1,4 @@
-import { deleteAttachmentsOfCard } from "../../../_database.js"
+import { deleteAttachmentsOfCard } from "../../../_database.js";
 
 export async function del(req, res) {
   const { cardId } = req.params;
