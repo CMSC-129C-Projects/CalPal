@@ -10,7 +10,13 @@
   <div class="flex-item-left">
     <Container>
       <Row>
-        <Col xs="4"><img src="CalPal_logo.png" alt="CalPal Logo" /></Col>
+        <Col xs="4"
+          ><img
+            src="CalPal_logo.png"
+            class="calpal-logo"
+            alt="CalPal Logo"
+          /></Col
+        >
       </Row>
       <Row>
         <Col class="section-header">
@@ -32,8 +38,15 @@
           <p>Look ahead into your schedule with calendar view</p>
         </Col>
       </Row>
-      <!-- the image goes here -->
-      <Row />
+    </Container>
+    <div class="image-container">
+      <img
+        src="div_illustration.png"
+        class="div-illustration"
+        alt="The CalPal team"
+      />
+    </div>
+    <Container>
       <Row>
         <Col class="section-body-login">Please Log in to get started.</Col>
       </Row>
@@ -81,10 +94,19 @@
     white-space: nowrap;
   }
 
-  img {
+  .calpal-logo {
     width: 70px;
     height: 70px;
-    /* padding-top: 20px; */
+    /* padding-top: 20px;  */
+  }
+
+  .div-illustration {
+    width: 70%;
+    height: auto;
+    /* padding-top: 20px;  */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
   }
 
   .calpal {
