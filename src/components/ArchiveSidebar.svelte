@@ -2,6 +2,7 @@
   import { stores } from "@sapper/app";
   import { Offcanvas, Col, Container, Row, Icon } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
+  import BackSidebar from "./BackSidebar.svelte";
 
   const { session } = stores();
 
@@ -54,9 +55,7 @@
     <div slot="header">
       <Row>
         <Col xs="2">
-          <button class="borderless-button" on:click={back}>
-            <Icon name="arrow-left" />
-          </button>
+          <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
         </Col>
         <Col xs="10">Archived Cards</Col>
       </Row>
