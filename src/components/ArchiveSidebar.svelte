@@ -1,17 +1,21 @@
-<script>
+<script lang="ts">
   import { stores } from "@sapper/app";
   import { fly } from "svelte/transition";
   import {
+    Offcanvas,
     Col,
     Container,
     Row,
     Card,
     CardHeader,
     CardBody,
+    Icon,
   } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
+  let open = false;
+  const toggle = () => (open = !open);
 
   export let is_archive_sidebar_shown;
 
@@ -48,7 +52,7 @@
   }
 </script>
 
-{#if is_archive_sidebar_shown}
+<!-- {#if is_archive_sidebar_shown}
   <nav class="sidebar" transition:fly={{ x: 350 }}>
     <Card>
       <CardHeader>
@@ -74,34 +78,46 @@
       </CardBody>
     </Card>
   </nav>
-{/if}
+{/if} -->
+<button class="borderless-button" on:click={toggle}>
+  <Icon name="archive-fill" />
+  Archived Cards
+</button>
+<Offcanvas scroll isOpen={open} placement="end" {toggle}>
+  <Card>
+    <CardHeader>
+      <Container>
+        <Row>
+          <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
+        </Row>
+      </Container>
+    </CardHeader>
+    <CardBody>
+      {#each $session.archived_cards as card (card._id)}
+        <ViewCard
+          bind:card
+          on:cardunarchived={handleCardUnarchived}
+          isArchived
+        />
+      {/each}
+    </CardBody>
+  </Card>
+</Offcanvas>
 
 <style>
-  nav {
-    position: fixed;
-    top: 6.1em;
-    right: 0;
-    height: 100%;
-    border-left: 1px solid #aaa;
-    background: #fff;
-    overflow-y: auto;
-    width: 18em;
-    z-index: 1030;
-  }
-
   .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
     line-height: 0%;
     padding: 0%;
-    font-size: 30px;
+    font-size: medium;
     transition: transform 0.05s;
     transform-origin: center center;
-    color: lightgray;
+    text-align: center;
   }
 
-  .sidebar :global(.sidebar-sidebar-header) {
+  .sidebar-sidebar-header {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: bold;
