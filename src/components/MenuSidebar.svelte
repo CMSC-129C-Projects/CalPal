@@ -8,7 +8,7 @@
     CardBody,
     CardHeader,
     Icon,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
 
   export let is_menu_sidebar_shown;

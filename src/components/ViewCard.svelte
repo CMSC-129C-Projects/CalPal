@@ -10,7 +10,7 @@
     Col,
     Container,
     Row,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import Card from "./Card.svelte";
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
@@ -100,7 +100,7 @@
           />
         </FormGroup>
         <FormGroup>
-          <Attachment cardId={card._id} disabled={isArchived}/>
+          <Attachment cardId={card._id} disabled={isArchived} />
         </FormGroup>
       </Container>
       <Container>

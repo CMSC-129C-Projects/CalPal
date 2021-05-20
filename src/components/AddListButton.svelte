@@ -1,5 +1,5 @@
 <script>
-  import { Button, Icon } from "sveltestrap/src";
+  import { Button, Icon } from "sveltestrap";
 
   export let onClick;
 </script>

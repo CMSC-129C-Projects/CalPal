@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { Input, Label, Icon } from "sveltestrap/src";
+  import { Input, Label, Icon } from "sveltestrap";
   import getObjectId from "../routes/_object-id.js";
 
   export let cardId;
