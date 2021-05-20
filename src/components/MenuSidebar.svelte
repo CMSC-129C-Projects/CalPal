@@ -10,7 +10,7 @@
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
 
-  <Offcanvas scroll isOpen={isSidebarOpen} placement="end" {toggle}>
+  <Offcanvas header="Menu" isOpen={isSidebarOpen} placement="end" {toggle}>
     <Card>
       <CardBody>
         <ArchiveSidebar bind:isSidebarOpen />
