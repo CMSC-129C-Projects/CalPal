@@ -15,7 +15,11 @@
 
   const { session } = stores();
   let open = false;
-  const toggle = () => (open = !open);
+  export let isSidebarOpen;
+  const toggle = () => {
+    open = !open;
+    isSidebarOpen = false;
+  };
 
   export let is_archive_sidebar_shown;
 

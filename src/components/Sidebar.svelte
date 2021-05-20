@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Offcanvas, Card, CardBody, Icon } from "sveltestrap";
-  let open = false;
-  const toggle = () => (open = !open);
+  import ArchiveSidebar from "./ArchiveSidebar.svelte";
+  let isSidebarOpen = false;
+  const toggle = () => (isSidebarOpen = !isSidebarOpen);
 </script>
 
 <div>
@@ -9,7 +10,7 @@
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
 
-  <Offcanvas scroll isOpen={open} placement="end" {toggle}>
+  <Offcanvas scroll isOpen={isSidebarOpen} placement="end" {toggle}>
     <!-- <h1 slot="header">
       <i>Hello <b>World!</b></i>
     </h1>
@@ -17,10 +18,11 @@
     incididunt ut labore et dolore magna aliqua. -->
     <Card>
       <CardBody>
-        <button class="borderless-button">
-          <Icon name="archive-fill" />
-          Archived Cards
-        </button>
+        <!-- // <button class="borderless-button">
+          // <Icon name="archive-fill" />
+          // Archived Cards // //</button
+        //> -->
+        <ArchiveSidebar bind:isSidebarOpen />
       </CardBody>
     </Card>
   </Offcanvas>
