@@ -20,9 +20,6 @@ export async function post(req, res) {
     }
   };
 
-  console.debug("/cards/did-cards-load");
-  console.debug(zeroOneToBool(req.query.set));
-
   req.session.did_cards_load = zeroOneToBool(req.query.set);
   res.end();
 }

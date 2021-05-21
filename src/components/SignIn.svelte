@@ -8,10 +8,7 @@
   export let isNavBarVisible;
 
   const initializeUserSession = async (idToken) => {
-    console.debug("initializeUserSession()");
-    console.debug(typeof idToken);
-    console.debug(idToken);
-
+    // Verify ID token and get the corresponding user ID.
     let res = await fetch(`/api/user/idtoken`, {
       method: "POST",
       headers: {
@@ -33,8 +30,8 @@
         "Content-Type": "application/json",
       },
     });
+
     const userData = await res.json();
-    console.debug(userData);
     $session.lists = userData.lists;
     $session.archived_cards = userData.archived_cards;
 
