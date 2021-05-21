@@ -19,7 +19,7 @@
   };
 </script>
 
-<Button outline secondary style="width: 100%;" on:click={toggle}>
+<Button outline secondary style="width: 100%; color:black;" on:click={toggle}>
   <Icon name="box-arrow-left" />
   Sign Out
 </Button>
