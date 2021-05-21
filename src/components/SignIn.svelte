@@ -4,21 +4,35 @@
 
   export let isNavBarVisible;
 
-  function onSignIn(googleUser) {
-    console.debug("HERE!");
+  if (typeof window !== "undefined") {
+    window.onSignIn = (googleUser) => {
+      const profile = googleUser.getBasicProfile();
+      console.debug(`ID: ${profile.getId()}`);
+      console.debug(`Full Name: ${profile.getName()}`);
+      console.debug(`Given Name: ${profile.getGivenName()}`);
+      console.debug(`Family Name: ${profile.getFamilyName()}`);
+      console.debug(`Image URL: ${profile.getImageUrl()}`);
+      console.debug(`Email: ${profile.getEmail()}`);
 
-    const profile = googleUser.getBasicProfile();
-    console.debug(`ID: ${profile.getId()}`);
-    console.debug(`Full Name: ${profile.getName()}`);
-    console.debug(`Given Name: ${profile.getGivenName()}`);
-    console.debug(`Family Name: ${profile.getFamilyName()}`);
-    console.debug(`Image URL: ${profile.getImageUrl()}`);
-    console.debug(`Email: ${profile.getEmail()}`);
+      const id_token = googleUser.getAuthResponse().id_token;
+      console.debug(`ID Token: ${id_token}`);
+    };
 
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.debug(`ID Token: ${id_token}`);
+    window.onSignOut = async () => {
+      const auth2 = gapi.auth2.getAuthInstance();
+      await auth2.signOut();
+      console.debug("User signed out.");
+    };
   }
 </script>
+
+<svelte:head>
+  <meta
+    name="google-signin-client_id"
+    content="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
+  />
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</svelte:head>
 
 <div class="sign-in-div">
   <Card body color="light" class="sign-in-card">
@@ -31,12 +45,23 @@
         </Row>
         <Row>
           <div class="g-signin2" data-onsuccess="onSignIn" />
+        </Row>
+        <Row>
           <button
             on:click={() => {
               isNavBarVisible = !isNavBarVisible;
             }}
           >
-            Test
+            Go to Board
+          </button>
+        </Row>
+        <Row>
+          <button
+            on:click={async () => {
+              await window.onSignOut();
+            }}
+          >
+            Sign out
           </button>
         </Row>
       </Container>
