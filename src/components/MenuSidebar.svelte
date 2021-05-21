@@ -1,5 +1,5 @@
 <script>
-  import { Offcanvas, Card, CardBody } from "sveltestrap";
+  import { Offcanvas } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   let isSidebarOpen = false;
   const toggle = () => (isSidebarOpen = !isSidebarOpen);

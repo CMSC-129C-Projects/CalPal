@@ -21,10 +21,7 @@
     open = !open;
     isSidebarOpen = false;
   };
-  const back = () => {
-    open = false;
-    isSidebarOpen = true;
-  };
+
   function handleCardUnarchived(event) {
     console.debug(`[Sidebar.svelte] Handling 'cardunarchived'...`);
     if ($session.archived_cards === null || $session.lists.length === 0) {
