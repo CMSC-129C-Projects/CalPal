@@ -7,8 +7,19 @@
 
   export let isNavBarVisible;
 
-  const initializeUserSession = async (userId) => {
+  const initializeUserSession = async (idToken) => {
     console.debug("initializeUserSession()");
+    console.debug(typeof idToken);
+    console.debug(idToken);
+
+    let res = await fetch(`/api/user/idtoken`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idToken }),
+    });
+    const userId = await res.json();
 
     // Use the Google account's ID token as our `session.user_id`.
     await fetch(`/api/user/${userId}`, {
@@ -17,7 +28,7 @@
     $session.user_id = userId;
 
     // Retrieve the user's cards.
-    let res = await fetch(`/cards/${userId}.json`, {
+    res = await fetch(`/cards/${userId}.json`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,11 +59,8 @@
       // TODO: Don't use the user's email as per
       //       https://developers.google.com/identity/sign-in/web/backend-auth.
       //       Probably do something like:
-      //         const id_token = googleUser.getAuthResponse().id_token;
-      //         await initializeUserSession(id_token);
-      
-      const profile = googleUser.getBasicProfile();
-      await initializeUserSession(profile.getEmail());
+      const id_token = googleUser.getAuthResponse().id_token;
+      await initializeUserSession(id_token);
     };
 
     window.onSignOut = async () => {
