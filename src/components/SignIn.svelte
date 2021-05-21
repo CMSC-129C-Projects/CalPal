@@ -10,10 +10,13 @@
   const initializeUserSession = async (userId) => {
     console.debug("initializeUserSession()");
 
+    // Use the Google account's ID token as our `session.user_id`.
     await fetch(`/api/user/${userId}`, {
       method: "POST",
     });
+    $session.user_id = userId;
 
+    // Retrieve the user's cards.
     let res = await fetch(`/cards/${userId}.json`, {
       headers: {
         "Content-Type": "application/json",
@@ -21,8 +24,10 @@
     });
     const userData = await res.json();
     console.debug(userData);
-    $session = { ...userData };
+    $session.lists = userData.lists;
+    $session.archived_cards = userData.archived_cards;
 
+    // Insert the user's cards into the `session`.
     res = await fetch(`/cards/${userId}.json`, {
       method: "POST",
       headers: {
@@ -30,6 +35,12 @@
       },
       body: JSON.stringify({ ...userData }),
     });
+
+    // Tell the server that we have now loaded the user's cards.
+    res = await fetch(`/cards/did-cards-load?set=1`, {
+      method: "POST",
+    });
+    $session.did_cards_load = true;
   };
 
   if (typeof window !== "undefined") {
