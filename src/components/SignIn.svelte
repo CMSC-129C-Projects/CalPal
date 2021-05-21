@@ -1,11 +1,39 @@
 <script>
+  import { stores } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
   import { Card, CardBody } from "sveltestrap/src";
 
+  const { session } = stores();
+
   export let isNavBarVisible;
 
+  const initializeUserSession = async (userId) => {
+    console.debug("initializeUserSession()");
+
+    await fetch(`/api/user/${userId}`, {
+      method: "POST",
+    });
+
+    let res = await fetch(`/cards/${userId}.json`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const userData = await res.json();
+    console.debug(userData);
+    $session = { ...userData };
+
+    res = await fetch(`/cards/${userId}.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...userData }),
+    });
+  };
+
   if (typeof window !== "undefined") {
-    window.onSignIn = (googleUser) => {
+    window.onSignIn = async (googleUser) => {
       const profile = googleUser.getBasicProfile();
       console.debug(`ID: ${profile.getId()}`);
       console.debug(`Full Name: ${profile.getName()}`);
@@ -16,6 +44,8 @@
 
       const id_token = googleUser.getAuthResponse().id_token;
       console.debug(`ID Token: ${id_token}`);
+
+      await initializeUserSession(id_token);
     };
 
     window.onSignOut = async () => {
