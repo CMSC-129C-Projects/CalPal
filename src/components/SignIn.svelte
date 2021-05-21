@@ -45,18 +45,14 @@
 
   if (typeof window !== "undefined") {
     window.onSignIn = async (googleUser) => {
+      // TODO: Don't use the user's email as per
+      //       https://developers.google.com/identity/sign-in/web/backend-auth.
+      //       Probably do something like:
+      //         const id_token = googleUser.getAuthResponse().id_token;
+      //         await initializeUserSession(id_token);
+      
       const profile = googleUser.getBasicProfile();
-      console.debug(`ID: ${profile.getId()}`);
-      console.debug(`Full Name: ${profile.getName()}`);
-      console.debug(`Given Name: ${profile.getGivenName()}`);
-      console.debug(`Family Name: ${profile.getFamilyName()}`);
-      console.debug(`Image URL: ${profile.getImageUrl()}`);
-      console.debug(`Email: ${profile.getEmail()}`);
-
-      const id_token = googleUser.getAuthResponse().id_token;
-      console.debug(`ID Token: ${id_token}`);
-
-      await initializeUserSession(id_token);
+      await initializeUserSession(profile.getEmail());
     };
 
     window.onSignOut = async () => {
