@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload(_page, session) {
-    const userId = 1;
+    const userId = session.user_id;
     if (session.did_cards_load) {
       await this.fetch(`cards/${userId}-update.json`, {
         method: "POST",
@@ -41,7 +41,7 @@
 
 <div class="index-parent">
   <Header {isNavBarVisible} />
-  {#if $session && isNavBarVisible}
+  {#if $session.did_cards_load && isNavBarVisible}
     <Board />
   {:else}
     <div class="index-sign-in">
