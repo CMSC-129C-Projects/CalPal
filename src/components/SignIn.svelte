@@ -88,13 +88,25 @@
           <div class="g-signin2" data-onsuccess="onSignIn" />
         </Row>
         <Row>
-          <button
-            on:click={() => {
-              isNavBarVisible = !isNavBarVisible;
-            }}
-          >
-            Go to Board
-          </button>
+          <Col>
+            <button
+              on:click={() => {
+                isNavBarVisible = !isNavBarVisible;
+              }}
+            >
+              Go to Board
+            </button>
+          </Col>
+          <Col>
+            <button
+              on:click={() => {
+                initializeUserSession("1");
+                isNavBarVisible = !isNavBarVisible;
+              }}
+            >
+              Go to debug Board
+            </button>
+          </Col>
         </Row>
         <Row>
           <button
