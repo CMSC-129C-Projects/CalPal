@@ -1,10 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
   import { Offcanvas, Col, Container, Row, Icon, Button } from "sveltestrap";
-  import ViewCard from "./ViewCard.svelte";
   import BackSidebar from "./BackSidebar.svelte";
-
-  const { session } = stores();
 
   export let isSidebarOpen;
 
@@ -12,10 +9,6 @@
   const toggle = () => {
     open = !open;
     isSidebarOpen = false;
-  };
-  const back = () => {
-    open = false;
-    isSidebarOpen = true;
   };
 </script>
 

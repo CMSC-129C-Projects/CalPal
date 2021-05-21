@@ -1,5 +1,5 @@
 <script>
-  import { Offcanvas, Card, CardBody, Button } from "sveltestrap";
+  import { Offcanvas } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
