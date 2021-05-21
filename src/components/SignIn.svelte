@@ -66,7 +66,7 @@
 <svelte:head>
   <meta
     name="google-signin-client_id"
-    content="874358838704-q8m09bulue1j7hugsppo4e3tg9fqmrnc.apps.googleusercontent.com"
+    content={$session.GOOGLE_OAUTH2_CLIENT_ID}
   />
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 </svelte:head>
