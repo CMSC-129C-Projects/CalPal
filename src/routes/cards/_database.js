@@ -46,6 +46,48 @@ export async function updateCardsOfUser(userId, lists, archived_cards) {
   return result;
 }
 
+export async function createNewUser(userId) {
+  const db = await getDb();
+  const cards = db.collection("cards");
+
+  const result = await cards.insertOne({
+    user_id: userId,
+    lists: [
+      {
+        _id: newObjectIdString(),
+        list_name: "Not started",
+        cards: [
+          // TODO: Put a description to introduce CalPal.
+          {
+            _id: newObjectIdString(),
+            card_name: "Welcome to CalPal!",
+            original_title: "",
+            original_date: "",
+            date_created: new Date(Date.now()),
+            due_date_time: "",
+            remind_date_time: "",
+            description: "Hello world.",
+            color: "#ffffff",
+          },
+        ],
+      },
+      {
+        _id: newObjectIdString(),
+        list_name: "Doing",
+        cards: [],
+      },
+      {
+        _id: newObjectIdString(),
+        list_name: "Done",
+        cards: [],
+      },
+    ],
+    archived_cards: [],
+  });
+
+  return result;
+}
+
 export function newObjectIdString() {
   return new ObjectID().toHexString();
 }
