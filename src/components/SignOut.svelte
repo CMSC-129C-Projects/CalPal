@@ -32,7 +32,7 @@
     </div>
     <Container>
       <Row>
-        <Col>Insert Settings Here</Col>
+        <Col>Sign Out Shit Happens</Col>
       </Row>
     </Container>
   </Offcanvas>

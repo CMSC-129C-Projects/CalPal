@@ -20,7 +20,7 @@
     <br />
     <SettingsSidebar bind:isSidebarOpen />
     <br />
-    <SignOut />
+    <SignOut bind:isSidebarOpen />
   </Offcanvas>
 </div>
 
