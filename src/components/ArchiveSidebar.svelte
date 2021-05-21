@@ -1,6 +1,6 @@
 <script>
   import { stores } from "@sapper/app";
-  import { Offcanvas, Col, Container, Row, Icon } from "sveltestrap";
+  import { Offcanvas, Col, Container, Row, Icon, Card } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
   import BackSidebar from "./BackSidebar.svelte";
 
@@ -46,10 +46,12 @@
   }
 </script>
 
-<button class="borderless-button" on:click={toggle}>
-  <Icon name="archive-fill" />
-  Archived Cards
-</button>
+<Card on:click={toggle}>
+  <button class="borderless-button">
+    <Icon name="archive-fill" />
+    Archived Cards
+  </button>
+</Card>
 <div>
   <Offcanvas scroll isOpen={open} placement="end" {toggle}>
     <div slot="header" class="archive-sidebar-header-title">

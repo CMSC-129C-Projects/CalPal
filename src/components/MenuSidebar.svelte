@@ -11,11 +11,7 @@
   </button>
 
   <Offcanvas header="Menu" isOpen={isSidebarOpen} placement="end" {toggle}>
-    <Card>
-      <CardBody>
-        <ArchiveSidebar bind:isSidebarOpen />
-      </CardBody>
-    </Card>
+    <ArchiveSidebar bind:isSidebarOpen />
   </Offcanvas>
 </div>
 
