@@ -1,6 +1,14 @@
 <script>
   import { stores } from "@sapper/app";
-  import { Offcanvas, Col, Container, Row, Icon, Card } from "sveltestrap";
+  import {
+    Offcanvas,
+    Col,
+    Container,
+    Row,
+    Icon,
+    Card,
+    Button,
+  } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
   import BackSidebar from "./BackSidebar.svelte";
 
@@ -46,12 +54,16 @@
   }
 </script>
 
-<Card on:click={toggle}>
-  <button class="borderless-button">
-    <Icon name="archive-fill" />
-    Archived Cards
-  </button>
-</Card>
+<div class="component-button-parent">
+  <Button class="component-button" on:click={toggle}>
+    <Card class="component-button-card">
+      <button class="borderless-button">
+        <Icon name="archive-fill" />
+        Archived Cards
+      </button>
+    </Card>
+  </Button>
+</div>
 <div>
   <Offcanvas scroll isOpen={open} placement="end" {toggle}>
     <div slot="header" class="archive-sidebar-header-title">
@@ -75,6 +87,23 @@
 </div>
 
 <style>
+  .component-button-parent :global(.component-button-card) {
+    background-color: transparent;
+    padding: 5%;
+  }
+
+  .component-button-parent :global(.component-button) {
+    background-color: transparent;
+    padding: 0%;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: none;
+    color: black;
+    text-align: left;
+    width: 345px;
+  }
+
   .borderless-button {
     background-color: transparent;
     border: none;
