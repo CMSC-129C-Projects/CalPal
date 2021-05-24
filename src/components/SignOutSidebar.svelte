@@ -1,10 +1,7 @@
 <script>
+  import { stores, goto } from "@sapper/app";
   import { onMount } from "svelte";
   import {
-    Offcanvas,
-    Col,
-    Container,
-    Row,
     Icon,
     Button,
     Modal,
@@ -12,9 +9,8 @@
     ModalBody,
     ModalFooter,
   } from "sveltestrap";
-  import BackSidebar from "./BackSidebar.svelte";
 
-  export let isSignedIn;
+  const { session } = stores();
 
   let isSignOutModalVisible = false;
 
@@ -25,7 +21,6 @@
   $: onModalClose = () => {};
 
   onMount(() => {
-    // TODO: Clear out our `session` variables.
     window.onSignOut = async () => {
       const auth2 = gapi.auth2.getAuthInstance();
       await auth2.signOut();
@@ -60,12 +55,7 @@
     <Button
       color="danger"
       on:click={() => {
-        toggleSignOutModal();
         window.onSignOut();
-
-        onModalClose = () => {
-          isSignedIn = false;
-        };
       }}
     >
       <Icon name="box-arrow-left" />
