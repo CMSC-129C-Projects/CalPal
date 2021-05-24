@@ -24,6 +24,7 @@
     window.onSignOut = async () => {
       const auth2 = gapi.auth2.getAuthInstance();
       await auth2.signOut();
+      google.accounts.id.disableAutoSelect();
       console.debug("User signed out.");
 
       await fetch(`/api/user/signout`, {
