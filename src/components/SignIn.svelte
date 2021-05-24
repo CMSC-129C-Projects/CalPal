@@ -55,6 +55,7 @@
     // TODO: Find a way to use SSR here since it takes a while
     //       to show up on the client side.
     //       Maybe show a spinner instead if we can't?
+    /*global gapi*/
     gapi.signin2.render("g-sign-in", {
       longtitle: true,
       onsuccess: async (googleUser) => {
