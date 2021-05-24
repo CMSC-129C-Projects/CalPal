@@ -84,3 +84,10 @@ export async function deleteAttachmentsOfCard(cardId) {
 
   return result;
 }
+
+export async function getCalendarsOfUser(userId) {
+  const db = await getDb();
+  const result = db.collection("calendars").findOne({ user_id: userId });
+
+  return result.calendars;
+}

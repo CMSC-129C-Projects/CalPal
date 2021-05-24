@@ -4,9 +4,9 @@
 
   export let isSidebarOpen;
 
-  let open = false;
+  let isOpen = false;
   const toggle = () => {
-    open = !open;
+    isOpen = !isOpen;
     isSidebarOpen = false;
   };
 </script>
@@ -17,9 +17,9 @@
 </Button>
 
 <div>
-  <Offcanvas scroll isOpen={open} placement="end" {toggle}>
+  <Offcanvas scroll isOpen={isOpen} placement="end" {toggle}>
     <div slot="header" class="archive-sidebar-header-title">
-      <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
+      <BackSidebar bind:isCurrentMenuOpen={isOpen} bind:isSidebarOpen />
       Synced Calendars
     </div>
     <Container>
