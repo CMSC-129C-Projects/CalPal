@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { stores, goto } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
 
@@ -50,12 +51,18 @@
     await goto("/board");
   };
 
-  if (typeof window !== "undefined") {
-    window.onSignIn = async (googleUser) => {
-      const id_token = googleUser.getAuthResponse().id_token;
-      await initializeUserSession(id_token);
-    };
-  }
+  onMount(() => {
+    // TODO: Find a way to use SSR here since it takes a while
+    //       to show up on the client side.
+    //       Maybe show a spinner instead if we can't?
+    gapi.signin2.render("g-sign-in", {
+      longtitle: true,
+      onsuccess: async (googleUser) => {
+        const id_token = googleUser.getAuthResponse().id_token;
+        await initializeUserSession(id_token);
+      },
+    });
+  });
 </script>
 
 <svelte:head>
@@ -97,7 +104,7 @@
     <Container>
       <Row>
         <Col class="sign-in-interface-sign-in-button" align="center">
-          <div class="g-signin2" data-onsuccess="onSignIn" />
+          <div id="g-sign-in" />
         </Col>
       </Row>
     </Container>
