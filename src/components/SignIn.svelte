@@ -96,12 +96,7 @@
     </Container>
     <Container>
       <Row>
-        <Col class="sign-in-interface-section-body-login">
-          Please Log in to get started.
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+        <Col class="sign-in-interface-sign-in-button" align="center">
           <div class="g-signin2" data-onsuccess="onSignIn" />
         </Col>
       </Row>
@@ -162,39 +157,45 @@
     flex-wrap: wrap;
     height: 100%;
     width: 100%;
-    font-size: 30px;
+    font-size: 1.875rem;
   }
 
   .flex-item-left {
     background-color: #78c0e0;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-top: 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     flex: 35%;
   }
 
   .flex-item-left :global(.sign-in-interface-section-header) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 50px;
+    font-size: 3rem;
     color: white;
-    padding-top: 20px;
-    padding-left: 30px;
+    padding-top: 1.25rem;
+    padding-left: 1.875rem;
+    line-height: 3.5rem;
   }
 
   .flex-item-left :global(.sign-in-interface-section-body) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 1.25rem;
     color: white;
-    padding-left: 30px;
+    padding-left: 1.875rem;
+    padding-top: 2rem;
   }
 
   .flex-item-left :global(.sign-in-interface-section-body-login) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 30px;
+    font-size: 1.875rem;
     color: white;
-    padding-top: 20px;
-    padding-right: 5px;
+    padding-top: 1.25rem;
+    padding-right: 0.3125rem;
     text-align: center;
+  }
+
+  .flex-item-left :global(.sign-in-interface-sign-in-button) {
+    padding: 1.875rem;
   }
 
   img {
@@ -203,7 +204,7 @@
   }
 
   .flex-item-right {
-    padding: 40px;
+    padding: 2.5rem;
     flex: 65%;
     align-self: center;
   }
