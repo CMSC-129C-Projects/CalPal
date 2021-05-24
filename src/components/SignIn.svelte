@@ -194,9 +194,9 @@
     text-align: center;
   }
 
-  /* .flex-item-left :global(.sign-in-interface-sign-in-button) {
+  .flex-item-left :global(.sign-in-interface-sign-in-button) {
     padding: 1.875rem;
-  } */
+  }
 
   img {
     object-fit: contain;
