@@ -138,11 +138,11 @@
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>
       <ModalFooter>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
         <Button color="danger" on:click={() => deleteList(list._id)}>
           <Icon name="trash" />
           Delete
         </Button>
-        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
       </ModalFooter>
     </Modal>
   </Card>
