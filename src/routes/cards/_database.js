@@ -119,3 +119,10 @@ export async function deleteAttachment(attachmentId) {
 
   return result;
 }
+
+export async function deleteAttachmentsOfCard(cardId) {
+  const db = await getDb();
+  const result = db.collection("attachments").deleteMany({ card_id: cardId });
+
+  return result;
+}

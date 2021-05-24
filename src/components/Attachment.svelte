@@ -99,7 +99,15 @@
     {#each attachments as file (file._id)}
       <li class:is-image={isImage} style={imagePreviewStyle(file)}>
         <a href={file.data.path} target="_blank">{file.data.filename}</a>
-        <button on:click={() => deleteAttachment(file._id)}> Delete </button>
+        <button
+          on:click={() => {
+            if (!disabled) {
+              deleteAttachment(file._id);
+            }
+          }}
+        >
+          Delete
+        </button>
       </li>
     {/each}
   </ul>
