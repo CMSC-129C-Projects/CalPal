@@ -40,6 +40,10 @@
   });
 </script>
 
+<svelte:head>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</svelte:head>
+
 <Button
   outline
   secondary
