@@ -88,8 +88,8 @@
         <Col class="sign-in-interface-section-header">Welcome to CalPal!</Col>
       </Row>
       <Row>
-        <Col class="sign-in-interface-section-body"
-          ><p>
+        <Col class="sign-in-interface-section-body">
+          <p>
             CalPal is a productivity tool which lets you manage your tasks and
             schedules
           </p>
@@ -102,9 +102,9 @@
     </Container>
     <Container>
       <Row>
-        <Col class="sign-in-interface-section-body-login"
-          >Please Log in to get started.</Col
-        >
+        <Col class="sign-in-interface-section-body-login">
+          Please Log in to get started.
+        </Col>
       </Row>
       <Row>
         <Col>
