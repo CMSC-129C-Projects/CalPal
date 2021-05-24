@@ -1,23 +1,18 @@
 <script>
   import { stores } from "@sapper/app";
-  import { fly } from "svelte/transition";
-  import {
-    Col,
-    Container,
-    Row,
-    Card,
-    CardHeader,
-    CardBody,
-  } from "sveltestrap";
+  import { Offcanvas, Col, Container, Row, Icon, Button } from "sveltestrap";
   import ViewCard from "./ViewCard.svelte";
+  import BackSidebar from "./BackSidebar.svelte";
 
   const { session } = stores();
 
-  export let is_archive_sidebar_shown;
+  export let isSidebarOpen;
 
-  function closeSidebar() {
-    is_archive_sidebar_shown = false;
-  }
+  let open = false;
+  const toggle = () => {
+    open = !open;
+    isSidebarOpen = false;
+  };
 
   function handleCardUnarchived(event) {
     console.debug(`[Sidebar.svelte] Handling 'cardunarchived'...`);
@@ -48,63 +43,37 @@
   }
 </script>
 
-{#if is_archive_sidebar_shown}
-  <nav class="sidebar" transition:fly={{ x: 350 }}>
-    <Card>
-      <CardHeader>
-        <Container>
-          <Row>
-            <Col class="sidebar-sidebar-header" xs="10">Archived Cards</Col>
-            <Col xs="1">
-              <button class="borderless-button" on:click={closeSidebar}>
-                x
-              </button>
-            </Col>
-          </Row>
-        </Container>
-      </CardHeader>
-      <CardBody>
-        {#each $session.archived_cards as card (card._id)}
-          <ViewCard
-            bind:card
-            on:cardunarchived={handleCardUnarchived}
-            isArchived
-          />
-        {/each}
-      </CardBody>
-    </Card>
-  </nav>
-{/if}
+<Button outline secondary style="width: 100%; color:black;" on:click={toggle}>
+  <Icon name="archive-fill" />
+  Archived Cards
+</Button>
+
+<div>
+  <Offcanvas scroll isOpen={open} placement="end" {toggle}>
+    <div slot="header" class="archive-sidebar-header-title">
+      <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
+      Archived Cards
+    </div>
+    <Container>
+      <Row>
+        <Col>
+          {#each $session.archived_cards as card (card._id)}
+            <ViewCard
+              bind:card
+              on:cardunarchived={handleCardUnarchived}
+              isArchived
+            />
+          {/each}
+        </Col>
+      </Row>
+    </Container>
+  </Offcanvas>
+</div>
 
 <style>
-  nav {
-    position: fixed;
-    top: 6.1em;
-    right: 0;
-    height: 100%;
-    border-left: 1px solid #aaa;
-    background: #fff;
-    overflow-y: auto;
-    width: 18em;
-    z-index: 1030;
-  }
-
-  .borderless-button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    line-height: 0%;
-    padding: 0%;
-    font-size: 30px;
-    transition: transform 0.05s;
-    transform-origin: center center;
-    color: lightgray;
-  }
-
-  .sidebar :global(.sidebar-sidebar-header) {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
+  .archive-sidebar-header-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 </style>

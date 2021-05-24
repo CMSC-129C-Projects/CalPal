@@ -1,93 +1,47 @@
 <script>
-  import { fly } from "svelte/transition";
-  import {
-    Col,
-    Container,
-    Row,
-    Card,
-    CardBody,
-    CardHeader,
-    Icon,
-  } from "sveltestrap";
+  import { Offcanvas } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
-
-  export let is_menu_sidebar_shown;
-  export let is_archive_sidebar_shown;
-
-  function openArchivedCards() {
-    is_archive_sidebar_shown = true;
-    is_menu_sidebar_shown = false;
-  }
+  import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
+  import SettingsSidebar from "./SettingsSidebar.svelte";
+  import SignOut from "./SignOut.svelte";
+  let isSidebarOpen = false;
+  const toggle = () => (isSidebarOpen = !isSidebarOpen);
 </script>
 
-{#if is_menu_sidebar_shown}
-  <nav class="sidebar" transition:fly={{ x: 300, opacity: 1 }}>
-    <Card>
-      <CardHeader>
-        <Container>
-          <Row>
-            <Col class="sidebar-sidebar-header" xs="10">Menu</Col>
-            <Col xs="2">
-              <button
-                class="borderless-button sidebar-close-button"
-                on:click={() => {
-                  is_menu_sidebar_shown = !is_menu_sidebar_shown;
-                }}
-              >
-                x
-              </button>
-            </Col>
-          </Row>
-        </Container>
-      </CardHeader>
-      <CardBody>
-        <button class="borderless-button" on:click={openArchivedCards}>
-          <Icon name="archive-fill" />
-          Archived Cards
-        </button>
-      </CardBody>
-    </Card>
-  </nav>
-{/if}
+<div>
+  <button class="scale-on-hover borderless-button" on:click={toggle}>
+    <img src="menu_ellipses_vertical.png" alt="Menu" />
+  </button>
 
-<ArchiveSidebar bind:is_archive_sidebar_shown />
+  <Offcanvas header="Menu" isOpen={isSidebarOpen} placement="end" {toggle}>
+    <ArchiveSidebar bind:isSidebarOpen />
+    <br />
+    <SyncedCalendarsSidebar bind:isSidebarOpen />
+    <br />
+    <SettingsSidebar bind:isSidebarOpen />
+    <br />
+    <SignOut bind:isSidebarOpen />
+  </Offcanvas>
+</div>
 
 <style>
-  nav {
-    position: fixed;
-    top: 6.1em;
-    right: 0;
-    height: 100%;
-    padding: 0;
-    border-left: 1px solid #aaa;
-    background: #fff;
-    overflow-y: auto;
-    width: 18em;
-    z-index: 1030;
-  }
-
   .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
     line-height: 0%;
     padding: 0%;
-    font-size: medium;
+    font-size: 30px;
     transition: transform 0.05s;
     transform-origin: center center;
-    text-align: center;
   }
 
-  .sidebar-close-button {
-    font-size: 30px;
-    text-align: center;
-    color: lightgray;
+  .scale-on-hover:hover {
+    transform: scale(1.1);
   }
 
-  .sidebar :global(.sidebar-sidebar-header) {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
+  img {
+    width: 45px;
+    height: 45px;
   }
 </style>
