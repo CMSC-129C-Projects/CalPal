@@ -106,7 +106,7 @@
             }
           }}
         >
-          Delete
+          <Icon name="x-circle-fill" style="background-color:whitesmoke;" />
         </button>
       </li>
     {/each}
