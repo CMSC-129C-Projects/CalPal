@@ -19,7 +19,7 @@
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
   import getObjectId from "../routes/_object-id.js";
@@ -133,7 +133,7 @@
       </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <ModalHeader>Deleting list "{list.list_name}"</ModalHeader>
+      <ModalHeader>Deleting list</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>

@@ -1,20 +1,6 @@
 <script>
-  import MenuSidebar from "./MenuSidebar.svelte";
-  import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import AddCalendar from "./AddCalendar.svelte";
-
-  let is_menu_sidebar_shown;
-  let is_archive_sidebar_shown;
-
-  function handleMenuButton() {
-    if (!is_menu_sidebar_shown && !is_archive_sidebar_shown) {
-      is_menu_sidebar_shown = !is_menu_sidebar_shown;
-    } else if (is_menu_sidebar_shown && !is_archive_sidebar_shown) {
-      is_menu_sidebar_shown = !is_menu_sidebar_shown;
-    } else if (!is_menu_sidebar_shown && is_archive_sidebar_shown) {
-      is_archive_sidebar_shown = !is_archive_sidebar_shown;
-    }
-  }
+  import MenuSidebar from "./MenuSidebar.svelte";
 </script>
 
 <div class="parent">
@@ -22,11 +8,7 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <button class="scale-on-hover borderless-button" on:click={handleMenuButton}>
-    <img src="menu_ellipses_vertical.png" alt="Menu" />
-  </button>
-  <MenuSidebar bind:is_menu_sidebar_shown bind:is_archive_sidebar_shown />
-  <ArchiveSidebar bind:is_archive_sidebar_shown />
+  <MenuSidebar />
 </div>
 
 <style>
