@@ -18,8 +18,10 @@
     isSignOutModalVisible = !isSignOutModalVisible;
   };
 
+  let onSignOut = () => {};
+
   onMount(() => {
-    window.onSignOut = async () => {
+    onSignOut = async () => {
       const auth2 = gapi.auth2.getAuthInstance();
       await auth2.signOut();
       google.accounts.id.disableAutoSelect();
@@ -65,7 +67,7 @@
     <Button
       color="danger"
       on:click={() => {
-        window.onSignOut();
+        onSignOut();
       }}
     >
       <Icon name="box-arrow-left" />
