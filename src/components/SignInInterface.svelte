@@ -1,0 +1,148 @@
+<script>
+  import { Col, Container, Row } from "sveltestrap/src";
+  //   import { SignIn } from "SignIn.svelte";
+</script>
+
+<div class="flex-container">
+  <div class="flex-item-left">
+    <Container>
+      <Row>
+        <Col xs="4"
+          ><p class="overflow">
+            <img src="CalPal_logo.png" class="calpal-logo" alt="CalPal Logo" />
+            <span class="calpal cal">Cal</span>
+            <span class="calpal pal">Pal</span>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col class="section-header">Welcome to CalPal!</Col>
+      </Row>
+      <Row>
+        <Col class="section-body"
+          ><p>
+            CalPal is a productivity tool which lets you manage your tasks and
+            schedules
+          </p>
+          <p>
+            Sync multiple calendars and turn your events into card automatically
+          </p>
+          <p>Look ahead into your schedule with calendar view</p>
+        </Col>
+      </Row>
+    </Container>
+    <Container>
+      <Row>
+        <Col class="section-body-login">Please Log in to get started.</Col>
+      </Row>
+      <!-- import sign in here -->
+    </Container>
+  </div>
+
+  <div class="flex-item-right">
+    <img
+      src="div_illustration.png"
+      class="div-illustration"
+      alt="The CalPal team"
+    />
+  </div>
+</div>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .overflow {
+    white-space: nowrap;
+  }
+
+  .calpal-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .div-illustration {
+    width: 70%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .calpal {
+    font-size: 50px;
+    font-family: "Nunito", sans-serif;
+    position: relative;
+    top: 0.3em;
+    left: -0.1em;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+      1px 1px 0 white;
+  }
+
+  .cal {
+    color: #00b0f0;
+  }
+
+  .pal {
+    color: #f58f29;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    font-size: 30px;
+  }
+
+  .flex-item-left {
+    background-color: #78c0e0;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 35%;
+  }
+
+  .flex-item-left :global(.section-header) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 50px;
+    color: white;
+    padding-top: 20px;
+    padding-left: 30px;
+  }
+
+  .flex-item-left :global(.section-body) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: white;
+    padding-left: 30px;
+  }
+
+  .flex-item-left :global(.section-body-login) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    color: white;
+    padding-top: 20px;
+    padding-right: 5px;
+    text-align: center;
+  }
+
+  img {
+    object-fit: contain;
+    justify-content: center;
+  }
+
+  .flex-item-right {
+    padding: 40px;
+    flex: 65%;
+    align-self: center;
+  }
+
+  @media (max-width: 800px) {
+    .flex-item-right,
+    .flex-item-left {
+      flex: 100%;
+    }
+  }
+</style>

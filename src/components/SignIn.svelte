@@ -5,7 +5,7 @@
 
   const { session } = stores();
 
-  export let isNavBarVisible;
+  export let isSignedIn;
 
   const initializeUserSession = async (idToken) => {
     // Verify ID token and get the corresponding user ID.
@@ -77,7 +77,7 @@
 </svelte:head>
 
 <div class="sign-in-div">
-  <Card body color="light" class="sign-in-card">
+  <Card body color="transparent" class="sign-in-card">
     <CardBody class="sign-in-body">
       <Container>
         <Row>
@@ -92,7 +92,7 @@
           <Col>
             <button
               on:click={() => {
-                isNavBarVisible = !isNavBarVisible;
+                isSignedIn = !isSignedIn;
               }}
             >
               Go to Board
@@ -102,7 +102,7 @@
             <button
               on:click={() => {
                 initializeUserSession("1");
-                isNavBarVisible = !isNavBarVisible;
+                isSignedIn = !isSignedIn;
               }}
             >
               Go to debug Board
@@ -128,6 +128,5 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 50%;
   }
 </style>

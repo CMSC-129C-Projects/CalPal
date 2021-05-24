@@ -1,8 +1,6 @@
 <script>
   import { Col, Row } from "sveltestrap/src";
   import NavBar from "./NavBar.svelte";
-
-  export let isNavBarVisible;
 </script>
 
 <div class="header-parent">
@@ -16,9 +14,7 @@
     </Col>
     <Col xs="4" />
     <Col xs="4">
-      {#if isNavBarVisible}
-        <NavBar />
-      {/if}
+      <NavBar />
     </Col>
   </Row>
 </div>
