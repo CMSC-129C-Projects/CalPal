@@ -33,7 +33,13 @@
     dispatch("cardunarchived", cardId);
   }
 
-  function deleteCard(cardIdToDelete) {
+  async function deleteCard(cardIdToDelete) {
+    // Delete attachments of the card so that there are no stray
+    // files left over.
+    await fetch(`/cards/attachments/delete/card/${cardIdToDelete}`, {
+      method: "DELETE",
+    });
+
     const cardIndex = $session.archived_cards.findIndex(
       (card) => card._id === cardIdToDelete
     );
