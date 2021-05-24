@@ -3,10 +3,10 @@
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
-  import SignOutSidebar from "./SignOut.svelte";
+  import SignOutSidebar from "./SignOutSidebar.svelte";
 
   let isSidebarOpen = false;
-  
+
   const toggle = () => (isSidebarOpen = !isSidebarOpen);
 </script>
 
