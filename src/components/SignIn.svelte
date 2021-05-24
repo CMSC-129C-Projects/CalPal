@@ -4,7 +4,6 @@
 
   const { session } = stores();
 
-  export let isSignedIn;
 
   const initializeUserSession = async (idToken) => {
     // Verify ID token and get the corresponding user ID.

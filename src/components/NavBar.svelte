@@ -1,7 +1,5 @@
 <script>
   import MenuSidebar from "./MenuSidebar.svelte";
-
-  export let isSignedIn;
 </script>
 
 <div class="parent">
@@ -11,7 +9,7 @@
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>
-  <MenuSidebar bind:isSignedIn />
+  <MenuSidebar />
 </div>
 
 <style>

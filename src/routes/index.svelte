@@ -31,8 +31,6 @@
   import SignIn from "../components/SignIn.svelte";
 
   const { session } = stores();
-
-  let isSignedIn = false;
 </script>
 
 <svelte:head>
