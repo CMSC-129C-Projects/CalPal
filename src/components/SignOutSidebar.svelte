@@ -45,7 +45,7 @@
 <Button
   outline
   secondary
-  style="width: 100%; color:black;"
+  style="width: 100%; color: black;"
   on:click={() => {
     toggleSignOutModal();
   }}
