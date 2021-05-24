@@ -64,24 +64,18 @@
   </button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader {toggle}>
-      <span class="add-calendar-header-calpal add-calendar-header-cal">
-        Cal
-      </span>
-      <span class="add-calendar-header-calpal add-calendar-header-pal">
-        Pal
-      </span>
-      <span class="add-calendar-header"> - Add a New Calendar</span>
+      <span class="add-calendar-header">Add a New Calendar</span>
     </ModalHeader>
     <ModalBody>
       <Container>
         <Row class="add-calendar-message">
-          <Col>Input a shared calendar URL.</Col>
+          <Col>Input a shared calendar URL</Col>
         </Row>
         <br />
         <Row>
           <Col>
             <FormGroup>
-              <Label for="add-calendar-name">Calendar Name:</Label>
+              <Label for="add-calendar-name">Calendar Name</Label>
               <Input
                 type="plaintext"
                 name="calendar-name"
@@ -95,7 +89,7 @@
         <Row>
           <Col>
             <FormGroup>
-              <Label for="add-calendar-link">URL:</Label>
+              <Label for="add-calendar-link">URL</Label>
               <Input
                 type="url"
                 name="url"
@@ -117,7 +111,7 @@
           inputUrl = "";
         }}
       >
-        ADD CALENDAR
+        Add Calendar
       </Button>
     </ModalFooter>
   </Modal>
