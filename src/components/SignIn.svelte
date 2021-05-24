@@ -1,10 +1,8 @@
 <script>
-  import { stores } from "@sapper/app";
+  import { stores, goto } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
 
   const { session } = stores();
-
-  export let isSignedIn;
 
   const initializeUserSession = async (idToken) => {
     // Verify ID token and get the corresponding user ID.
@@ -48,6 +46,8 @@
       method: "POST",
     });
     $session.did_cards_load = true;
+
+    await goto("/board");
   };
 
   if (typeof window !== "undefined") {
@@ -103,26 +103,6 @@
       <Row>
         <Col>
           <div class="g-signin2" data-onsuccess="onSignIn" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <button
-            on:click={() => {
-              isSignedIn = !isSignedIn;
-            }}
-          >
-            Go to Board
-          </button>
-        </Col>
-        <Col>
-          <button
-            on:click={() => {
-              window.onSignOut();
-            }}
-          >
-            Log out
-          </button>
         </Col>
       </Row>
     </Container>
