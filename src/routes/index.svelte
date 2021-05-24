@@ -28,7 +28,7 @@
   import { stores } from "@sapper/app";
   import Header from "../components/Header.svelte";
   import Board from "../components/Board.svelte";
-  import SignIn from "../components/SignIn.svelte";
+  import SignInInterface from "../components/SignInInterface.svelte";
 
   const { session } = stores();
 
@@ -45,7 +45,7 @@
     <Board />
   {:else}
     <div class="index-sign-in">
-      <SignIn bind:isSignedIn />
+      <SignInInterface bind:isSignedIn />
     </div>
   {/if}
 </div>

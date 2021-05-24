@@ -1,7 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
-  import { Card, CardBody } from "sveltestrap/src";
+  import SignIn from "./SignIn.svelte";
 
   const { session } = stores();
 
@@ -53,9 +53,6 @@
 
   if (typeof window !== "undefined") {
     window.onSignIn = async (googleUser) => {
-      // TODO: Don't use the user's email as per
-      //       https://developers.google.com/identity/sign-in/web/backend-auth.
-      //       Probably do something like:
       const id_token = googleUser.getAuthResponse().id_token;
       await initializeUserSession(id_token);
     };
@@ -76,57 +73,172 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 </svelte:head>
 
-<div class="sign-in-div">
-  <Card body color="transparent" class="sign-in-card">
-    <CardBody class="sign-in-body">
-      <Container>
-        <Row>
-          <Col class="log-in-text" sm="12" md={{ size: 6, offset: 3 }}>
-            Log into CalPal
-          </Col>
-        </Row>
-        <Row>
+<div class="sign-in-interface-flex-container">
+  <div class="flex-item-left">
+    <Container>
+      <Row>
+        <Col xs="4">
+          <p class="overflow">
+            <img src="CalPal_logo.png" class="calpal-logo" alt="CalPal Logo" />
+            <span class="calpal cal">Cal</span>
+            <span class="calpal pal">Pal</span>
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col class="sign-in-interface-section-header">Welcome to CalPal!</Col>
+      </Row>
+      <Row>
+        <Col class="sign-in-interface-section-body"
+          ><p>
+            CalPal is a productivity tool which lets you manage your tasks and
+            schedules
+          </p>
+          <p>
+            Sync multiple calendars and turn your events into card automatically
+          </p>
+          <p>Look ahead into your schedule with calendar view</p>
+        </Col>
+      </Row>
+    </Container>
+    <Container>
+      <Row>
+        <Col class="sign-in-interface-section-body-login"
+          >Please Log in to get started.</Col
+        >
+      </Row>
+      <Row>
+        <Col>
           <div class="g-signin2" data-onsuccess="onSignIn" />
-        </Row>
-        <Row>
-          <Col>
-            <button
-              on:click={() => {
-                isSignedIn = !isSignedIn;
-              }}
-            >
-              Go to Board
-            </button>
-          </Col>
-          <Col>
-            <button
-              on:click={() => {
-                initializeUserSession("1");
-                isSignedIn = !isSignedIn;
-              }}
-            >
-              Go to debug Board
-            </button>
-          </Col>
-        </Row>
-        <Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <button
-            on:click={async () => {
-              await window.onSignOut();
+            on:click={() => {
+              isSignedIn = !isSignedIn;
             }}
           >
-            Sign out
+            Go to Board
           </button>
-        </Row>
-      </Container>
-    </CardBody>
-  </Card>
+        </Col>
+        <Col>
+          <button
+            on:click={() => {
+              window.onSignOut();
+            }}
+          >
+            Log out
+          </button>
+        </Col>
+      </Row>
+    </Container>
+  </div>
+
+  <div class="flex-item-right">
+    <img
+      src="div_illustration.png"
+      class="div-illustration"
+      alt="The CalPal team"
+    />
+  </div>
 </div>
 
 <style>
-  .sign-in-div {
+  * {
+    box-sizing: border-box;
+  }
+
+  .overflow {
+    white-space: nowrap;
+  }
+
+  .calpal-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .div-illustration {
+    width: 70%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .calpal {
+    font-size: 50px;
+    font-family: "Nunito", sans-serif;
+    position: relative;
+    top: 0.3em;
+    left: -0.1em;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+      1px 1px 0 white;
+  }
+
+  .cal {
+    color: #00b0f0;
+  }
+
+  .pal {
+    color: #f58f29;
+  }
+
+  .sign-in-interface-flex-container {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    font-size: 30px;
+  }
+
+  .flex-item-left {
+    background-color: #78c0e0;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 35%;
+  }
+
+  .flex-item-left :global(.sign-in-interface-section-header) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 50px;
+    color: white;
+    padding-top: 20px;
+    padding-left: 30px;
+  }
+
+  .flex-item-left :global(.sign-in-interface-section-body) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: white;
+    padding-left: 30px;
+  }
+
+  .flex-item-left :global(.sign-in-interface-section-body-login) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    color: white;
+    padding-top: 20px;
+    padding-right: 5px;
     text-align: center;
+  }
+
+  img {
+    object-fit: contain;
+    justify-content: center;
+  }
+
+  .flex-item-right {
+    padding: 40px;
+    flex: 65%;
+    align-self: center;
+  }
+
+  @media (max-width: 800px) {
+    .flex-item-right,
+    .flex-item-left {
+      flex: 100%;
+    }
   }
 </style>
