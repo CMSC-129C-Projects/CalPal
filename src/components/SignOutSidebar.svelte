@@ -25,6 +25,16 @@
       const auth2 = gapi.auth2.getAuthInstance();
       await auth2.signOut();
       console.debug("User signed out.");
+
+      await fetch(`/api/user/signout`, {
+        method: "POST"
+      });
+      $session.did_cards_load = false;
+      $session.user_id = "";
+      $session.lists = [];
+      $session.archived_cards = [];
+
+      goto("/");
     };
   });
 </script>
