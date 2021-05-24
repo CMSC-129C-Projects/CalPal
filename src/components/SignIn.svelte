@@ -1,7 +1,6 @@
 <script>
   import { stores } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
-  import SignIn from "./SignIn.svelte";
 
   const { session } = stores();
 
