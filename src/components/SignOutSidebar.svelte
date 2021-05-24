@@ -18,8 +18,6 @@
     isSignOutModalVisible = !isSignOutModalVisible;
   };
 
-  $: onModalClose = () => {};
-
   onMount(() => {
     window.onSignOut = async () => {
       const auth2 = gapi.auth2.getAuthInstance();
@@ -59,9 +57,6 @@
 <Modal
   isOpen={isSignOutModalVisible}
   toggle={toggleSignOutModal}
-  on:close={() => {
-    onModalClose();
-  }}
 >
   <ModalHeader toggle={toggleSignOutModal}>Sign out</ModalHeader>
   <ModalBody>Are you sure you want to sign out?</ModalBody>
