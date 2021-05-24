@@ -41,7 +41,7 @@
 
 <div class="index-parent">
   {#if $session.did_cards_load && isSignedIn}
-    <Header {isSignedIn} />
+    <Header bind:isSignedIn />
     <Board />
   {:else}
     <div class="index-sign-in">

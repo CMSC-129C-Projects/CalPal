@@ -1,6 +1,8 @@
 <script>
   import { Col, Row } from "sveltestrap";
   import NavBar from "./NavBar.svelte";
+
+  export let isSignedIn;
 </script>
 
 <div class="header-parent">
@@ -14,7 +16,7 @@
     </Col>
     <Col xs="4" />
     <Col xs="4">
-      <NavBar />
+      <NavBar bind:isSignedIn />
     </Col>
   </Row>
 </div>

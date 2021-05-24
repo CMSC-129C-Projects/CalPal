@@ -5,6 +5,8 @@
   import SettingsSidebar from "./SettingsSidebar.svelte";
   import SignOutSidebar from "./SignOutSidebar.svelte";
 
+  export let isSignedIn;
+
   let isSidebarOpen = false;
 
   const toggle = () => (isSidebarOpen = !isSidebarOpen);
@@ -22,7 +24,7 @@
     <br />
     <SettingsSidebar bind:isSidebarOpen />
     <br />
-    <SignOutSidebar bind:isSidebarOpen />
+    <SignOutSidebar bind:isSignedIn />
   </Offcanvas>
 </div>
 
