@@ -55,12 +55,6 @@
       const id_token = googleUser.getAuthResponse().id_token;
       await initializeUserSession(id_token);
     };
-
-    window.onSignOut = async () => {
-      const auth2 = gapi.auth2.getAuthInstance();
-      await auth2.signOut();
-      console.debug("User signed out.");
-    };
   }
 </script>
 
