@@ -18,15 +18,17 @@
     isSignOutModalVisible = !isSignOutModalVisible;
   };
 
+  let onSignOut = () => {};
+
   onMount(() => {
-    window.onSignOut = async () => {
+    onSignOut = async () => {
+      /*global gapi*/
       const auth2 = gapi.auth2.getAuthInstance();
       await auth2.signOut();
-      google.accounts.id.disableAutoSelect();
       console.debug("User signed out.");
 
       await fetch(`/api/user/signout`, {
-        method: "POST"
+        method: "POST",
       });
       $session.did_cards_load = false;
       $session.user_id = "";
@@ -37,10 +39,6 @@
     };
   });
 </script>
-
-<svelte:head>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</svelte:head>
 
 <Button
   outline
@@ -54,10 +52,7 @@
   Sign Out
 </Button>
 
-<Modal
-  isOpen={isSignOutModalVisible}
-  toggle={toggleSignOutModal}
->
+<Modal isOpen={isSignOutModalVisible} toggle={toggleSignOutModal}>
   <ModalHeader toggle={toggleSignOutModal}>Sign out</ModalHeader>
   <ModalBody>Are you sure you want to sign out?</ModalBody>
   <ModalFooter>
@@ -65,7 +60,7 @@
     <Button
       color="danger"
       on:click={() => {
-        window.onSignOut();
+        onSignOut();
       }}
     >
       <Icon name="box-arrow-left" />
