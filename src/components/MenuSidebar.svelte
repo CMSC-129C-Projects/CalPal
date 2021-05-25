@@ -3,8 +3,10 @@
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
-  import SignOut from "./SignOut.svelte";
+  import SignOutSidebar from "./SignOutSidebar.svelte";
+
   let isSidebarOpen = false;
+
   const toggle = () => (isSidebarOpen = !isSidebarOpen);
 </script>
 
@@ -20,7 +22,7 @@
     <br />
     <SettingsSidebar bind:isSidebarOpen />
     <br />
-    <SignOut bind:isSidebarOpen />
+    <SignOutSidebar />
   </Offcanvas>
 </div>
 

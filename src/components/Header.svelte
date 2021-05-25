@@ -13,7 +13,9 @@
       </p>
     </Col>
     <Col xs="4" />
-    <Col xs="4"><NavBar /></Col>
+    <Col xs="4">
+      <NavBar />
+    </Col>
   </Row>
 </div>
 
