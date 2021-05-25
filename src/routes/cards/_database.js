@@ -115,14 +115,14 @@ export async function insertAttachment(newAttachment) {
 
 export async function deleteAttachment(attachmentId) {
   const db = await getDb();
-  const result = db.collection("attachments").deleteOne({ _id: attachmentId });
+  const result = await db.collection("attachments").deleteOne({ _id: attachmentId });
 
   return result;
 }
 
 export async function deleteAttachmentsOfCard(cardId) {
   const db = await getDb();
-  const result = db.collection("attachments").deleteMany({ card_id: cardId });
+  const result = await db.collection("attachments").deleteMany({ card_id: cardId });
 
   return result;
 }
