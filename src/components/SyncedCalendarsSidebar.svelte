@@ -17,8 +17,8 @@
 </Button>
 
 <div>
-  <Offcanvas scroll {isOpen} placement="end" {toggle}>
-    <div slot="header" class="archive-sidebar-header-title">
+  <Offcanvas {isOpen} placement="end" toggle={toggleSidebar}>
+    <div slot="header" class="synced-calendars-sidebar-header-title">
       <BackSidebar bind:isCurrentMenuOpen={isOpen} bind:isSidebarOpen />
       Synced Calendars
     </div>
