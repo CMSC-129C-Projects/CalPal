@@ -1,9 +1,3 @@
-<script context="module">
-  export async function preload(_page, session) {
-    session.did_cards_load = false;
-  }
-</script>
-
 <main>
   <slot />
 </main>
