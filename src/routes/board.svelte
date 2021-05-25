@@ -2,7 +2,7 @@
   export async function preload(page, session) {
     const userId = session.user_id;
 
-    if (!session.user_id) {
+    if (!session.user_id || !session.did_cards_load) {
       return this.redirect(302, "/");
     }
 
