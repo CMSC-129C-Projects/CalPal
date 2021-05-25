@@ -42,6 +42,17 @@
       body: JSON.stringify({ ...userData }),
     });
 
+    // Retrieve the user's calendars.
+    res = await fetch(`/api/ical/user/${userId}.json`);
+    const calendars = await res.json();
+    
+    // Update the session to store the user's calendars.
+    res = await fetch(`/api/ical/session`, {
+      method: "POST",
+      body: JSON.stringify(calendars)
+    });
+    $session.calendars = calendars;
+
     // Tell the server that we have now loaded the user's cards.
     res = await fetch(`/cards/did-cards-load?set=1`, {
       method: "POST",
