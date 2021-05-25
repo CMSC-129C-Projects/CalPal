@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import { stores, goto } from "@sapper/app";
   import { Col, Container, Row } from "sveltestrap/src";
 
@@ -46,9 +45,15 @@
     res = await fetch(`/api/ical/user/${userId}.json`);
     const calendars = await res.json();
 
+    console.debug("[SignIn.svelte]");
+    console.debug(calendars);
+
     // Update the session to store the user's calendars.
     res = await fetch(`/api/ical/session`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(calendars),
     });
     $session.calendars = calendars;
@@ -62,10 +67,7 @@
     await goto("/board");
   };
 
-  onMount(() => {
-    // TODO: Find a way to use SSR here since it takes a while
-    //       to show up on the client side.
-    //       Maybe show a spinner instead if we can't?
+  const renderSignInButton = () => {
     /*global gapi*/
     gapi.signin2.render("g-sign-in", {
       longtitle: true,
@@ -74,7 +76,22 @@
         await initializeUserSession(id_token);
       },
     });
-  });
+  };
+
+  let isLoading = false;
+  const onGoogleApiLoad = (el) => {
+    isLoading = true;
+    el.addEventListener("load", () => {
+      isLoading = false;
+      if (isLoading === false) {
+        didGoogleApiLoad();
+      }
+    })
+  }
+
+  const didGoogleApiLoad = () => {
+    renderSignInButton();
+  }
 </script>
 
 <svelte:head>
@@ -82,7 +99,11 @@
     name="google-signin-client_id"
     content={$session.GOOGLE_OAUTH2_CLIENT_ID}
   />
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script
+    src="https://apis.google.com/js/platform.js"
+    async
+    defer
+    use:onGoogleApiLoad></script>
 </svelte:head>
 
 <div class="sign-in-interface-flex-container">
