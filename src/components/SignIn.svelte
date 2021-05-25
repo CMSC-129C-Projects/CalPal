@@ -45,11 +45,11 @@
     // Retrieve the user's calendars.
     res = await fetch(`/api/ical/user/${userId}.json`);
     const calendars = await res.json();
-    
+
     // Update the session to store the user's calendars.
     res = await fetch(`/api/ical/session`, {
       method: "POST",
-      body: JSON.stringify(calendars)
+      body: JSON.stringify(calendars),
     });
     $session.calendars = calendars;
 
