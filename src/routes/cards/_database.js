@@ -129,7 +129,7 @@ export async function deleteAttachmentsOfCard(cardId) {
 
 export async function getCalendarsOfUser(userId) {
   const db = await getDb();
-  const result = db.collection("calendars").findOne({ user_id: userId });
+  const result = await db.collection("calendars").findOne({ user_id: userId });
 
   return result.calendars;
 }
