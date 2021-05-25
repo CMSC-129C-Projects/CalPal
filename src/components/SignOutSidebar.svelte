@@ -35,7 +35,7 @@
       $session.lists = [];
       $session.archived_cards = [];
 
-      goto("/");
+      await goto("/");
     };
   });
 </script>
