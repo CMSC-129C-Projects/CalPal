@@ -1,17 +1,23 @@
-import { getCardsOfUser } from "./_database.js";
+import { getCardsOfUser, createNewUser } from "./_database.js";
 
 export async function get(req, res, next) {
   const { userId } = req.params;
 
-  const cards = await getCardsOfUser(userId);
+  let cards = await getCardsOfUser(userId);
 
-  if (cards !== null) {
-    res.writeHead(200, "Content-Type", "application/json");
-    res.end(JSON.stringify(cards));
-  } else {
-    console.error("Could not get cards");
+  if (cards === null) {
+    await createNewUser(userId);
+    cards = await getCardsOfUser(userId);
+  }
+
+  // We really can't get the user's cards.
+  if (cards === null) {
+    console.error("Really cannot get user's cards");
     next();
   }
+
+  res.writeHead(200, "Content-Type", "application/json");
+  res.end(JSON.stringify(cards));
 }
 
 export async function post(req, res) {

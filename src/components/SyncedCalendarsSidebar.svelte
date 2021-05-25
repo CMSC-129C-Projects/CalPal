@@ -11,7 +11,7 @@
   };
 </script>
 
-<Button outline secondary style="width: 100%; color:black;" on:click={toggle}>
+<Button outline secondary style="width: 100%; color: black;" on:click={toggle}>
   <Icon name="calendar-check-fill" />
   Synced Calendars
 </Button>
