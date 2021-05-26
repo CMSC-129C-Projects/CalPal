@@ -57,13 +57,17 @@
     <Container>
       <Row>
         <Col>
-          {#each $session.archived_cards as card (card._id)}
-            <ViewCard
-              bind:card
-              on:cardunarchived={handleCardUnarchived}
-              isArchived
-            />
-          {/each}
+          {#if $session.archived_cards && $session.archived_cards.length > 0}
+            {#each $session.archived_cards as card (card._id)}
+              <ViewCard
+                bind:card
+                on:cardunarchived={handleCardUnarchived}
+                isArchived
+              />
+            {/each}
+          {:else}
+            <p>You don't have any archived cards.</p>
+          {/if}
         </Col>
       </Row>
     </Container>
