@@ -1,6 +1,6 @@
 import { getCalendarsOfUser } from "../../../cards/_database";
 
-export async function get(req, res, next) {
+export async function get(req, res, _next) {
   const { userId } = req.params;
 
   let result = await getCalendarsOfUser(userId);
