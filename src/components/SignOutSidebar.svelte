@@ -24,7 +24,7 @@
     onSignOut = async () => {
       /*global gapi*/
       const auth2 =
-        gapi.auth2.getAuthInstance() ?? window.gapi.auth2.getAuthInstance();
+        gapi?.auth2.getAuthInstance() ?? window.gapi.auth2.getAuthInstance();
       await auth2.signOut();
       console.debug("User signed out.");
 
