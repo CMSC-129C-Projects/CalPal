@@ -3,11 +3,10 @@ import { getCalendarsOfUser } from "../../../cards/_database";
 export async function get(req, res, next) {
   const { userId } = req.params;
 
-  const result = await getCalendarsOfUser(userId);
+  let result = await getCalendarsOfUser(userId);
 
   if (!result) {
-    console.error("Could not get calendars of user");
-    next();
+    result = [];
   }
 
   res.writeHead(200, "Content-Type", "application/json");

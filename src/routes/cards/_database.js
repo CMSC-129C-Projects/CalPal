@@ -27,7 +27,12 @@ export async function getCardsOfUser(userId) {
   return userCards;
 }
 
-export async function updateCardsOfUser(userId, lists, archived_cards) {
+export async function updateCardsOfUser(
+  userId,
+  lists,
+  archived_cards,
+  calendars
+) {
   const db = await getDb();
   const cards = db.collection("cards");
 
@@ -39,11 +44,16 @@ export async function updateCardsOfUser(userId, lists, archived_cards) {
     },
   };
 
-  const result = await cards.updateOne(filter, updatedDocument);
-  console.log(
-    `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
-  );
-  return result;
+  await cards.updateOne(filter, updatedDocument);
+
+  const calendarsCollection = db.collection("calendars");
+  const updatedCalendars = {
+    $set: {
+      calendars: calendars,
+    },
+  };
+
+  await calendarsCollection.updateOne(filter, updatedCalendars);
 }
 
 export async function createNewUser(userId) {

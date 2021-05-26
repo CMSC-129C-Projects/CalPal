@@ -2,14 +2,16 @@ import { updateCardsOfUser } from "./_database.js";
 
 export async function post(req, res) {
   const { userId } = req.params;
-  const lists = req.body.lists;
-  const archivedCards = req.body.archived_cards;
 
-  const result = await updateCardsOfUser(userId, lists, archivedCards);
+  req.session.lists = req.body.lists ?? [];
+  req.session.archived_cards = req.body.archived_cards ?? [];
+  req.session.calendars = req.body.calendars ?? [];
 
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-  });
+  const lists = req.session.lists;
+  const archivedCards = req.session.archived_cards;
+  const calendars = req.session.calendars;
 
-  res.end(JSON.stringify(result));
+  await updateCardsOfUser(userId, lists, archivedCards, calendars);
+
+  res.end();
 }

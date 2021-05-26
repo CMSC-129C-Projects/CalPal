@@ -22,6 +22,11 @@
 
   const toggle = () => (open = !open);
 
+  const clearFields = () => {
+    calendarName = "";
+    inputUrl = "";
+  };
+
   const getCardsFromUrl = async (url) => {
     const encodedUrl = encodeURIComponent(url);
     console.debug(`[index.svelte] encodedUrl: ${encodedUrl}`);
@@ -33,7 +38,7 @@
     });
     const result = await response.json();
 
-    const insertCardsIntoList = (cards) => {
+    const insertCardsIntoFirstList = (cards) => {
       const isCardAlreadyInLists = (card) => {
         for (const list of $session.lists) {
           if (list.cards.find((c) => c._id === card._id)) {
@@ -54,7 +59,22 @@
       }
     };
 
-    insertCardsIntoList(result);
+    insertCardsIntoFirstList(result);
+  };
+
+  const addCalendar = async () => {
+    const res = await fetch(`/cards/new-oid.json`);
+    const result = await res.json();
+    const objectId = result.new_object_id;
+
+    $session.calendars = [
+      ...$session.calendars,
+      {
+        _id: objectId,
+        name: calendarName,
+        url: inputUrl,
+      },
+    ];
   };
 </script>
 
@@ -105,10 +125,11 @@
     <ModalFooter class="add-calendar-footer">
       <Button
         color="primary"
-        on:click={() => {
+        on:click={async () => {
           toggle();
-          getCardsFromUrl(inputUrl);
-          inputUrl = "";
+          await getCardsFromUrl(inputUrl);
+          await addCalendar();
+          clearFields();
         }}
       >
         Add Calendar

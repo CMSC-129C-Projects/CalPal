@@ -17,7 +17,7 @@
 </Button>
 
 <div>
-  <Offcanvas scroll isOpen={open} placement="end" {toggle}>
+  <Offcanvas isOpen={open} placement="end" {toggle}>
     <div slot="header" class="archive-sidebar-header-title">
       <BackSidebar bind:isCurrentMenuOpen={open} bind:isSidebarOpen />
       Settings

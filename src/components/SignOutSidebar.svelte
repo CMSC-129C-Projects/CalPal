@@ -23,7 +23,7 @@
   onMount(() => {
     onSignOut = async () => {
       /*global gapi*/
-      const auth2 = gapi.auth2.getAuthInstance();
+      const auth2 = window.gapi.auth2.getAuthInstance();
       await auth2.signOut();
       console.debug("User signed out.");
 
@@ -35,7 +35,7 @@
       $session.lists = [];
       $session.archived_cards = [];
 
-      goto("/");
+      await goto("/");
     };
   });
 </script>
