@@ -22,7 +22,9 @@
 
   onMount(() => {
     onSignOut = async () => {
-      const auth2 = window.gapi.auth2.getAuthInstance();
+      /*global gapi*/
+      const auth2 =
+        gapi.auth2.getAuthInstance() ?? window.gapi.auth2.getAuthInstance();
       await auth2.signOut();
       console.debug("User signed out.");
 
