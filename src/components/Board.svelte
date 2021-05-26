@@ -53,7 +53,7 @@
 </script>
 
 <div class="board-flex-box-container">
-  {#if $session.lists.length > 0}
+  {#if $session.lists && $session.lists.length > 0}
     {#each $session.lists as list (list._id)}
       <div transition:fade={{ duration: 150 }}>
         <List bind:list on:cardarchived={handleCardArchived} />
@@ -68,13 +68,15 @@
 </div>
 <div class="alert-area">
   <div class="alert-flexbox-container">
-    {#each $session.lists as list, i (i)}
-      {#each list.cards.filter((c) => {
-        return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, j (card)}
-        <Reminder bind:card id="{id}-card-{j}" />
+    {#if $session.lists && $session.lists.length > 0}
+      {#each $session.lists as list, i (i)}
+        {#each list.cards.filter((c) => {
+          return !(typeof c.card_name === "undefined" || c.is_archived);
+        }) as card, j (card)}
+          <Reminder bind:card id="{id}-card-{j}" />
+        {/each}
       {/each}
-    {/each}
+    {/if}
   </div>
 </div>
 
