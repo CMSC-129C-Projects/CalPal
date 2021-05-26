@@ -1,6 +1,7 @@
 <script>
+  import { onMount } from "svelte";
   import { stores, goto } from "@sapper/app";
-  import { Col, Container, Row } from "sveltestrap/src";
+  import { Col, Container, Row, Spinner } from "sveltestrap/src";
 
   const { session } = stores();
 
@@ -67,6 +68,8 @@
     await goto("/board");
   };
 
+  let googleApiScript;
+
   const renderSignInButton = () => {
     /*global gapi*/
     gapi.signin2.render("g-sign-in", {
@@ -78,20 +81,14 @@
     });
   };
 
-  let isLoading = false;
-  const onGoogleApiLoad = (el) => {
-    isLoading = true;
-    el.addEventListener("load", () => {
-      isLoading = false;
-      if (isLoading === false) {
-        didGoogleApiLoad();
-      }
-    });
-  };
+  let isGoogleApiScriptLoaded = false;
 
-  const didGoogleApiLoad = () => {
-    renderSignInButton();
-  };
+  onMount(() => {
+    googleApiScript.addEventListener("load", () => {
+      renderSignInButton();
+      isGoogleApiScriptLoaded = true;
+    });
+  });
 </script>
 
 <svelte:head>
@@ -103,7 +100,7 @@
     src="https://apis.google.com/js/platform.js"
     async
     defer
-    use:onGoogleApiLoad></script>
+    bind:this={googleApiScript}></script>
 </svelte:head>
 
 <div class="sign-in-interface-flex-container">
@@ -137,6 +134,9 @@
     <Container>
       <Row>
         <Col class="sign-in-interface-sign-in-button" align="center">
+          {#if !isGoogleApiScriptLoaded}
+            <Spinner color="light" />
+          {/if}
           <div id="g-sign-in" />
         </Col>
       </Row>
