@@ -90,7 +90,7 @@
       googleApiScript.addEventListener("load", () => {
         renderSignInButton();
         isGoogleApiScriptLoaded = true;
-      });  
+      });
     } else {
       renderSignInButton();
       isGoogleApiScriptLoaded = true;
