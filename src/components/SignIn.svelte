@@ -86,12 +86,12 @@
       if (isLoading === false) {
         didGoogleApiLoad();
       }
-    })
-  }
+    });
+  };
 
   const didGoogleApiLoad = () => {
     renderSignInButton();
-  }
+  };
 </script>
 
 <svelte:head>
