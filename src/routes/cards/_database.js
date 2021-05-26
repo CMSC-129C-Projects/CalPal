@@ -18,7 +18,7 @@ async function getDb() {
   return cachedDb;
 }
 
-export async function getCardsOfUser(userId) {
+export async function getUserData(userId) {
   const db = await getDb();
   const cards = db.collection("cards");
 
@@ -27,12 +27,7 @@ export async function getCardsOfUser(userId) {
   return userCards;
 }
 
-export async function updateCardsOfUser(
-  userId,
-  lists,
-  archived_cards,
-  calendars
-) {
+export async function updateUserData(userId, lists, archived_cards, calendars) {
   const db = await getDb();
   const cards = db.collection("cards");
 
@@ -41,19 +36,12 @@ export async function updateCardsOfUser(
     $set: {
       lists: lists,
       archived_cards: archived_cards,
-    },
-  };
-
-  await cards.updateOne(filter, updatedDocument);
-
-  const calendarsCollection = db.collection("calendars");
-  const updatedCalendars = {
-    $set: {
       calendars: calendars,
     },
   };
 
-  await calendarsCollection.updateOne(filter, updatedCalendars);
+  const result = await cards.updateOne(filter, updatedDocument);
+  return result;
 }
 
 export async function createNewUser(userId) {
@@ -93,6 +81,7 @@ export async function createNewUser(userId) {
       },
     ],
     archived_cards: [],
+    calendars: [],
   });
 
   return result;

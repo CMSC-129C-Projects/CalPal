@@ -1,4 +1,4 @@
-import { updateCardsOfUser } from "./_database.js";
+import { updateUserData } from "./_database.js";
 
 export async function post(req, res) {
   const { userId } = req.params;
@@ -11,7 +11,7 @@ export async function post(req, res) {
   const archivedCards = req.session.archived_cards;
   const calendars = req.session.calendars;
 
-  await updateCardsOfUser(userId, lists, archivedCards, calendars);
+  await updateUserData(userId, lists, archivedCards, calendars);
 
   res.end();
 }
