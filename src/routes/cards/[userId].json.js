@@ -1,13 +1,13 @@
-import { getCardsOfUser, createNewUser } from "./_database.js";
+import { getUserData, createNewUser } from "./_database.js";
 
 export async function get(req, res, next) {
   const { userId } = req.params;
 
-  let cards = await getCardsOfUser(userId);
+  let cards = await getUserData(userId);
 
   if (cards === null) {
     await createNewUser(userId);
-    cards = await getCardsOfUser(userId);
+    cards = await getUserData(userId);
   }
 
   // We really can't get the user's cards.
@@ -24,6 +24,7 @@ export async function post(req, res) {
   req.session.user_id = req.body.user_id;
   req.session.lists = req.body.lists;
   req.session.archived_cards = req.body.archived_cards;
+  req.session.calendars = req.body.calendars;
 
   res.writeHead(200, {
     "Content-Type": "application/json",
