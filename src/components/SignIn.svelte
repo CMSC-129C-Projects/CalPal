@@ -84,10 +84,17 @@
   let isGoogleApiScriptLoaded = false;
 
   onMount(() => {
-    googleApiScript.addEventListener("load", () => {
+    // If the script hasn't loaded yet, listen to the `load` event.
+    // We know that it hasn't loaded if `gapi` doesn't exist.
+    if (typeof gapi === "undefined") {
+      googleApiScript.addEventListener("load", () => {
+        renderSignInButton();
+        isGoogleApiScriptLoaded = true;
+      });  
+    } else {
       renderSignInButton();
       isGoogleApiScriptLoaded = true;
-    });
+    }
   });
 </script>
 
