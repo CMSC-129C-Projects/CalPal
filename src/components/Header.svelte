@@ -7,15 +7,20 @@
 
 <div class="header-parent">
   <Row class="header-header">
-    <Col xs="4">
+    <Col class="d-none d-sm-block">
       <p class="overflow">
         <img src="CalPal_logo.png" alt="CalPal Logo" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
       </p>
     </Col>
-    <Col xs="4" />
-    <Col xs="4"><NavBar bind:is_board_shown /></Col>
+    <Col class="d-block d-sm-none">
+      <!-- TODO: Tweak the padding to make it match on `sm` and above devices -->
+      <p class="overflow" style="padding-top: 0.75rem;">
+        <img src="CalPal_logo.png" alt="CalPal Logo" />
+      </p>
+    </Col>
+    <Col class="d-xs-block"><NavBar bind:is_board_shown /></Col>
   </Row>
 </div>
 
