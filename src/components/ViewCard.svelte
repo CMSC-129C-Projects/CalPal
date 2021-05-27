@@ -30,7 +30,9 @@
 
   if (!showCard) {
     open = true;
-    toggle = () => {};
+    toggle = () => {
+      open = false;
+    };
   }
 
   let cardColor;
