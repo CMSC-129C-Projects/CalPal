@@ -22,14 +22,16 @@
   } from "../routes/_date-format.js";
 
   export let card;
-  // TODO: When toggling isArchived, all footer elements appear at
-  //       the same time for a moment as the Card does its fade
-  //       animation. Find a way to make it so the new footer
-  //       elements don't show up while the animation is occurring.
   export let isArchived = false;
+  export let showCard = true;
 
   let open = false;
-  const toggle = () => (open = !open);
+  let toggle = () => (open = !open);
+
+  if (!showCard) {
+    open = true;
+    let toggle = () => {};
+  }
 
   let cardColor;
   $: {
@@ -69,8 +71,10 @@
 </script>
 
 <div class="view-card-parent">
-  <Card {card} {cardColor} on:click={toggle} />
-  <Modal isOpen={open} {toggle}>
+  {#if showCard}
+    <Card {card} {cardColor} on:click={toggle} />
+  {/if}
+  <Modal isOpen={open} {toggle} on:opening on:open on:closing on:close>
     <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
         bind:value={card.card_name}
