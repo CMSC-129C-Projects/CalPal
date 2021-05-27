@@ -74,6 +74,7 @@
     width: 400px;
     opacity: 0.85;
     color: rgba(255, 255, 255, 0.9);
+    z-index: 1031; /* Render on top of Calendar */
   }
 
   .alert-flexbox-container {
