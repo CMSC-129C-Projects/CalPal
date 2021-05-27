@@ -51,14 +51,16 @@
       remindDateTime.time = "";
       card.due_date_time = "";
       card.remind_date_time = "";
-    } else if (remindDateTime.date === "") {
+    } else {
+      card.due_date_time = new Date(
+        `${dueDateTime.date} ${dueDateTime.time}`.trim()
+      );
+    }
+
+    if (remindDateTime.date === "") {
       remindDateTime.time = "";
       card.remind_date_time = "";
     } else {
-      const newDueDateTime = new Date(
-        `${dueDateTime.date} ${dueDateTime.time}`.trim()
-      );
-      card.due_date_time = newDueDateTime;
       card.remind_date_time = new Date(
         `${remindDateTime.date} ${remindDateTime.time}`.trim()
       );
