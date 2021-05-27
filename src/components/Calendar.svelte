@@ -1,13 +1,16 @@
 <script>
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
   import { stores } from "@sapper/app";
   import { Container } from "sveltestrap";
   import FullCalendar from "svelte-fullcalendar";
   import dayGridPlugin from "@fullcalendar/daygrid";
+  import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
+  const selectedCard = writable(null);
 
-  const eventsFromCards = () => {
+  $: eventsFromCards = () => {
     let events = [];
 
     $session.lists.forEach((list) => {
@@ -41,6 +44,8 @@
     return events;
   };
 
+  $: events = eventsFromCards();
+
   let plugins = [];
 
   onMount(async () => {
@@ -50,7 +55,19 @@
   $: options = {
     initialView: "dayGridMonth",
     plugins: plugins,
-    events: eventsFromCards(),
+    events: events,
+    eventClick: (eventClickInfo) => {
+      for (const list of $session.lists) {
+        const result = list.cards.find(
+          (c) => c._id === eventClickInfo.event.id
+        );
+        if (result) {
+          $selectedCard = result;
+          return;
+        }
+      }
+      $selectedCard = null;
+    },
     dayMaxEventRows: true,
     height: "100%",
     eventTextColor: "#000000",
@@ -61,6 +78,15 @@
 
 <div class="calendar-flex-box-container">
   <FullCalendar {options} />
+  {#if $selectedCard}
+    <ViewCard
+      bind:card={$selectedCard}
+      showCard={false}
+      on:close={() => {
+        $selectedCard = null;
+      }}
+    />
+  {/if}
 </div>
 
 <style>
