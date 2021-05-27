@@ -6,7 +6,24 @@
 
   const { session } = stores();
 
-  let options = { initialView: "dayGridMonth", plugins: [dayGridPlugin], height: "100%" };
+  const eventsFromCards = () => {
+    let events = [];
+
+    $session.lists.forEach((list) => {
+      list.cards.forEach((card) => {
+        const event = {
+          title: card.card_name !== "" ? card.card_name : card.original_title,
+          date: card.due_date_time !== "" ? card.due_date_time : card.original_date
+        };
+
+        events = [...events, event];
+      });
+    });
+
+    return events;
+  };
+
+  $: options = { initialView: "dayGridMonth", plugins: [dayGridPlugin], height: "100%", events: eventsFromCards() };
 </script>
 
 <div class="calendar-flex-box-container">
