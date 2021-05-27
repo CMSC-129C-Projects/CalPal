@@ -18,7 +18,7 @@ async function getDb() {
   return cachedDb;
 }
 
-export async function getCardsOfUser(userId) {
+export async function getUserData(userId) {
   const db = await getDb();
   const cards = db.collection("cards");
 
@@ -27,7 +27,7 @@ export async function getCardsOfUser(userId) {
   return userCards;
 }
 
-export async function updateCardsOfUser(userId, lists, archived_cards) {
+export async function updateUserData(userId, lists, archived_cards, calendars) {
   const db = await getDb();
   const cards = db.collection("cards");
 
@@ -36,13 +36,54 @@ export async function updateCardsOfUser(userId, lists, archived_cards) {
     $set: {
       lists: lists,
       archived_cards: archived_cards,
+      calendars: calendars,
     },
   };
 
   const result = await cards.updateOne(filter, updatedDocument);
-  console.log(
-    `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
-  );
+  return result;
+}
+
+export async function createNewUser(userId) {
+  const db = await getDb();
+  const cards = db.collection("cards");
+
+  const result = await cards.insertOne({
+    user_id: userId,
+    lists: [
+      {
+        _id: newObjectIdString(),
+        list_name: "Not started",
+        cards: [
+          // TODO: Put a description to introduce CalPal.
+          {
+            _id: newObjectIdString(),
+            card_name: "Welcome to CalPal!",
+            original_title: "",
+            original_date: "",
+            date_created: new Date(Date.now()),
+            due_date_time: "",
+            remind_date_time: "",
+            description: "Hello world.",
+            color: "#ffffff",
+          },
+        ],
+      },
+      {
+        _id: newObjectIdString(),
+        list_name: "Doing",
+        cards: [],
+      },
+      {
+        _id: newObjectIdString(),
+        list_name: "Done",
+        cards: [],
+      },
+    ],
+    archived_cards: [],
+    calendars: [],
+  });
+
   return result;
 }
 
@@ -73,7 +114,25 @@ export async function insertAttachment(newAttachment) {
 
 export async function deleteAttachment(attachmentId) {
   const db = await getDb();
-  const result = db.collection("attachments").deleteOne({ _id: attachmentId });
+  const result = await db
+    .collection("attachments")
+    .deleteOne({ _id: attachmentId });
 
   return result;
+}
+
+export async function deleteAttachmentsOfCard(cardId) {
+  const db = await getDb();
+  const result = await db
+    .collection("attachments")
+    .deleteMany({ card_id: cardId });
+
+  return result;
+}
+
+export async function getCalendarsOfUser(userId) {
+  const db = await getDb();
+  const result = await db.collection("calendars").findOne({ user_id: userId });
+
+  return result.calendars;
 }

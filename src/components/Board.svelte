@@ -50,11 +50,13 @@
 </script>
 
 <div class="board-flex-box-container">
-  {#each $session.lists as list (list._id)}
-    <div transition:fade|local={{ duration: 150 }}>
-      <List bind:list on:cardarchived={handleCardArchived} />
-    </div>
-  {/each}
+  {#if $session.lists && $session.lists.length > 0}
+    {#each $session.lists as list (list._id)}
+      <div transition:fade|local={{ duration: 150 }}>
+        <List bind:list on:cardarchived={handleCardArchived} />
+      </div>
+    {/each}
+  {/if}
   <AddListButton
     onClick={() => {
       createNewList();

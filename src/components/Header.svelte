@@ -1,6 +1,7 @@
 <script>
-  import { Col, Row } from "sveltestrap/src";
+  import { Col, Row } from "sveltestrap";
   import NavBar from "./NavBar.svelte";
+
   export let is_board_shown;
 </script>
 

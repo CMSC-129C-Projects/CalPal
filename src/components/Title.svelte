@@ -1,6 +1,6 @@
 <script>
   import { tick } from "svelte";
-  import { Input } from "sveltestrap/src";
+  import { Input } from "sveltestrap";
 
   export let value;
   export let id;

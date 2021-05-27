@@ -5,7 +5,7 @@ import * as sapper from "@sapper/server";
 import session from "express-session";
 import { json } from "body-parser";
 
-const { PORT, NODE_ENV } = process.env;
+const { PORT, NODE_ENV, GOOGLE_OAUTH2_CLIENT_ID } = process.env;
 const dev = NODE_ENV === "development";
 
 polka() // You can also use Express
@@ -29,6 +29,8 @@ polka() // You can also use Express
         user_id: req.session.user_id,
         lists: req.session.lists,
         archived_cards: req.session.archived_cards,
+        calendars: req.session.calendars,
+        GOOGLE_OAUTH2_CLIENT_ID,
       }),
     })
   )

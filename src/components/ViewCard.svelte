@@ -10,7 +10,7 @@
     Col,
     Container,
     Row,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import Card from "./Card.svelte";
   import Title from "./Title.svelte";
   import ColorPicker from "./ColorPicker.svelte";
@@ -66,10 +66,10 @@
   }
 </script>
 
-<div class="view-card-parent" style="--card-color: {cardColor}">
+<div class="view-card-parent">
   <Card {card} {cardColor} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
-    <ModalHeader class="card-card-label" {toggle}>
+    <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
         bind:value={card.card_name}
         id="card-{card._id}"
@@ -100,7 +100,7 @@
           />
         </FormGroup>
         <FormGroup>
-          <Attachment cardId={card._id} />
+          <Attachment cardId={card._id} disabled={isArchived} />
         </FormGroup>
       </Container>
       <Container>
@@ -160,13 +160,14 @@
     </ModalBody>
     <ModalFooter>
       <Container>
-        <Row class="view-card-container">
-          <Col class="view-card-left-half" xs="4.5">
-            {#if !isArchived}
+        <Row>
+          {#if !isArchived}
+            <Col>
               <ColorPicker bind:color={card.color} />
-            {/if}
-          </Col>
-          <Col class="view-card-right-half" xs="7.5">
+            </Col>
+          {/if}
+          <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
+          <Col style="display: flex; justify-content: flex-end;">
             <ArchiveCard
               bind:card
               {isArchived}
@@ -179,34 +180,3 @@
     </ModalFooter>
   </Modal>
 </div>
-
-<style>
-  .view-card-parent :global(.card-card-label) {
-    background-color: var(--card-color, transparent);
-  }
-
-  .view-card-parent :global(.view-card-container) {
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .view-card-parent :global(.view-card-left-half) {
-    background-color: transparent;
-    display: flex;
-    border: none;
-    outline: none;
-    padding: 0%;
-    flex-grow: 1;
-  }
-
-  .view-card-parent :global(.view-card-right-half) {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    align-items: center;
-    display: flex;
-    padding: 0%;
-  }
-</style>

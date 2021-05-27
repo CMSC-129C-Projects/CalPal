@@ -1,11 +1,5 @@
 <script>
-  import {
-    Button,
-    Card,
-    CardBody,
-    CardSubtitle,
-    CardTitle,
-  } from "sveltestrap/src";
+  import { Button, Card, CardBody, CardSubtitle, CardTitle } from "sveltestrap";
   import { formattedDate } from "../routes/_date-format.js";
 
   export let card;

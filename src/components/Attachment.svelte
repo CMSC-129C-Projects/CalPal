@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { CustomInput, Label, Icon } from "sveltestrap/src";
+  import { Input, Label, Icon } from "sveltestrap";
   import getObjectId from "../routes/_object-id.js";
 
   export let cardId;
@@ -85,7 +85,7 @@
   <Icon name="paperclip" />
   Attachments
 </Label>
-<CustomInput
+<Input
   type="file"
   {name}
   {accept}
@@ -99,7 +99,15 @@
     {#each attachments as file (file._id)}
       <li class:is-image={isImage} style={imagePreviewStyle(file)}>
         <a href={file.data.path} target="_blank">{file.data.filename}</a>
-        <button on:click={() => deleteAttachment(file._id)}> Delete </button>
+        <button
+          on:click={() => {
+            if (!disabled) {
+              deleteAttachment(file._id);
+            }
+          }}
+        >
+          Delete
+        </button>
       </li>
     {/each}
   </ul>

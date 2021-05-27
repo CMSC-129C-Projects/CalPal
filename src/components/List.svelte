@@ -19,7 +19,7 @@
     ModalHeader,
     ModalBody,
     ModalFooter,
-  } from "sveltestrap/src";
+  } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
   import getObjectId from "../routes/_object-id.js";
@@ -133,16 +133,16 @@
       </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <ModalHeader>Deleting list "{list.list_name}"</ModalHeader>
+      <ModalHeader>Deleting list</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>
       <ModalFooter>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
         <Button color="danger" on:click={() => deleteList(list._id)}>
           <Icon name="trash" />
           Delete
         </Button>
-        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
       </ModalFooter>
     </Modal>
   </Card>
@@ -154,8 +154,8 @@
   }
 
   .list-parent :global(.list-list) {
-    width: 250px;
-    min-width: 250px;
+    width: 260px;
+    min-width: 260px;
     max-height: 100%;
   }
 
