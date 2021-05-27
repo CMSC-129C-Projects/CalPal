@@ -2,9 +2,7 @@
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
   import { stores } from "@sapper/app";
-  import { Container } from "sveltestrap";
   import FullCalendar from "svelte-fullcalendar";
-  import dayGridPlugin from "@fullcalendar/daygrid";
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
