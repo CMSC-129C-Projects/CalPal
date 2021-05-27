@@ -12,9 +12,26 @@
 
     $session.lists.forEach((list) => {
       list.cards.forEach((card) => {
+        const title =
+          card.card_name !== "" ? card.card_name : card.original_title;
+        const start = new Date(
+          card.due_date_time !== "" ? card.due_date_time : card.original_date
+        );
+
+        // NOTE: By default, FullCalendar lets the duration of an event without
+        //       an end time to be one hour long. This means that events after
+        //       11:00 PM spill over into the next day.
+        //       To fix this, we just set each event to be one second long.
+        let end = new Date(start);
+        end.setSeconds(start.getSeconds() + 1);
+
         const event = {
-          title: card.card_name !== "" ? card.card_name : card.original_title,
-          date: card.due_date_time !== "" ? card.due_date_time : card.original_date
+          id: card._id,
+          title: title,
+          start: start,
+          end: end,
+          backgroundColor: card.color,
+          borderColor: "rgba(0, 0, 0, 0.125)",
         };
 
         events = [...events, event];
@@ -27,18 +44,23 @@
   let plugins = [];
 
   onMount(async () => {
-    plugins = [
-      (await import("@fullcalendar/daygrid")).default
-    ];
+    plugins = [(await import("@fullcalendar/daygrid")).default];
   });
 
-  $: options = { initialView: "dayGridMonth", plugins: plugins, height: "100%", events: eventsFromCards() };
+  $: options = {
+    initialView: "dayGridMonth",
+    plugins: plugins,
+    events: eventsFromCards(),
+    dayMaxEventRows: true,
+    height: "100%",
+    eventTextColor: "#000000",
+    eventDisplay: "block",
+    displayEventTime: false,
+  };
 </script>
 
 <div class="calendar-flex-box-container">
-  <Container style="height: 100%;">
-    <FullCalendar {options} />
-  </Container>
+  <FullCalendar {options} />
 </div>
 
 <style>
@@ -46,8 +68,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem;
     height: 100%;
   }
 </style>
