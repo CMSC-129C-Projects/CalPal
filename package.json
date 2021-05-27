@@ -16,6 +16,7 @@
     "express-session": "^1.17.1",
     "google-auth-library": "^7.0.4",
     "mongodb": "^3.6.5",
+    "node-ical": "^0.13.0",
     "polka": "next",
     "sirv": "^1.0.0"
   },

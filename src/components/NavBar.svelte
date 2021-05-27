@@ -1,11 +1,10 @@
 <script>
+  import AddCalendar from "./AddCalendar.svelte";
   import MenuSidebar from "./MenuSidebar.svelte";
 </script>
 
 <div class="parent">
-  <button class="scale-on-hover borderless-button">
-    <img src="add_calendar.png" alt="Add Calendar" />
-  </button>
+  <AddCalendar />
   <button class="scale-on-hover borderless-button">
     <img src="switch_board_view.png" alt="Board view" />
   </button>

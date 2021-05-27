@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { stores, goto } from "@sapper/app";
-  import { Col, Container, Row } from "sveltestrap/src";
+  import { Col, Container, Row, Spinner } from "sveltestrap/src";
 
   const { session } = stores();
 
@@ -32,6 +32,7 @@
     const userData = await res.json();
     $session.lists = userData.lists;
     $session.archived_cards = userData.archived_cards;
+    $session.calendars = userData.calendars;
 
     // Insert the user's cards into the `session`.
     res = await fetch(`/cards/${userId}.json`, {
@@ -51,10 +52,9 @@
     await goto("/board");
   };
 
-  onMount(() => {
-    // TODO: Find a way to use SSR here since it takes a while
-    //       to show up on the client side.
-    //       Maybe show a spinner instead if we can't?
+  let googleApiScript;
+
+  const renderSignInButton = () => {
     /*global gapi*/
     gapi.signin2.render("g-sign-in", {
       longtitle: true,
@@ -63,6 +63,22 @@
         await initializeUserSession(id_token);
       },
     });
+  };
+
+  let isGoogleApiScriptLoaded = false;
+
+  onMount(() => {
+    // If the script hasn't loaded yet, listen to the `load` event.
+    // We know that it hasn't loaded if `gapi` doesn't exist.
+    if (typeof gapi === "undefined") {
+      googleApiScript.addEventListener("load", () => {
+        renderSignInButton();
+        isGoogleApiScriptLoaded = true;
+      });
+    } else {
+      renderSignInButton();
+      isGoogleApiScriptLoaded = true;
+    }
   });
 </script>
 
@@ -71,7 +87,11 @@
     name="google-signin-client_id"
     content={$session.GOOGLE_OAUTH2_CLIENT_ID}
   />
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script
+    src="https://apis.google.com/js/platform.js"
+    async
+    defer
+    bind:this={googleApiScript}></script>
 </svelte:head>
 
 <div class="sign-in-interface-flex-container">
@@ -105,6 +125,9 @@
     <Container>
       <Row>
         <Col class="sign-in-interface-sign-in-button" align="center">
+          {#if !isGoogleApiScriptLoaded}
+            <Spinner color="light" />
+          {/if}
           <div id="g-sign-in" />
         </Col>
       </Row>
