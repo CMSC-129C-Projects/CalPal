@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { stores } from "@sapper/app";
   import { Container } from "sveltestrap";
   import FullCalendar from "svelte-fullcalendar";
@@ -23,7 +24,15 @@
     return events;
   };
 
-  $: options = { initialView: "dayGridMonth", plugins: [dayGridPlugin], height: "100%", events: eventsFromCards() };
+  let plugins = [];
+
+  onMount(async () => {
+    plugins = [
+      (await import("@fullcalendar/daygrid")).default
+    ];
+  });
+
+  $: options = { initialView: "dayGridMonth", plugins: plugins, height: "100%", events: eventsFromCards() };
 </script>
 
 <div class="calendar-flex-box-container">
