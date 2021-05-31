@@ -4,7 +4,6 @@
     CardHeader,
     CardBody,
     CardFooter,
-    Container,
     Row,
     Col,
     Collapse,
@@ -14,6 +13,10 @@
     DropdownMenu,
     DropdownToggle,
     DropdownItem,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
   } from "sveltestrap";
 
   import FolderCard from "./FolderCard.svelte";
@@ -41,7 +44,7 @@
         </div>
       </Col>
       <Col xs="8">
-        <Title />
+        <Title untitledString="New Folder" />
       </Col>
       <Col xs="2">
         <button on:click={() => (isOpen = !isOpen)} class="borderless-button">
@@ -65,7 +68,6 @@
         isOpen={isDropdownOpen}
         class={isDropdownOpen}
         toggle={toggleDropdown}
-        direction="down"
       >
         <DropdownToggle
           class="folder-drop-down-button"
@@ -78,6 +80,18 @@
         </DropdownMenu>
       </Dropdown>
     </CardFooter>
+    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <ModalHeader toggle={toggleModal}>Deleting folder</ModalHeader>
+      <ModalBody>Are you sure you want to delete "this folder"</ModalBody>
+      <ModalFooter>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+        <!-- TODO: Implement the Delete Button action -->
+        <Button color="danger">
+          <Icon name="trash" />
+          Delete
+        </Button>
+      </ModalFooter>
+    </Modal>
   {/if}
 </Card>
 
