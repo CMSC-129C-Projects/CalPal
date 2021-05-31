@@ -133,7 +133,7 @@
       </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <ModalHeader>Deleting list</ModalHeader>
+      <ModalHeader toggle={toggleModal}>Deleting list</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>

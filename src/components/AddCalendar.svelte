@@ -84,14 +84,10 @@
   </button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader {toggle}>
-      <span class="add-calendar-header">Add a New Calendar</span>
+      <span class="add-calendar-header">Add a new calendar</span>
     </ModalHeader>
     <ModalBody>
       <Container>
-        <Row class="add-calendar-message">
-          <Col>Input a shared calendar URL</Col>
-        </Row>
-        <br />
         <Row>
           <Col>
             <FormGroup>
@@ -123,6 +119,7 @@
       </Container>
     </ModalBody>
     <ModalFooter class="add-calendar-footer">
+      <Button color="secondary" on:click={toggle}>Cancel</Button>
       <Button
         color="primary"
         on:click={async () => {
@@ -143,22 +140,6 @@
     font-family: "Nunito", sans-serif;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
       1px 1px 0 white;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header-cal) {
-    color: #00b0f0;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header-pal) {
-    color: #f58f29;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header) {
-    font-family: "Nunito", sans-serif;
-  }
-
-  .add-calendar-parent :global(.add-calendar-message) {
-    font-weight: 500;
   }
 
   .add-calendar-parent :global(.add-calendar-footer) {
