@@ -23,6 +23,7 @@
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
   import getObjectId from "../routes/_object-id.js";
+  import Folder from "./Folder.svelte";
 
   const { session } = stores();
 
@@ -104,6 +105,7 @@
           }}
         />
       {/each}
+      <Folder />
     </CardBody>
     <CardFooter class="list-list-footer">
       <Row>
@@ -122,8 +124,8 @@
             class={isDropdownOpen ? "list-is-open" : ""}
             toggle={toggleDropdown}
           >
-            <DropdownToggle caret class="list-drop-down-button">
-              <!-- <Icon class="threeDots" name="three-dots" /> -->
+            <DropdownToggle class="list-drop-down-button">
+              <Icon class="threeDots" name="three-dots" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
@@ -179,8 +181,8 @@
   }
 
   .list-parent :global(.list-list-body) {
-    padding: 0%;
-    margin-top: 10px;
+    padding: 1rem;
+    /* margin-top: 10px; */
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 100%;
