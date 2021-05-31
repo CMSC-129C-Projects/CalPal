@@ -82,7 +82,7 @@
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
       <ModalHeader toggle={toggleModal}>Deleting folder</ModalHeader>
-      <ModalBody>Are you sure you want to delete "this folder"</ModalBody>
+      <ModalBody>Are you sure you want to delete "this folder"?</ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleModal}>Cancel</Button>
         <!-- TODO: Implement the Delete Button action -->
