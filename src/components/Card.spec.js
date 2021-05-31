@@ -44,7 +44,7 @@ describe("Card", () => {
         original_title: "",
         original_calendar: "",
         original_date: originalDateString,
-        date_created: "",
+        date_created: "2021-05-27T11:51:46.274Z",
         due_date_time: "",
         remind_date_time: "",
         description: "",
@@ -54,5 +54,30 @@ describe("Card", () => {
     });
 
     expect(getByText(formattedDate(originalDate))).toBeInTheDocument();
+  });
+
+  it("is gray if it is archived", () => {
+    const { container, getByTestId } = render(Card, {
+      card: {
+        _id: "60af87d2e22789c33805dadf",
+        card_name: "Test card",
+        original_title: "",
+        original_calendar: "",
+        original_date: "",
+        date_created: "2021-05-27T11:51:46.274Z",
+        due_date_time: "",
+        remind_date_time: "",
+        description: "",
+        color: "#ffffff",
+      },
+      isArchived: true,
+    });
+
+    const card = container.firstChild.firstChild;
+    expect(card).toHaveClass("card-parent");
+    expect(card).toBeVisible();
+
+    const cardStyle = window.getComputedStyle(card);
+    expect(cardStyle.getPropertyValue("--card-color")).toEqual("#AAAAAA");
   });
 });
