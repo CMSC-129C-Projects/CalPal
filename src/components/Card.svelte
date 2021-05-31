@@ -3,7 +3,9 @@
   import { formattedDate } from "../routes/_date-format.js";
 
   export let card;
-  export let cardColor;
+  export let isArchived;
+
+  $: cardColor = isArchived ? "#AAAAAA" : card.color;
 
   let dateToDisplay;
   $: {

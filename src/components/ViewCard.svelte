@@ -67,7 +67,7 @@
 </script>
 
 <div class="view-card-parent">
-  <Card {card} {cardColor} on:click={toggle} />
+  <Card {card} {isArchived} on:click={toggle} />
   <Modal isOpen={open} {toggle}>
     <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
