@@ -3,21 +3,37 @@
     Card,
     CardHeader,
     CardBody,
+    CardFooter,
     Container,
     Row,
     Col,
     Collapse,
     Button,
     Icon,
+    Dropdown,
+    DropdownMenu,
+    DropdownToggle,
+    DropdownItem,
   } from "sveltestrap";
 
   import FolderCard from "./FolderCard.svelte";
   import Title from "./Title.svelte";
   let isOpen = false;
+
+  let isDropdownOpen = false;
+  let isModalOpen = false;
+
+  const toggleDropdown = () => {
+    isDropdownOpen = !isDropdownOpen;
+  };
+
+  const toggleModal = () => {
+    isModalOpen = !isModalOpen;
+  };
 </script>
 
 <Card style="width: 100%;">
-  <CardHeader>
+  <CardHeader style="background-color: rgba(0, 0, 0, 0.02);">
     <Row>
       <Col xs="2">
         <div style="padding-top: 0.2rem;">
@@ -44,6 +60,24 @@
         <Collapse style="padding: 0%;" {isOpen}><FolderCard /></Collapse>
       </Row>
     </CardBody>
+    <CardFooter align="right" style="padding-top: 0%; padding-bottom: 0%;">
+      <Dropdown
+        isOpen={isDropdownOpen}
+        class={isDropdownOpen}
+        toggle={toggleDropdown}
+        direction="down"
+      >
+        <DropdownToggle
+          class="folder-drop-down-button"
+          style=" background-color: transparent; color: #40415a; vertical-align: middle; border: none; outline: none; line-height: 0%; padding: 0; font-size: 1.5em;"
+        >
+          <Icon class="threeDots" name="three-dots" />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    </CardFooter>
   {/if}
 </Card>
 
