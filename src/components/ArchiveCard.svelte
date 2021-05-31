@@ -66,8 +66,8 @@
       <Icon name="trash" />
       Delete
     </Button>
-    <Modal isOpen={openDeleteModal} {toggleDeleteModal}>
-      <ModalHeader {toggleDeleteModal}>Deleting card</ModalHeader>
+    <Modal isOpen={openDeleteModal} toggle={toggleDeleteModal}>
+      <ModalHeader toggle={toggleDeleteModal}>Deleting card</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{card.card_name}"?
       </ModalBody>
