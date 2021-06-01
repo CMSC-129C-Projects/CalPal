@@ -14,7 +14,7 @@ describe("Card", () => {
     const dueDate = new Date(dueDateString);
     const color = "#ffffff";
 
-    const { container, getByText } = render(Card, {
+    const { getByText } = render(Card, {
       card: {
         _id: "60af87d2e22789c33805dadf",
         card_name: cardTitleString,
@@ -62,7 +62,7 @@ describe("Card", () => {
   });
 
   it("is colored gray if it is archived", () => {
-    const { container, getByTestId } = render(Card, {
+    render(Card, {
       card: {
         _id: "60af87d2e22789c33805dadf",
         card_name: "Test card",
