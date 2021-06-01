@@ -67,6 +67,18 @@
       },
     ];
   }
+
+  async function addFolder() {
+    const objectId = await getObjectId();
+    list.cards = [
+      ...list.cards,
+      {
+        _id: objectId,
+        folder_name: "New Folder",
+        cards: [],
+      },
+    ];
+  }
 </script>
 
 <div class="list-parent">
