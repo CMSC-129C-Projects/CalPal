@@ -1,4 +1,4 @@
-import { getAttachmentsOfCard } from "../_database.js";
+import { getAttachmentsOfCard } from "../../_database.js";
 
 export async function get(req, res, next) {
   const { cardId } = req.params;
@@ -10,7 +10,7 @@ export async function get(req, res, next) {
     });
     res.end(JSON.stringify(attachments));
   } else {
-    console.error(`Could not get attachments of card ${cardId}`);
+    console.log(`Could not get attachments of card ${cardId}`);
     next();
   }
 }

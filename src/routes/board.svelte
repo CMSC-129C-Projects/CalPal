@@ -7,7 +7,7 @@
     }
 
     console.debug("[board.svelte] Trying to post...");
-    await this.fetch(`cards/${userId}-update.json`, {
+    await this.fetch(`/api/card/update?user=${userId}.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,4 @@
-import { deleteAttachment } from "../../_database.js";
+import { deleteAttachment } from "../../../_database.js";
 import { ObjectId } from "mongodb";
 
 export async function del(req, res) {

@@ -19,7 +19,7 @@
   import {
     formattedDate,
     getDateAndTimeStringsFromDate,
-  } from "../routes/_date-format.js";
+  } from "../routes/util/_date-format.js";
 
   export let card;
   // TODO: When toggling isArchived, all footer elements appear at
