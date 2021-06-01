@@ -19,10 +19,12 @@
     ModalFooter,
   } from "sveltestrap";
 
-  import FolderCard from "./FolderCard.svelte";
+  // import FolderCard from "./FolderCard.svelte";
   import Title from "./Title.svelte";
-  let isOpen = false;
 
+  export let folder;
+  
+  let isOpen = false;
   let isDropdownOpen = false;
   let isModalOpen = false;
 
@@ -44,7 +46,11 @@
         </div>
       </Col>
       <Col xs="8">
-        <Title untitledString="New Folder" />
+        <Title
+          bind:value={folder.folder_name}
+          id="folder-{folder._id}"
+          untitledString="New Folder"
+        />
       </Col>
       <Col xs="2">
         <button on:click={() => (isOpen = !isOpen)} class="borderless-button">
@@ -60,7 +66,7 @@
   {#if isOpen}
     <CardBody>
       <Row style="padding-left: 0%;">
-        <Collapse style="padding: 0%;" {isOpen}><FolderCard /></Collapse>
+        <Collapse style="padding: 0%;" {isOpen}></Collapse>
       </Row>
     </CardBody>
     <CardFooter align="right" style="padding-top: 0%; padding-bottom: 0%;">
