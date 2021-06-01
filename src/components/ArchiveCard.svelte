@@ -36,7 +36,7 @@
   async function deleteCard(cardIdToDelete) {
     // Delete attachments of the card so that there are no stray
     // files left over.
-    await fetch(`/cards/attachments/delete/card/${cardIdToDelete}`, {
+    await fetch(`/api/card/attachment/delete/card/${cardIdToDelete}`, {
       method: "DELETE",
     });
 

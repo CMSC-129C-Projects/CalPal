@@ -5,7 +5,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render } from "@testing-library/svelte";
 import Card from "./Card.svelte";
-import { formattedDate } from "../routes/_date-format";
+import { formattedDate } from "../routes/util/_date-format";
 
 describe("Card", () => {
   it("displays its title, date, and color", async () => {

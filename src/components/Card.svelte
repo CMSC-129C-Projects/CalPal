@@ -1,6 +1,6 @@
 <script>
   import { Button, Card, CardBody, CardSubtitle, CardTitle } from "sveltestrap";
-  import { formattedDate } from "../routes/_date-format.js";
+  import { formattedDate } from "../routes/util/_date-format.js";
 
   export let card;
   export let isArchived;

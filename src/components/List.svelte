@@ -22,7 +22,7 @@
   } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
-  import getObjectId from "../routes/_object-id.js";
+  import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
 
