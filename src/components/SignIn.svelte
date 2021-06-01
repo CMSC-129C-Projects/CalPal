@@ -113,12 +113,13 @@
         <Col class="sign-in-interface-section-body">
           <p>
             CalPal is a productivity tool which lets you manage your tasks and
-            schedules
+            schedules.
           </p>
           <p>
-            Sync multiple calendars and turn your events into card automatically
+            Sync multiple calendars and turn your events into card
+            automatically.
           </p>
-          <p>Look ahead into your schedule with calendar view</p>
+          <p>Look ahead into your schedule with calendar view.</p>
         </Col>
       </Row>
     </Container>
@@ -201,7 +202,8 @@
 
   .flex-item-left :global(.sign-in-interface-section-header) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-weight: 300;
     color: white;
     padding-top: 1.25rem;
     padding-left: 1.875rem;
