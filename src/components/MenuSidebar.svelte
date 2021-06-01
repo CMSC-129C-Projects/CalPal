@@ -1,5 +1,5 @@
 <script>
-  import { Offcanvas } from "sveltestrap";
+  import { Offcanvas, Row, Col } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
@@ -16,13 +16,22 @@
   </button>
 
   <Offcanvas header="Menu" isOpen={isSidebarOpen} placement="end" {toggle}>
-    <ArchiveSidebar bind:isSidebarOpen />
-    <br />
-    <SyncedCalendarsSidebar bind:isSidebarOpen />
-    <br />
-    <SettingsSidebar bind:isSidebarOpen />
-    <br />
-    <SignOutSidebar />
+    <div class="menu-sidebar-offcanvas-flexbox">
+      <div class="menu-sidebar-offcanvas-body">
+        <ArchiveSidebar bind:isSidebarOpen />
+        <br />
+        <SyncedCalendarsSidebar bind:isSidebarOpen />
+      </div>
+      <div>
+        <Row>
+          <Col>
+            <SettingsSidebar bind:isSidebarOpen /></Col>
+          <Col>
+            <SignOutSidebar />
+          </Col>
+        </Row>
+      </div>
+    </div>
   </Offcanvas>
 </div>
 
@@ -36,6 +45,16 @@
     font-size: 30px;
     transition: transform 0.05s;
     transform-origin: center center;
+  }
+
+  .menu-sidebar-offcanvas-flexbox {
+    display: flex;
+    flex-direction: column;
+    height: 100%
+  }
+
+  .menu-sidebar-offcanvas-body {
+    flex: 1;
   }
 
   .scale-on-hover:hover {
