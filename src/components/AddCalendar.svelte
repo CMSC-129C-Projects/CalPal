@@ -63,9 +63,8 @@
   };
 
   const addCalendar = async () => {
-    const res = await fetch(`/cards/new-oid.json`);
-    const result = await res.json();
-    const objectId = result.new_object_id;
+    const res = await fetch(`/api/card/oid`);
+    const objectId = await res.text();
 
     $session.calendars = [
       ...$session.calendars,
