@@ -16,16 +16,33 @@
 
   const { session } = stores();
 
+  class ICalURLParseError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "ICalURLParseError";
+    }
+  }
+
   let open = false;
   let calendarName = "";
   let inputUrl = "";
+  let errorMessage = "";
 
-  const toggle = () => (open = !open);
+  const toggle = () => {
+    open = !open;
+  };
 
   const clearFields = () => {
     calendarName = "";
     inputUrl = "";
   };
+
+  $: {
+    if (!open) {
+      clearFields();
+      errorMessage = "";
+    }
+  }
 
   const getCardsFromUrl = async (url) => {
     const encodedUrl = encodeURIComponent(url);
@@ -36,6 +53,9 @@
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok) {
+      throw new ICalURLParseError("Could not parse calendar URL");
+    }
     const result = await response.json();
 
     const insertCardsIntoFirstList = (cards) => {
@@ -113,6 +133,9 @@
                 bind:value={inputUrl}
               />
             </FormGroup>
+            {#if errorMessage}
+              <p class="error-message">{errorMessage}</p>
+            {/if}
           </Col>
         </Row>
       </Container>
@@ -122,10 +145,16 @@
       <Button
         color="primary"
         on:click={async () => {
-          toggle();
-          await getCardsFromUrl(inputUrl);
-          await addCalendar();
-          clearFields();
+          try {
+            await getCardsFromUrl(inputUrl);
+            await addCalendar();
+            toggle();
+            clearFields();
+          } catch (err) {
+            console.debug(err);
+            errorMessage =
+              "Could not read the URL. Did you enter it correctly?";
+          }
         }}
       >
         Add Calendar
@@ -163,5 +192,9 @@
   img {
     width: 45px;
     height: 45px;
+  }
+
+  .error-message {
+    color: var(--bs-red);
   }
 </style>
