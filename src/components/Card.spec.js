@@ -8,12 +8,13 @@ import Card from "./Card.svelte";
 import { formattedDate } from "../routes/_date-format";
 
 describe("Card", () => {
-  it("displays the title and date", async () => {
+  it("displays its title, date, and color", async () => {
     const cardTitleString = "Test unarchived card";
     const dueDateString = "2021-05-28T00:00:00.000Z";
     const dueDate = new Date(dueDateString);
+    const color = "#ffffff";
 
-    const { getByText } = render(Card, {
+    const { container, getByText } = render(Card, {
       card: {
         _id: "60af87d2e22789c33805dadf",
         card_name: cardTitleString,
@@ -24,13 +25,17 @@ describe("Card", () => {
         due_date_time: dueDateString,
         remind_date_time: "",
         description: "",
-        color: "#ffffff",
+        color: color,
       },
       isArchived: false,
     });
 
     expect(getByText(cardTitleString)).toBeInTheDocument();
     expect(getByText(formattedDate(dueDate))).toBeInTheDocument();
+
+    const card = document.querySelector(".card-parent");
+    const cardStyle = window.getComputedStyle(card);
+    expect(cardStyle.getPropertyValue("--card-color")).toBe(color);
   });
 
   it("displays the original date if there is no due date", async () => {
@@ -56,7 +61,7 @@ describe("Card", () => {
     expect(getByText(formattedDate(originalDate))).toBeInTheDocument();
   });
 
-  it("is gray if it is archived", () => {
+  it("is colored gray if it is archived", () => {
     const { container, getByTestId } = render(Card, {
       card: {
         _id: "60af87d2e22789c33805dadf",
@@ -73,11 +78,8 @@ describe("Card", () => {
       isArchived: true,
     });
 
-    const card = container.firstChild.firstChild;
-    expect(card).toHaveClass("card-parent");
-    expect(card).toBeVisible();
-
+    const card = document.querySelector(".card-parent");
     const cardStyle = window.getComputedStyle(card);
-    expect(cardStyle.getPropertyValue("--card-color")).toEqual("#AAAAAA");
+    expect(cardStyle.getPropertyValue("--card-color")).toBe("#AAAAAA");
   });
 });
