@@ -25,7 +25,8 @@
       <div>
         <Row>
           <Col>
-            <SettingsSidebar bind:isSidebarOpen /></Col>
+            <SettingsSidebar bind:isSidebarOpen />
+          </Col>
           <Col>
             <SignOutSidebar />
           </Col>
@@ -50,7 +51,7 @@
   .menu-sidebar-offcanvas-flexbox {
     display: flex;
     flex-direction: column;
-    height: 100%
+    height: 100%;
   }
 
   .menu-sidebar-offcanvas-body {
