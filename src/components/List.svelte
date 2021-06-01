@@ -96,7 +96,10 @@
             </CardTitle>
           </Col>
           <Col class="list-right-half" xs="2">
-            <button class="borderless-button list-new-folder">
+            <button
+              class="borderless-button list-new-folder"
+              on:click={() => addFolder()}
+            >
               <Icon class="list-new-folder" name="folder-plus" />
             </button>
           </Col>
