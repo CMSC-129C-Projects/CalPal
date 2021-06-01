@@ -38,6 +38,16 @@
   const toggleModal = () => {
     isModalOpen = !isModalOpen;
   };
+
+  const deleteFolder = (folderIdToDelete) => {
+    $session.lists = $session.lists.map((list) => {
+      if (list._id !== listId) {
+        return list;
+    }
+
+    return list.cards.filter((folder) => folder._id !== folderIdToDelete);
+});
+  };
 </script>
 
 <Card style="width: 100%;">
