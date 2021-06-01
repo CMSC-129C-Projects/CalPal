@@ -31,6 +31,7 @@
 
   let isDropdownOpen = false;
   let isModalOpen = false;
+  let listId = list._id;
 
   const toggleDropdown = () => {
     isDropdownOpen = !isDropdownOpen;
@@ -132,7 +133,7 @@
             );
           }}
         /> -->
-        <Folder bind:folder />
+        <Folder bind:folder bind:listId />
       {/each}
       <!-- <Folder /> -->
     </CardBody>
