@@ -1,4 +1,5 @@
 <script>
+  import { stores } from "@sapper/app";
   import {
     Card,
     CardHeader,
@@ -21,6 +22,8 @@
 
   // import FolderCard from "./FolderCard.svelte";
   import Title from "./Title.svelte";
+
+  const { session } = stores();
 
   export let folder;
   
