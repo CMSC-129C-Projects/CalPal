@@ -40,6 +40,25 @@
     isModalOpen = !isModalOpen;
   };
 
+  async function addCard() {
+    const objectId = await getObjectId();
+    folder.cards = [
+      ...folder.cards,
+      {
+        _id: objectId,
+        card_name: "Untitled Card",
+        original_title: "",
+        original_calendar: "",
+        original_date: "",
+        date_created: new Date(Date.now()),
+        due_date_time: "",
+        remind_date_time: "",
+        description: "",
+        color: "#ffffff",
+      },
+    ];
+  }
+
   const deleteFolder = (folderIdToDelete) => {
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
