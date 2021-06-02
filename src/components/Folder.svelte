@@ -99,7 +99,7 @@
     </Row>
   </CardHeader>
   {#if isOpen}
-    <CardBody>
+    <CardBody style="padding-bottom:2%;">
       <Row style="padding-left: 0%;">
         <Collapse style="padding: 0%;" {isOpen}>
           {#each folder.cards.filter((c) => {
