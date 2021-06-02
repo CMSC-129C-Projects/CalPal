@@ -124,18 +124,8 @@
       {#each list.cards.filter((f) => {
         return !(typeof f.folder_name === "undefined");
       }) as folder (folder._id)}
-        <!-- <ViewCard
-          bind:card
-          on:cardarchived
-          on:cardunarchived={() => {
-            console.debug(
-              `[List.svelte] Received 'cardunarchived', forwarding...`
-            );
-          }}
-        /> -->
         <Folder bind:folder bind:listId />
       {/each}
-      <!-- <Folder /> -->
     </CardBody>
     <CardFooter class="list-list-footer" style="padding-left:7%;">
       <Row>

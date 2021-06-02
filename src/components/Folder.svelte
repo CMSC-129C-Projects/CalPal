@@ -20,7 +20,6 @@
     ModalFooter,
   } from "sveltestrap";
 
-  // import FolderCard from "./FolderCard.svelte";
   import getObjectId from "../routes/_object-id.js";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
