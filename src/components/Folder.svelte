@@ -21,7 +21,9 @@
   } from "sveltestrap";
 
   // import FolderCard from "./FolderCard.svelte";
+  import getObjectId from "../routes/_object-id.js";
   import Title from "./Title.svelte";
+  import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
 
@@ -100,10 +102,36 @@
   {#if isOpen}
     <CardBody>
       <Row style="padding-left: 0%;">
-        <Collapse style="padding: 0%;" {isOpen}></Collapse>
+        <Collapse style="padding: 0%;" {isOpen}>
+          {#each folder.cards.filter((c) => {
+            return !(typeof c.card_name === "undefined" || c.is_archived);
+          }) as card (card._id)}
+            <ViewCard
+              bind:card
+              on:cardarchived
+              on:cardunarchived={() => {
+                console.debug(
+                  `[List.svelte] Received 'cardunarchived', forwarding...`
+                );
+              }}
+            />
+          {/each}
+        
+        </Collapse>
       </Row>
     </CardBody>
     <CardFooter align="right" style="padding-top: 0%; padding-bottom: 0%;">
+      <Row>
+        <Col>
+      <button
+            class="borderless-button list-add-card"
+            on:click={() => addCard()}
+          >
+            <Icon class="list-plus-icon" name="plus" />
+            Add Card
+          </button>
+        </Col>
+        <Col>
       <Dropdown
         isOpen={isDropdownOpen}
         class={isDropdownOpen}
@@ -119,6 +147,8 @@
           <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
         </DropdownMenu>
       </Dropdown>
+    </Col>
+    </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
       <ModalHeader toggle={toggleModal}>Deleting folder</ModalHeader>
