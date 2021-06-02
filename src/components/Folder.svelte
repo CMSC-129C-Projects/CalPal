@@ -73,7 +73,7 @@
   };
 </script>
 
-<Card style="width: 100%;">
+<Card style="width: 100%; margin-bottom:5%">
   <CardHeader style="background-color: rgba(0, 0, 0, 0.02);">
     <Row>
       <Col xs="2">
