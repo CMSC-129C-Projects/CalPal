@@ -120,10 +120,10 @@
         </Collapse>
       </Row>
     </CardBody>
-    <CardFooter align="right" style="padding-top: 0%; padding-bottom: 0%;">
+    <CardFooter style="padding-top: 0%; padding-bottom: 0%;">
       <Row>
-        <Col>
-      <button
+        <Col xs="9" style="padding-left:0%; padding-top: 1%;">
+          <button
             class="borderless-button list-add-card"
             on:click={() => addCard()}
           >
@@ -131,23 +131,23 @@
             Add Card
           </button>
         </Col>
-        <Col>
-      <Dropdown
-        isOpen={isDropdownOpen}
-        class={isDropdownOpen}
-        toggle={toggleDropdown}
-      >
-        <DropdownToggle
-          class="folder-drop-down-button"
-          style=" background-color: transparent; color: #40415a; vertical-align: middle; border: none; outline: none; line-height: 0%; padding: 0; font-size: 1.5em;"
-        >
-          <Icon class="threeDots" name="three-dots" />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </Col>
+        <Col xs="3" align="right">
+          <Dropdown
+            isOpen={isDropdownOpen}
+            class={isDropdownOpen}
+            toggle={toggleDropdown}
+          >
+            <DropdownToggle
+              class="folder-drop-down-button"
+              style=" background-color: transparent; color: #40415a; vertical-align: middle; border: none; outline: none; line-height: 0%; padding: 0; font-size: 1.5em;"
+              >
+              <Icon class="threeDots" name="three-dots" />
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
+              </DropdownMenu>
+        </Dropdown>
+      </Col>
     </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
