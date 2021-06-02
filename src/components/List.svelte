@@ -137,7 +137,7 @@
       {/each}
       <!-- <Folder /> -->
     </CardBody>
-    <CardFooter class="list-list-footer">
+    <CardFooter class="list-list-footer" style="padding-left:7%;">
       <Row>
         <Col class="list-left-half">
           <button
