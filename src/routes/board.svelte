@@ -50,8 +50,17 @@
         {#each $session.lists as list, i (i)}
           {#each list.cards.filter((c) => {
             return !(typeof c.card_name === "undefined" || c.is_archived);
-          }) as card, j (card._id)}
+          }) as card (card._id)}
             <Reminder bind:card />
+          {/each}
+          {#each list.cards.filter((f) => {
+            return !(typeof f.folder_name === "undefined");
+          }) as folder (folder._id)}
+            {#each folder.cards.filter((c) => {
+              return !(typeof c.card_name === "undefined" || c.is_archived);
+            }) as card (card._id)}
+              <Reminder bind:card />
+            {/each}
           {/each}
         {/each}
       {/if}
