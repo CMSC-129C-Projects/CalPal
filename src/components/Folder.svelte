@@ -26,6 +26,7 @@
   const { session } = stores();
 
   export let folder;
+  export let listId;
   
   let isOpen = false;
   let isDropdownOpen = false;
@@ -43,10 +44,11 @@
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
         return list;
-    }
+      }
+      list.cards = list.cards.filter((folder) => folder._id !== folderIdToDelete)
+      return list;
+    });
 
-    return list.cards.filter((folder) => folder._id !== folderIdToDelete);
-});
   };
 </script>
 
@@ -106,7 +108,7 @@
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleModal}>Cancel</Button>
-        <Button color="danger" on:click={() => deleteFolder(folder._id)}>
+        <Button color="danger"  on:click={() => deleteFolder(folder._id)}>
           <Icon name="trash" />
           Delete
         </Button>
