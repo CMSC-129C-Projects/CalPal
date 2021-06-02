@@ -107,7 +107,7 @@
         </Row>
       </Container>
     </CardHeader>
-    <CardBody class="list-list-body">
+    <CardBody class="list-list-body" style="padding-bottom:2%;">
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card (card._id)}
