@@ -109,14 +109,16 @@
     </CardHeader>
     <CardBody class="list-list-body" style="padding-bottom:2%;">
       {#each list.cards.filter((c) => {
-        return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card (card._id)}
-        <ViewCard bind:card />
-      {/each}
-      {#each list.cards.filter((f) => {
-        return !(typeof f.folder_name === "undefined");
-      }) as folder (folder._id)}
-        <Folder bind:folder bind:listId />
+        if (c.card_name == null && c.folder_name == null) {
+          return false;
+        }
+        return true;
+      }) as listElement (listElement._id)}
+        {#if listElement.card_name ?? false}
+          <ViewCard bind:card={listElement} />
+        {:else}
+          <Folder bind:folder={listElement} bind:listId />
+        {/if}
       {/each}
     </CardBody>
     <CardFooter class="list-list-footer" style="padding-left:7%;">
