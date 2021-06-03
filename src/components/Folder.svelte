@@ -82,11 +82,7 @@
         </div>
       </Col>
       <Col xs="8">
-        <Title
-          bind:value={folder.folder_name}
-          id="folder-{folder._id}"
-          untitledString="New Folder"
-        />
+        <Title bind:value={folder.folder_name} untitledString="New Folder" />
       </Col>
       <Col xs="2">
         <button on:click={() => (isOpen = !isOpen)} class="borderless-button">

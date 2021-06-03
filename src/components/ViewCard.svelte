@@ -80,7 +80,6 @@
     <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
         bind:value={card.card_name}
-        id="card-{card._id}"
         disabled={isArchived}
         untitledString={card.original_title
           ? card.original_title

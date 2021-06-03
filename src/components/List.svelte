@@ -91,7 +91,6 @@
             <CardTitle class="card-card-title-container">
               <Title
                 bind:value={list.list_name}
-                id="list-{list._id}"
                 untitledString="Untitled List"
               />
             </CardTitle>

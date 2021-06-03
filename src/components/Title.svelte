@@ -3,10 +3,10 @@
   import { Input } from "sveltestrap";
 
   export let value;
-  export let id;
   export let untitledString = "";
   export let disabled;
 
+  let inner;
   let isSelected = false;
 
   $: isUntitled = value === untitledString;
@@ -18,43 +18,50 @@
     isSelected = true;
     await tick();
 
-    const inputElement = document.getElementById(id);
-    inputElement.focus();
+    inner.focus();
+    inner.select();
   }
 
-  async function handleKeydown(event) {
+  const handleKeydown = async (event) => {
     if (event.key === "Enter") {
       await onBlur();
     }
-  }
+  };
 
-  async function onFocus() {
+  const onFocus = () => {
     isSelected = true;
     if (value === untitledString) {
       value = "";
     }
-  }
+    resize();
+  };
 
-  async function onBlur() {
+  const onBlur = async () => {
     isSelected = false;
     value = value.trim();
     if (value === "") {
       value = untitledString;
     }
-  }
+  };
+
+  const resize = () => {
+    inner.style.height = "auto";
+    inner.style.height = `${4 + inner.scrollHeight}px`;
+  };
 </script>
 
 <div class="title-parent">
   {#if isSelected}
     <Input
-      {id}
       class="title-title {isUntitled ? 'title-untitled' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
+      bind:inner
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}
       on:keydown={(e) => handleKeydown(e)}
+      on:input={() => resize()}
     />
   {:else}
     <div
@@ -68,11 +75,10 @@
 
 <style>
   .title-parent :global(.title-untitled) {
-    color: #aaa;
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .title-parent :global(.title-title) {
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 1.25em;
     margin: 0px 0px 0px 0px;
