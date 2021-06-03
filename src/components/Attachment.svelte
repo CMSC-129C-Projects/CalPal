@@ -106,7 +106,10 @@
             }
           }}
         >
-          <Icon name="x-circle-fill" style="background-color:whitesmoke;" />
+          <Icon
+            name="x-circle-fill"
+            style="background-color: whitesmoke; color: rgba(0, 0, 0, 0.5);"
+          />
         </button>
       </li>
     {/each}
