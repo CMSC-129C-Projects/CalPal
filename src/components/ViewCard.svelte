@@ -22,14 +22,18 @@
   } from "../routes/util/_date-format.js";
 
   export let card;
-  // TODO: When toggling isArchived, all footer elements appear at
-  //       the same time for a moment as the Card does its fade
-  //       animation. Find a way to make it so the new footer
-  //       elements don't show up while the animation is occurring.
   export let isArchived = false;
+  export let showCard = true;
 
   let open = false;
-  const toggle = () => (open = !open);
+  let toggle = () => (open = !open);
+
+  if (!showCard) {
+    open = true;
+    toggle = () => {
+      open = false;
+    };
+  }
 
   let cardColor;
   $: {
@@ -51,14 +55,16 @@
       remindDateTime.time = "";
       card.due_date_time = "";
       card.remind_date_time = "";
-    } else if (remindDateTime.date === "") {
+    } else {
+      card.due_date_time = new Date(
+        `${dueDateTime.date} ${dueDateTime.time}`.trim()
+      );
+    }
+
+    if (remindDateTime.date === "") {
       remindDateTime.time = "";
       card.remind_date_time = "";
     } else {
-      const newDueDateTime = new Date(
-        `${dueDateTime.date} ${dueDateTime.time}`.trim()
-      );
-      card.due_date_time = newDueDateTime;
       card.remind_date_time = new Date(
         `${remindDateTime.date} ${remindDateTime.time}`.trim()
       );
@@ -67,8 +73,10 @@
 </script>
 
 <div class="view-card-parent">
-  <Card {card} {isArchived} on:click={toggle} />
-  <Modal isOpen={open} {toggle}>
+  {#if showCard}
+    <Card {card} {isArchived} on:click={toggle} />
+  {/if}
+  <Modal isOpen={open} {toggle} on:opening on:open on:closing on:close>
     <ModalHeader style="background-color: {cardColor};" {toggle}>
       <Title
         bind:value={card.card_name}
@@ -168,12 +176,7 @@
           {/if}
           <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
           <Col style="display: flex; justify-content: flex-end;">
-            <ArchiveCard
-              bind:card
-              {isArchived}
-              on:cardarchived
-              on:cardunarchived
-            />
+            <ArchiveCard bind:card {isArchived} />
           </Col>
         </Row>
       </Container>

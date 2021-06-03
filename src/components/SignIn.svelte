@@ -28,7 +28,7 @@
     });
     $session.user_id = userId;
 
-    // Retrieve the user's cards.
+    // Retrieve the user's cards and insert into the `session`.
     res = await fetch(`/api/card/${userId}.json`, {
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,6 @@
       $session[key] = userData[key];
     }
 
-    // Insert the user's cards into the `session`.
     res = await fetch(`/api/session`, {
       method: "POST",
       headers: {

@@ -22,6 +22,7 @@
   } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
+  import Folder from "./Folder.svelte";
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
@@ -30,6 +31,7 @@
 
   let isDropdownOpen = false;
   let isModalOpen = false;
+  let listId = list._id;
 
   const toggleDropdown = () => {
     isDropdownOpen = !isDropdownOpen;
@@ -66,6 +68,18 @@
       },
     ];
   }
+
+  async function addFolder() {
+    const objectId = await getObjectId();
+    list.cards = [
+      ...list.cards,
+      {
+        _id: objectId,
+        folder_name: "New Folder",
+        cards: [],
+      },
+    ];
+  }
 </script>
 
 <div class="list-parent">
@@ -83,29 +97,31 @@
             </CardTitle>
           </Col>
           <Col class="list-right-half" xs="2">
-            <button class="borderless-button list-new-folder">
+            <button
+              class="borderless-button list-new-folder"
+              on:click={() => addFolder()}
+            >
               <Icon class="list-new-folder" name="folder-plus" />
             </button>
           </Col>
         </Row>
       </Container>
     </CardHeader>
-    <CardBody class="list-list-body">
+    <CardBody class="list-list-body" style="padding-bottom:2%;">
       {#each list.cards.filter((c) => {
-        return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card (card._id)}
-        <ViewCard
-          bind:card
-          on:cardarchived
-          on:cardunarchived={() => {
-            console.debug(
-              `[List.svelte] Received 'cardunarchived', forwarding...`
-            );
-          }}
-        />
+        if (c.card_name == null && c.folder_name == null) {
+          return false;
+        }
+        return true;
+      }) as listElement (listElement._id)}
+        {#if listElement.card_name ?? false}
+          <ViewCard bind:card={listElement} />
+        {:else}
+          <Folder bind:folder={listElement} bind:listId />
+        {/if}
       {/each}
     </CardBody>
-    <CardFooter class="list-list-footer">
+    <CardFooter class="list-list-footer" style="padding-left:7%;">
       <Row>
         <Col class="list-left-half">
           <button
@@ -122,8 +138,8 @@
             class={isDropdownOpen ? "list-is-open" : ""}
             toggle={toggleDropdown}
           >
-            <DropdownToggle caret class="list-drop-down-button">
-              <!-- <Icon class="threeDots" name="three-dots" /> -->
+            <DropdownToggle class="list-drop-down-button">
+              <Icon class="threeDots" name="three-dots" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
@@ -179,8 +195,8 @@
   }
 
   .list-parent :global(.list-list-body) {
-    padding: 0%;
-    margin-top: 10px;
+    padding: 1rem;
+    /* margin-top: 10px; */
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 100%;

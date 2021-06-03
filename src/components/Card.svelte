@@ -40,12 +40,10 @@
     background-color: transparent;
     padding: 0%;
     margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
     border: none;
     color: black;
     text-align: left;
-    width: 230px;
+    width: 100%;
   }
 
   .card-parent :global(.card-actual-card) {

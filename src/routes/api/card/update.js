@@ -1,7 +1,7 @@
 import { updateUserData } from "../_database.js";
 
 export async function post(req, res) {
-  const { userId } = req.query.user;
+  const userId = req.query.user;
 
   // TODO: Find a way to fetch from `/api/session` so that there's
   //       no need to manually set the session here ourselves.
