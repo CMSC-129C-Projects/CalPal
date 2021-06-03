@@ -3,7 +3,6 @@
   import { fade } from "svelte/transition";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
-  import Reminder from "./Reminder.svelte";
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
