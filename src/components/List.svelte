@@ -114,7 +114,7 @@
         }
         return true;
       }) as listElement (listElement._id)}
-        {#if listElement.card_name ?? false}
+        {#if listElement.card_name != null}
           <ViewCard bind:card={listElement} />
         {:else}
           <Folder bind:folder={listElement} bind:listId />
