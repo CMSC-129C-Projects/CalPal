@@ -1,6 +1,5 @@
 <script>
   import { stores } from "@sapper/app";
-  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     Button,
@@ -11,7 +10,6 @@
   } from "sveltestrap";
 
   const { session } = stores();
-  const dispatch = createEventDispatcher();
 
   export let card;
   export let isArchived;
@@ -25,23 +23,63 @@
     openDeleteModal = !openDeleteModal;
   };
 
-  function notifyCardArchived(cardId) {
-    dispatch("cardarchived", cardId);
+  function handleCardArchived() {
+    $session.archived_cards = [...$session.archived_cards, card];
+
+    for (const list of $session.lists) {
+      let cardIndex = list.cards.findIndex((c) => c._id === card._id);
+
+      if (cardIndex !== -1) {
+        // Found the card in the first level. Remove it.
+        list.cards = list.cards.filter((c) => c._id !== card._id);
+        return;
+      } else {
+        // If the card cannot be found in the first level, try to look
+        // through the folders.
+        const folders = list.cards.filter((c) => c.folder_name ?? false);
+        for (const folder of folders) {
+          cardIndex = folder.cards.findIndex((c) => c._id === card._id);
+          if (cardIndex !== -1) {
+            // Found the card in this folder. Remove it.
+            folder.cards = folder.cards.filter((c) => c._id !== card._id);
+            return;
+          }
+        }
+      }
+    }
   }
 
-  function notifyCardUnarchived(cardId) {
-    dispatch("cardunarchived", cardId);
+  function handleCardUnarchived() {
+    if ($session.archived_cards === null || $session.lists.length === 0) {
+      throw new Error(`There are no lists to place the unarchived card into`);
+    }
+
+    const cardToUnarchive = $session.archived_cards.find(
+      (c) => c._id === card._id
+    );
+
+    if (typeof cardToUnarchive === "undefined") {
+      throw new Error(
+        `Couldn't find card ${card._id} in the list of archived cards`
+      );
+    }
+
+    $session.lists[0].cards = [...$session.lists[0].cards, cardToUnarchive];
+
+    $session.archived_cards = $session.archived_cards.filter(
+      (c) => c._id !== card._id
+    );
   }
 
-  async function deleteCard(cardIdToDelete) {
+  async function deleteCard() {
     // Delete attachments of the card so that there are no stray
     // files left over.
-    await fetch(`/cards/attachments/delete/card/${cardIdToDelete}`, {
+    await fetch(`/cards/attachments/delete/card/${card._id}`, {
       method: "DELETE",
     });
 
     const cardIndex = $session.archived_cards.findIndex(
-      (card) => card._id === cardIdToDelete
+      (c) => c._id === card._id
     );
     console.debug(`[ArchiveCard.svelte] cardIndex: ${cardIndex}`);
     const cardsBefore = $session.archived_cards.slice(0, cardIndex);
@@ -73,7 +111,7 @@
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleDeleteModal}>Cancel</Button>
-        <Button color="danger" on:click={() => deleteCard(card._id)}>
+        <Button color="danger" on:click={() => deleteCard()}>
           <Icon name="trash" />
           Delete
         </Button>
@@ -89,7 +127,7 @@
         <Button
           color="primary"
           on:click={() => {
-            notifyCardUnarchived(card._id);
+            handleCardUnarchived();
             toggle();
           }}
         >
@@ -113,7 +151,7 @@
         <Button
           color="warning"
           on:click={() => {
-            notifyCardArchived(card._id);
+            handleCardArchived();
             toggle();
           }}
         >

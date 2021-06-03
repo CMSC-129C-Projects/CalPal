@@ -111,15 +111,7 @@
       {#each list.cards.filter((c) => {
         return !(typeof c.card_name === "undefined" || c.is_archived);
       }) as card (card._id)}
-        <ViewCard
-          bind:card
-          on:cardarchived
-          on:cardunarchived={() => {
-            console.debug(
-              `[List.svelte] Received 'cardunarchived', forwarding...`
-            );
-          }}
-        />
+        <ViewCard bind:card />
       {/each}
       {#each list.cards.filter((f) => {
         return !(typeof f.folder_name === "undefined");

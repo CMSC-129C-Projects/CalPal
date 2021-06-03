@@ -28,7 +28,7 @@
 
   export let folder;
   export let listId;
-  
+
   let isOpen = false;
   let isDropdownOpen = false;
   let isModalOpen = false;
@@ -65,10 +65,11 @@
       if (list._id !== listId) {
         return list;
       }
-      list.cards = list.cards.filter((folder) => folder._id !== folderIdToDelete)
+      list.cards = list.cards.filter(
+        (folder) => folder._id !== folderIdToDelete
+      );
       return list;
     });
-
   };
 </script>
 
@@ -105,17 +106,8 @@
           {#each folder.cards.filter((c) => {
             return !(typeof c.card_name === "undefined" || c.is_archived);
           }) as card (card._id)}
-            <ViewCard
-              bind:card
-              on:cardarchived
-              on:cardunarchived={() => {
-                console.debug(
-                  `[List.svelte] Received 'cardunarchived', forwarding...`
-                );
-              }}
-            />
+            <ViewCard bind:card />
           {/each}
-        
         </Collapse>
       </Row>
     </CardBody>
@@ -139,15 +131,15 @@
             <DropdownToggle
               class="folder-drop-down-button"
               style=" background-color: transparent; color: #40415a; vertical-align: middle; border: none; outline: none; line-height: 0%; padding: 0; font-size: 1.5em;"
-              >
+            >
               <Icon class="threeDots" name="three-dots" />
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
-              </DropdownMenu>
-        </Dropdown>
-      </Col>
-    </Row>
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem on:click={toggleModal}>Delete Folder</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </Col>
+      </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
       <ModalHeader toggle={toggleModal}>Deleting folder</ModalHeader>
@@ -156,7 +148,7 @@
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleModal}>Cancel</Button>
-        <Button color="danger"  on:click={() => deleteFolder(folder._id)}>
+        <Button color="danger" on:click={() => deleteFolder(folder._id)}>
           <Icon name="trash" />
           Delete
         </Button>
