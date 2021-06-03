@@ -143,6 +143,13 @@
     position: relative;
   }
 
+  ul li a {
+    width: 95%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   ul li.is-image {
     padding-left: 50px;
   }
