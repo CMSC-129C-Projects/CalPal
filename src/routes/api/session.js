@@ -3,7 +3,5 @@ export async function post(req, res) {
     req.session[key] = req.body[key];
   }
 
-  console.dir(req.session);
-
   res.end();
 }
