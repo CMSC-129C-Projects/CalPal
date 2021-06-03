@@ -94,27 +94,26 @@
   {disabled}
 />
 
-{#if attachments.length}
-  <ul id="preview">
-    {#each attachments as file (file._id)}
-      <li class:is-image={isImage} style={imagePreviewStyle(file)}>
-        <a href={file.data.path} target="_blank">{file.data.filename}</a>
-        <button
-          on:click={() => {
-            if (!disabled) {
-              deleteAttachment(file._id);
-            }
-          }}
-        >
-          <Icon
-            name="x-circle-fill"
-            style="background-color: whitesmoke; color: rgba(0, 0, 0, 0.5);"
-          />
-        </button>
-      </li>
-    {/each}
-  </ul>
-{/if}
+<div class="attachment-parent">
+  {#if attachments.length}
+    <ul id="preview">
+      {#each attachments as file (file._id)}
+        <li class:is-image={isImage} style={imagePreviewStyle(file)}>
+          <a href={file.data.path} target="_blank">{file.data.filename}</a>
+          <button
+            on:click={() => {
+              if (!disabled) {
+                deleteAttachment(file._id);
+              }
+            }}
+          >
+            <Icon name="x-circle-fill" class="attachment-delete-button" />
+          </button>
+        </li>
+      {/each}
+    </ul>
+  {/if}
+</div>
 
 <style>
   ul {
@@ -156,5 +155,18 @@
     padding: 0;
     margin: 0;
     display: flex;
+  }
+
+  .attachment-parent :global(.attachment-delete-button) {
+    background-color: whitesmoke;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .attachment-parent :global(.attachment-delete-button:hover) {
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  .attachment-parent :global(.attachment-delete-button:active) {
+    color: rgba(0, 0, 0, 1);
   }
 </style>
