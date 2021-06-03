@@ -22,8 +22,8 @@
   } from "sveltestrap";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
-  import getObjectId from "../routes/_object-id.js";
   import Folder from "./Folder.svelte";
+  import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
 
@@ -147,7 +147,7 @@
       </Row>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
-      <ModalHeader>Deleting list</ModalHeader>
+      <ModalHeader toggle={toggleModal}>Deleting list</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{list.list_name}"?
       </ModalBody>

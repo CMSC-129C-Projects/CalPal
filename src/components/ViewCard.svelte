@@ -19,7 +19,7 @@
   import {
     formattedDate,
     getDateAndTimeStringsFromDate,
-  } from "../routes/_date-format.js";
+  } from "../routes/util/_date-format.js";
 
   export let card;
   export let isArchived = false;
@@ -74,7 +74,7 @@
 
 <div class="view-card-parent">
   {#if showCard}
-    <Card {card} {cardColor} on:click={toggle} />
+    <Card {card} {isArchived} on:click={toggle} />
   {/if}
   <Modal isOpen={open} {toggle} on:opening on:open on:closing on:close>
     <ModalHeader style="background-color: {cardColor};" {toggle}>

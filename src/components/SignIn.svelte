@@ -17,35 +17,47 @@
     const userId = await res.json();
 
     // Use the Google account's ID token as our `session.user_id`.
-    await fetch(`/api/user/${userId}`, {
+    await fetch(`/api/session`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId,
+      }),
     });
     $session.user_id = userId;
 
     // Retrieve the user's cards.
-    res = await fetch(`/cards/${userId}.json`, {
+    res = await fetch(`/api/card/${userId}.json`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     const userData = await res.json();
-    $session.lists = userData.lists;
-    $session.archived_cards = userData.archived_cards;
-    $session.calendars = userData.calendars;
+    for (const key in userData) {
+      $session[key] = userData[key];
+    }
 
     // Insert the user's cards into the `session`.
-    res = await fetch(`/cards/${userId}.json`, {
+    res = await fetch(`/api/session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...userData }),
+      body: JSON.stringify(userData),
     });
 
     // Tell the server that we have now loaded the user's cards.
-    res = await fetch(`/cards/did-cards-load?set=1`, {
+    res = await fetch(`/api/session`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        did_cards_load: true,
+      }),
     });
     $session.did_cards_load = true;
 
@@ -113,12 +125,13 @@
         <Col class="sign-in-interface-section-body">
           <p>
             CalPal is a productivity tool which lets you manage your tasks and
-            schedules
+            schedules.
           </p>
           <p>
-            Sync multiple calendars and turn your events into card automatically
+            Sync multiple calendars and turn your events into card
+            automatically.
           </p>
-          <p>Look ahead into your schedule with calendar view</p>
+          <p>Look ahead into your schedule with calendar view.</p>
         </Col>
       </Row>
     </Container>
@@ -201,7 +214,8 @@
 
   .flex-item-left :global(.sign-in-interface-section-header) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-weight: 300;
     color: white;
     padding-top: 1.25rem;
     padding-left: 1.875rem;

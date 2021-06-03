@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { Input, Label, Icon } from "sveltestrap";
-  import getObjectId from "../routes/_object-id.js";
+  import getObjectId from "../routes/util/_object-id.js";
 
   export let cardId;
   export let attachments = [],
@@ -13,7 +13,7 @@
 
   if (process.browser) {
     onMount(async () => {
-      const res = await fetch(`cards/attachments/${cardId}.json`);
+      const res = await fetch(`/api/card/attachment/${cardId}.json`);
       if (!res.ok) {
         return;
       }
@@ -29,7 +29,7 @@
       : "";
 
   async function addAttachmentToDatabase(attachment) {
-    await fetch(`cards/attachments.json`, {
+    await fetch(`/api/card/attachment.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@
   async function deleteAttachment(attachmentId) {
     attachments = attachments.filter((a) => a._id !== attachmentId);
 
-    await fetch(`cards/attachments/delete/${attachmentId}`, {
+    await fetch(`/api/card/attachment/delete/${attachmentId}`, {
       method: "DELETE",
     });
   }

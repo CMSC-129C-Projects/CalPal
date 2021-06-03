@@ -16,16 +16,33 @@
 
   const { session } = stores();
 
+  class ICalURLParseError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "ICalURLParseError";
+    }
+  }
+
   let open = false;
   let calendarName = "";
   let inputUrl = "";
+  let errorMessage = "";
 
-  const toggle = () => (open = !open);
+  const toggle = () => {
+    open = !open;
+  };
 
   const clearFields = () => {
     calendarName = "";
     inputUrl = "";
   };
+
+  $: {
+    if (!open) {
+      clearFields();
+      errorMessage = "";
+    }
+  }
 
   const getCardsFromUrl = async (url) => {
     const encodedUrl = encodeURIComponent(url);
@@ -36,6 +53,9 @@
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok) {
+      throw new ICalURLParseError("Could not parse calendar URL");
+    }
     const result = await response.json();
 
     const insertCardsIntoFirstList = (cards) => {
@@ -63,9 +83,8 @@
   };
 
   const addCalendar = async () => {
-    const res = await fetch(`/cards/new-oid.json`);
-    const result = await res.json();
-    const objectId = result.new_object_id;
+    const res = await fetch(`/api/card/oid`);
+    const objectId = await res.text();
 
     $session.calendars = [
       ...$session.calendars,
@@ -84,14 +103,10 @@
   </button>
   <Modal isOpen={open} {toggle}>
     <ModalHeader {toggle}>
-      <span class="add-calendar-header">Add a New Calendar</span>
+      <span class="add-calendar-header">Add a new calendar</span>
     </ModalHeader>
     <ModalBody>
       <Container>
-        <Row class="add-calendar-message">
-          <Col>Input a shared calendar URL</Col>
-        </Row>
-        <br />
         <Row>
           <Col>
             <FormGroup>
@@ -118,18 +133,28 @@
                 bind:value={inputUrl}
               />
             </FormGroup>
+            {#if errorMessage}
+              <p class="error-message">{errorMessage}</p>
+            {/if}
           </Col>
         </Row>
       </Container>
     </ModalBody>
     <ModalFooter class="add-calendar-footer">
+      <Button color="secondary" on:click={toggle}>Cancel</Button>
       <Button
         color="primary"
         on:click={async () => {
-          toggle();
-          await getCardsFromUrl(inputUrl);
-          await addCalendar();
-          clearFields();
+          try {
+            await getCardsFromUrl(inputUrl);
+            await addCalendar();
+            toggle();
+            clearFields();
+          } catch (err) {
+            console.debug(err);
+            errorMessage =
+              "Could not read the URL. Did you enter it correctly?";
+          }
         }}
       >
         Add Calendar
@@ -143,22 +168,6 @@
     font-family: "Nunito", sans-serif;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
       1px 1px 0 white;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header-cal) {
-    color: #00b0f0;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header-pal) {
-    color: #f58f29;
-  }
-
-  .add-calendar-parent :global(.add-calendar-header) {
-    font-family: "Nunito", sans-serif;
-  }
-
-  .add-calendar-parent :global(.add-calendar-message) {
-    font-weight: 500;
   }
 
   .add-calendar-parent :global(.add-calendar-footer) {
@@ -183,5 +192,9 @@
   img {
     width: 45px;
     height: 45px;
+  }
+
+  .error-message {
+    color: var(--bs-red);
   }
 </style>

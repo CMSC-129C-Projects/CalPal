@@ -74,23 +74,13 @@
   async function deleteCard() {
     // Delete attachments of the card so that there are no stray
     // files left over.
-    await fetch(`/cards/attachments/delete/card/${card._id}`, {
+    await fetch(`/api/card/attachment/delete/card/${card._id}`, {
       method: "DELETE",
     });
 
-    const cardIndex = $session.archived_cards.findIndex(
-      (c) => c._id === card._id
+    $session.archived_cards = $session.archived_cards.filter(
+      (c) => c._id !== card._id
     );
-    console.debug(`[ArchiveCard.svelte] cardIndex: ${cardIndex}`);
-    const cardsBefore = $session.archived_cards.slice(0, cardIndex);
-    const cardsAfter = $session.archived_cards.slice(cardIndex + 1);
-    console.debug(
-      `[ArchiveCard.svelte] cardsBefore: ${JSON.stringify(cardsBefore)}`
-    );
-    console.debug(
-      `[ArchiveCard.svelte] cardsAfter: ${JSON.stringify(cardsAfter)}`
-    );
-    $session.archived_cards = [...cardsBefore, ...cardsAfter];
   }
 </script>
 
@@ -104,8 +94,8 @@
       <Icon name="trash" />
       Delete
     </Button>
-    <Modal isOpen={openDeleteModal} {toggleDeleteModal}>
-      <ModalHeader {toggleDeleteModal}>Deleting card</ModalHeader>
+    <Modal isOpen={openDeleteModal} toggle={toggleDeleteModal}>
+      <ModalHeader toggle={toggleDeleteModal}>Deleting card</ModalHeader>
       <ModalBody>
         Are you sure you want to delete "{card.card_name}"?
       </ModalBody>

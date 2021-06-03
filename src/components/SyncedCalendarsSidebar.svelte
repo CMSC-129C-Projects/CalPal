@@ -104,8 +104,8 @@
   </Offcanvas>
 </div>
 
-<Modal isOpen={isDeleteModalOpen} {toggleDeleteModal}>
-  <ModalHeader {toggleDeleteModal}>Deleting calendar</ModalHeader>
+<Modal isOpen={isDeleteModalOpen} toggle={toggleDeleteModal}>
+  <ModalHeader toggle={toggleDeleteModal}>Deleting calendar</ModalHeader>
   <ModalBody>
     <p>
       Are you sure you want to delete "{calendarToDelete.name}"? This will not

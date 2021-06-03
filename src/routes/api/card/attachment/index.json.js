@@ -1,4 +1,4 @@
-import { insertAttachment } from "../_database.js";
+import { insertAttachment } from "../../_database.js";
 import { ObjectId } from "mongodb";
 
 export async function post(req, res) {
