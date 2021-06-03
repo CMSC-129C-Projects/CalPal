@@ -8,9 +8,6 @@
     CardHeader,
     CardTitle,
     Icon,
-    Col,
-    Container,
-    Row,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -85,28 +82,21 @@
 <div class="list-parent">
   <Card class="list-list">
     <CardHeader>
-      <Container>
-        <Row>
-          <Col class="list-left-half">
-            <CardTitle class="card-card-title-container">
-              <Title
-                bind:value={list.list_name}
-                untitledString="Untitled List"
-              />
-            </CardTitle>
-          </Col>
-          <Col class="list-right-half" xs="2">
-            <button
-              class="borderless-button list-new-folder"
-              on:click={() => addFolder()}
-            >
-              <Icon class="list-new-folder" name="folder-plus" />
-            </button>
-          </Col>
-        </Row>
-      </Container>
+      <div
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5em;"
+      >
+        <CardTitle class="card-card-title-container">
+          <Title bind:value={list.list_name} untitledString="Untitled List" />
+        </CardTitle>
+        <button
+          class="borderless-button list-new-folder"
+          on:click={() => addFolder()}
+        >
+          <Icon class="list-new-folder" name="folder-plus" />
+        </button>
+      </div>
     </CardHeader>
-    <CardBody class="list-list-body" style="padding-bottom:2%;">
+    <CardBody class="list-list-body">
       {#each list.cards.filter((c) => {
         if (c.card_name == null && c.folder_name == null) {
           return false;
@@ -120,32 +110,26 @@
         {/if}
       {/each}
     </CardBody>
-    <CardFooter class="list-list-footer" style="padding-left:7%;">
-      <Row>
-        <Col class="list-left-half">
-          <button
-            class="borderless-button list-add-card"
-            on:click={() => addCard()}
-          >
-            <Icon class="list-plus-icon" name="plus" />
-            Add Card
-          </button>
-        </Col>
-        <Col class="list-right-half" xs="2">
-          <Dropdown
-            isOpen={isDropdownOpen}
-            class={isDropdownOpen ? "list-is-open" : ""}
-            toggle={toggleDropdown}
-          >
-            <DropdownToggle class="list-drop-down-button">
-              <Icon class="threeDots" name="three-dots" />
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </Col>
-      </Row>
+    <CardFooter class="list-list-footer">
+      <button
+        class="borderless-button list-add-card"
+        on:click={() => addCard()}
+      >
+        <Icon class="list-plus-icon" name="plus" />
+        Add Card
+      </button>
+      <Dropdown
+        isOpen={isDropdownOpen}
+        class={isDropdownOpen ? "list-is-open" : ""}
+        toggle={toggleDropdown}
+      >
+        <DropdownToggle class="list-drop-down-button">
+          <Icon name="three-dots" />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </CardFooter>
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
       <ModalHeader toggle={toggleModal}>Deleting list</ModalHeader>
@@ -179,35 +163,23 @@
     padding: 0%;
   }
 
-  .list-parent :global(.list-left-half) {
-    text-align: left;
-    padding: 0;
-    display: flex;
-  }
-
-  .list-parent :global(.list-right-half) {
-    text-align: right;
-    padding: 0;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-  }
-
   .list-parent :global(.list-list-body) {
-    padding: 1rem;
-    /* margin-top: 10px; */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0.5em;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 100%;
   }
 
   .list-parent :global(.list-list-footer) {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0;
+    padding-bottom: 0;
     text-align: center;
     vertical-align: middle;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    padding-left: 2em;
-    padding-right: 2em;
     font-size: medium;
   }
 
@@ -226,6 +198,7 @@
 
   .list-parent :global(.list-add-card) {
     color: #40415a;
+    margin: -0.3em;
     font-size: 15px;
   }
 

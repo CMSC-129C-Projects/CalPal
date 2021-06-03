@@ -39,7 +39,6 @@
   .card-parent :global(.card-card-button) {
     background-color: transparent;
     padding: 0%;
-    margin-bottom: 10px;
     border: none;
     color: black;
     text-align: left;
@@ -47,24 +46,25 @@
   }
 
   .card-parent :global(.card-actual-card) {
-    border-color: #d9d9d9;
+    border-color: rgba(0, 0, 0, 0.125);
   }
 
   .card-parent :global(.card-card-body) {
+    display: flex;
+    flex-direction: column;
     background-color: var(--card-color, transparent);
-    padding-top: 0%;
-    padding-bottom: 0%;
-    padding-left: 5%;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
   }
 
   .card-parent :global(.card-card-title) {
-    margin-bottom: 2%;
     font-size: 1.25em;
+    margin-top: 0.05em;
+    margin-bottom: 0;
   }
 
   .card-parent :global(.card-event-date) {
-    padding-top: 0%;
-    padding-bottom: 2%;
     font-size: 0.9em;
+    margin-top: 0.2em;
   }
 </style>

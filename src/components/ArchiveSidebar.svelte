@@ -28,7 +28,7 @@
     </div>
     <Container>
       <Row>
-        <Col>
+        <Col style="display: flex; flex-direction: column; gap: 0.5em;">
           {#if $session.archived_cards && $session.archived_cards.length > 0}
             {#each $session.archived_cards as card (card._id)}
               <ViewCard bind:card isArchived />
