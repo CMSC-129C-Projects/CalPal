@@ -1,11 +1,13 @@
 <script>
   import { stores } from "@sapper/app";
-  import { fade } from "svelte/transition";
+  import { flip } from "svelte/animate";
+  import { dndzone } from "svelte-dnd-action";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
+  const flipDuration = 100;
 
   async function createNewList() {
     const objectId = await getObjectId();
@@ -18,16 +20,33 @@
       },
     ];
   }
+
+  function handleSort(e) {
+    $session.lists = e.detail.items;
+  }
 </script>
 
 <div class="board-flex-box-container">
-  {#if $session.lists && $session.lists.length > 0}
-    {#each $session.lists as list (list._id)}
-      <div transition:fade|local={{ duration: 150 }}>
-        <List bind:list />
-      </div>
-    {/each}
-  {/if}
+  <section
+    use:dndzone={{
+      items: $session.lists,
+      type: "list",
+      dropTargetStyle: {
+        outline: "rgba(0, 0, 0, 0)",
+      },
+    }}
+    on:consider={handleSort}
+    on:finalize={handleSort}
+    class="board-section"
+  >
+    {#if $session.lists && $session.lists.length > 0}
+      {#each $session.lists as list (list._id)}
+        <div animate:flip={{ duration: flipDuration }}>
+          <List bind:list />
+        </div>
+      {/each}
+    {/if}
+  </section>
   <AddListButton
     onClick={() => {
       createNewList();
@@ -41,7 +60,13 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    padding: 8px;
-    gap: 8px;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .board-section {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
   }
 </style>

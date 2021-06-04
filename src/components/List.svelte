@@ -1,5 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
+  import { flip } from "svelte/animate";
+  import { dndzone } from "svelte-dnd-action";
   import {
     Button,
     Card,
@@ -23,6 +25,7 @@
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
+  const flipDuration = 100;
 
   export let list;
 
@@ -77,6 +80,10 @@
       },
     ];
   }
+
+  function handleSort(e) {
+    list.cards = e.detail.items;
+  }
 </script>
 
 <div class="list-parent">
@@ -97,18 +104,27 @@
       </div>
     </CardHeader>
     <CardBody class="list-list-body">
-      {#each list.cards.filter((c) => {
-        if (c.card_name == null && c.folder_name == null) {
-          return false;
-        }
-        return true;
-      }) as listElement (listElement._id)}
-        {#if listElement.card_name != null}
-          <ViewCard bind:card={listElement} />
-        {:else}
-          <Folder bind:folder={listElement} bind:listId />
-        {/if}
-      {/each}
+      <div
+        use:dndzone={{
+          items: list.cards,
+          dropTargetStyle: {
+            outline: "rgba(0, 176, 240, 0.125) solid 2px",
+          },
+        }}
+        on:consider={handleSort}
+        on:finalize={handleSort}
+        class="list-dnd-zone"
+      >
+        {#each list.cards as listElement (listElement._id)}
+          <div animate:flip={{ duration: flipDuration }}>
+            {#if listElement.card_name != null}
+              <ViewCard bind:card={listElement} />
+            {:else}
+              <Folder bind:folder={listElement} bind:listId />
+            {/if}
+          </div>
+        {/each}
+      </div>
     </CardBody>
     <CardFooter class="list-list-footer">
       <button
@@ -171,6 +187,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 100%;
+  }
+
+  .list-dnd-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
   }
 
   .list-parent :global(.list-list-footer) {

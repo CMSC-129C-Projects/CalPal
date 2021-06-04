@@ -1,5 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
+  import { flip } from "svelte/animate";
+  import { dndzone } from "svelte-dnd-action";
   import {
     Card,
     CardHeader,
@@ -23,6 +25,7 @@
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
+  const flipDuration = 100;
 
   export let folder;
   export let listId;
@@ -69,6 +72,10 @@
       return list;
     });
   };
+
+  function handleSort(e) {
+    folder.cards = e.detail.items;
+  }
 </script>
 
 <Card style="width: 100%;">
@@ -100,11 +107,25 @@
         style="display: flex; flex-direction: column; gap: 0.5em;"
         {isOpen}
       >
-        {#each folder.cards.filter((c) => {
-          return !(typeof c.card_name === "undefined" || c.is_archived);
-        }) as card (card._id)}
-          <ViewCard bind:card />
-        {/each}
+        <div
+          use:dndzone={{
+            items: folder.cards,
+            dropTargetStyle: {
+              outline: "rgba(0, 176, 240, 0.125) solid 2px",
+            },
+          }}
+          on:consider={handleSort}
+          on:finalize={handleSort}
+          class="list-dnd-zone"
+        >
+          {#each folder.cards.filter((c) => {
+            return !(typeof c.card_name === "undefined" || c.is_archived);
+          }) as card (card._id)}
+            <div animate:flip={{ duration: flipDuration }}>
+              <ViewCard bind:card />
+            </div>
+          {/each}
+        </div>
       </Collapse>
     </CardBody>
     <CardFooter
@@ -161,5 +182,13 @@
     line-height: 0%;
     padding: 0;
     transition: transform 0.05s;
+  }
+
+  .list-dnd-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    min-height: 2rem;
   }
 </style>
