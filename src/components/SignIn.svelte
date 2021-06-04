@@ -214,7 +214,7 @@
   .flex-item-left :global(.sign-in-interface-section-header) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 2.5rem;
-    font-weight: 300;
+    font-weight: 500;
     color: white;
     padding-top: 1.25rem;
     padding-left: 1.875rem;
@@ -224,6 +224,7 @@
   .flex-item-left :global(.sign-in-interface-section-body) {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.25rem;
+    font-weight: 500;
     color: white;
     padding-left: 1.875rem;
     padding-top: 2rem;
