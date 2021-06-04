@@ -80,7 +80,10 @@
         <Icon name="folder" />
       </div>
       <div style="flex: 1; text-align: left;">
-        <Title bind:value={folder.folder_name} untitledString="New Folder" />
+        <Title
+          bind:value={folder.folder_name}
+          untitledString="Untitled Folder"
+        />
       </div>
       <button on:click={() => (isOpen = !isOpen)} class="borderless-button">
         {#if isOpen}

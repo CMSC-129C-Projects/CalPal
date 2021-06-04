@@ -72,7 +72,7 @@
       ...list.cards,
       {
         _id: objectId,
-        folder_name: "New Folder",
+        folder_name: "Untitled Folder",
         cards: [],
       },
     ];
