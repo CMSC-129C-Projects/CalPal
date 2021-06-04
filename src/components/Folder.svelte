@@ -189,7 +189,7 @@
     flex-direction: column;
     gap: 0.5em;
     padding: 0.5em;
-    min-height: 1.5rem;
+    min-height: 2rem;
     max-height: 100%;
     overflow-y: auto;
   }
