@@ -182,18 +182,19 @@
   .list-parent :global(.list-list-body) {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
-    padding: 0.5em;
-    overflow-x: hidden;
-    overflow-y: auto;
+    padding: 0em;
     max-height: 100%;
+    overflow: hidden;
   }
 
   .list-dnd-zone {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    padding: 0.5em;
+    min-height: 1.5rem;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .list-parent :global(.list-list-footer) {

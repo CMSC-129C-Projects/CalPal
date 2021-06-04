@@ -185,10 +185,12 @@
   }
 
   .list-dnd-zone {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    min-height: 2rem;
+    padding: 0.5em;
+    min-height: 1.5rem;
+    max-height: 100%;
+    overflow-y: auto;
   }
 </style>
