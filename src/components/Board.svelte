@@ -27,26 +27,28 @@
 </script>
 
 <div class="board-flex-box-container">
-  <section
-    use:dndzone={{
-      items: $session.lists,
-      type: "list",
-      dropTargetStyle: {
-        outline: "rgba(0, 0, 0, 0)",
-      },
-    }}
-    on:consider={handleSort}
-    on:finalize={handleSort}
-    class="board-section"
-  >
-    {#if $session.lists && $session.lists.length > 0}
-      {#each $session.lists as list (list._id)}
-        <div animate:flip={{ duration: flipDuration }}>
-          <List bind:list />
-        </div>
-      {/each}
-    {/if}
-  </section>
+  <div>
+    <section
+      use:dndzone={{
+        items: $session.lists,
+        type: "list",
+        dropTargetStyle: {
+          outline: "rgba(0, 0, 0, 0)",
+        },
+      }}
+      on:consider={handleSort}
+      on:finalize={handleSort}
+      class="board-section"
+    >
+      {#if $session.lists && $session.lists.length > 0}
+        {#each $session.lists as list (list._id)}
+          <div animate:flip={{ duration: flipDuration }}>
+            <List bind:list />
+          </div>
+        {/each}
+      {/if}
+    </section>
+  </div>
   <AddListButton
     onClick={() => {
       createNewList();
@@ -67,6 +69,7 @@
   .board-section {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 0.5rem;
   }
 </style>
