@@ -12,6 +12,7 @@
     FormGroup,
     Input,
     Label,
+    Tooltip,
   } from "sveltestrap/src";
 
   const { session } = stores();
@@ -98,9 +99,16 @@
 </script>
 
 <div class="add-calendar-parent">
-  <button on:click={toggle} class="scale-on-hover borderless-button">
+  <button
+    on:click={toggle}
+    id="add-calendar-button"
+    class="scale-on-hover borderless-button"
+  >
     <img src="add_calendar.png" alt="Add Calendar" />
   </button>
+  <Tooltip target="add-calendar-button" placement="bottom">
+    Add Calendar
+  </Tooltip>
   <Modal isOpen={open} {toggle}>
     <ModalHeader {toggle}>
       <span class="add-calendar-header">Add a new calendar</span>

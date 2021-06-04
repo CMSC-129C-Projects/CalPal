@@ -30,7 +30,7 @@
 
   const { session } = stores();
 
-  let is_board_shown = true;
+  let isBoardShown = true;
 </script>
 
 <svelte:head>
@@ -38,8 +38,8 @@
 </svelte:head>
 
 <div class="index-parent">
-  <Header bind:is_board_shown />
-  {#if is_board_shown}
+  <Header bind:isBoardShown />
+  {#if isBoardShown}
     <Board />
   {:else}
     <Calendar />

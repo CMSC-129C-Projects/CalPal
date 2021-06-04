@@ -1,5 +1,5 @@
 <script>
-  import { Offcanvas, Row, Col } from "sveltestrap";
+  import { Offcanvas, Row, Col, Tooltip } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
@@ -11,10 +11,14 @@
 </script>
 
 <div>
-  <button class="scale-on-hover borderless-button" on:click={toggle}>
+  <button
+    id="menu-sidebar-button"
+    class="scale-on-hover borderless-button"
+    on:click={toggle}
+  >
     <img src="menu_ellipses_vertical.png" alt="Menu" />
   </button>
-
+  <Tooltip target="menu-sidebar-button" placement="bottom">Menu</Tooltip>
   <Offcanvas header="Menu" isOpen={isSidebarOpen} placement="end" {toggle}>
     <div class="menu-sidebar-offcanvas-flexbox">
       <div class="menu-sidebar-offcanvas-body">

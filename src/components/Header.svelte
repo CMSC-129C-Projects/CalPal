@@ -2,7 +2,7 @@
   import { Col, Row } from "sveltestrap";
   import NavBar from "./NavBar.svelte";
 
-  export let is_board_shown;
+  export let isBoardShown;
 </script>
 
 <div class="header-parent">
@@ -20,7 +20,7 @@
         <img src="CalPal_logo.png" alt="CalPal Logo" />
       </p>
     </Col>
-    <Col class="d-xs-block"><NavBar bind:is_board_shown /></Col>
+    <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
   </Row>
 </div>
 

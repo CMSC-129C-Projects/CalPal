@@ -1,19 +1,33 @@
 <script>
+  import { Tooltip } from "sveltestrap";
   import AddCalendar from "./AddCalendar.svelte";
   import MenuSidebar from "./MenuSidebar.svelte";
 
-  export let is_board_shown;
+  export let isBoardShown;
 
   function handleViewButton() {
-    is_board_shown = !is_board_shown;
+    isBoardShown = !isBoardShown;
   }
 </script>
 
 <div class="parent">
   <AddCalendar />
-  <button class="scale-on-hover borderless-button" on:click={handleViewButton}>
-    <img src="switch_board_view.png" alt="Board view" />
-  </button>
+  <div>
+    <button
+      id="switch-view-button"
+      class="scale-on-hover borderless-button"
+      on:click={handleViewButton}
+    >
+      <img src="switch_board_view.png" alt="Board view" />
+    </button>
+    <Tooltip target="switch-view-button" placement="bottom">
+      {#if isBoardShown}
+        Switch to Calendar
+      {:else}
+        Switch to Board
+      {/if}
+    </Tooltip>
+  </div>
   <MenuSidebar />
 </div>
 
