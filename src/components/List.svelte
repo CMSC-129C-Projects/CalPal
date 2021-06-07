@@ -25,7 +25,7 @@
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
-  const flipDuration = 100;
+  const flipDurationMs = 100;
 
   export let list;
 
@@ -110,13 +110,14 @@
           dropTargetStyle: {
             outline: "rgba(0, 176, 240, 0.125) solid 2px",
           },
+          flipDurationMs,
         }}
         on:consider={handleSort}
         on:finalize={handleSort}
         class="list-dnd-zone"
       >
         {#each list.cards as listElement (listElement._id)}
-          <div animate:flip={{ duration: flipDuration }}>
+          <div animate:flip={{ duration: flipDurationMs }}>
             {#if listElement.card_name != null}
               <ViewCard bind:card={listElement} />
             {:else}

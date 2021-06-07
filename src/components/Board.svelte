@@ -7,7 +7,7 @@
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
-  const flipDuration = 100;
+  const flipDurationMs = 100;
 
   async function createNewList() {
     const objectId = await getObjectId();
@@ -35,6 +35,7 @@
         dropTargetStyle: {
           outline: "rgba(0, 0, 0, 0)",
         },
+        flipDurationMs,
       }}
       on:consider={handleSort}
       on:finalize={handleSort}
@@ -42,7 +43,7 @@
     >
       {#if $session.lists && $session.lists.length > 0}
         {#each $session.lists as list (list._id)}
-          <div animate:flip={{ duration: flipDuration }}>
+          <div animate:flip={{ duration: flipDurationMs }}>
             <List bind:list />
           </div>
         {/each}

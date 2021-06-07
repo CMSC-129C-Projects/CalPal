@@ -25,7 +25,7 @@
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
-  const flipDuration = 100;
+  const flipDurationMs = 100;
 
   export let folder;
   export let listId;
@@ -113,6 +113,7 @@
             dropTargetStyle: {
               outline: "rgba(0, 176, 240, 0.125) solid 2px",
             },
+            flipDurationMs,
           }}
           on:consider={handleSort}
           on:finalize={handleSort}
@@ -121,7 +122,7 @@
           {#each folder.cards.filter((c) => {
             return !(typeof c.card_name === "undefined" || c.is_archived);
           }) as card (card._id)}
-            <div animate:flip={{ duration: flipDuration }}>
+            <div animate:flip={{ duration: flipDurationMs }}>
               <ViewCard bind:card />
             </div>
           {/each}
