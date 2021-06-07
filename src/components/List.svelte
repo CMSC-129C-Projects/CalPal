@@ -45,7 +45,7 @@
       }
       return true;
     });
-  };
+  }
 
   async function addCard() {
     const objectId = await getObjectId();
