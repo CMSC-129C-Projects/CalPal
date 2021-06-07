@@ -40,7 +40,14 @@
     height: 70px;
   }
 
-  .overflow {
+  .calpal-logo-button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    line-height: 0%;
+    padding: 1.5% 0% 1.5% 0%;
+    transition: transform 0.05s;
+    transform-origin: center center;
     white-space: nowrap;
   }
 
