@@ -6,8 +6,7 @@
       return this.redirect(302, "/");
     }
 
-    console.debug("[board.svelte] Trying to post...");
-    await this.fetch(`/api/card/update?user=${userId}`, {
+    this.fetch(`/api/card/update?user=${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
