@@ -153,8 +153,8 @@
   }
 
   .list-parent :global(.list-list) {
-    width: 260px;
-    min-width: 260px;
+    width: 272px;
+    min-width: 272px;
     max-height: 100%;
   }
 
