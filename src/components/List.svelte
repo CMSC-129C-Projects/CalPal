@@ -73,6 +73,7 @@
       {
         _id: objectId,
         folder_name: "Untitled Folder",
+        is_open: false,
         cards: [],
       },
     ];
