@@ -23,7 +23,7 @@
 <div class="board-flex-box-container">
   {#if $session.lists && $session.lists.length > 0}
     {#each $session.lists as list (list._id)}
-      <div transition:fade|local={{ duration: 150 }}>
+      <div>
         <List bind:list />
       </div>
     {/each}
