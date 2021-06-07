@@ -28,14 +28,20 @@
     </div>
     <Container>
       <Row>
-        <Col style="display: flex; flex-direction: column; gap: 0.5em;">
-          {#if $session.archived_cards && $session.archived_cards.length > 0}
-            {#each $session.archived_cards as card (card._id)}
-              <ViewCard bind:card isArchived />
-            {/each}
-          {:else}
-            <p>You don't have any archived cards.</p>
-          {/if}
+        <Col
+          style="display: flex; flex-direction: column; align-items: center;"
+        >
+          <div
+            style="display: flex; flex-direction: column; width: 260px; gap: 0.5em; padding: 0.5em;"
+          >
+            {#if $session.archived_cards && $session.archived_cards.length > 0}
+              {#each $session.archived_cards as card (card._id)}
+                <ViewCard bind:card isArchived />
+              {/each}
+            {:else}
+              <p>You don't have any archived cards.</p>
+            {/if}
+          </div>
         </Col>
       </Row>
     </Container>
