@@ -1,6 +1,5 @@
 <script>
   import { stores } from "@sapper/app";
-  import { fade } from "svelte/transition";
   import List from "./List.svelte";
   import AddListButton from "./AddListButton.svelte";
   import getObjectId from "../routes/util/_object-id.js";
