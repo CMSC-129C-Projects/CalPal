@@ -27,7 +27,7 @@
   export let folder;
   export let listId;
 
-  let isOpen = false;
+  $: isOpen = folder.is_open;
   let isDropdownOpen = false;
   let isModalOpen = false;
 
