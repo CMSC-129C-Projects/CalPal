@@ -9,7 +9,7 @@
   <Row class="header-header">
     <Col class="d-none d-sm-block">
       <button class="calpal-logo-button" onClick="window.location.reload()">
-        <img src="CalPal_logo.png" alt="CalPal Logo"/>
+        <img src="CalPal_logo.png" alt="CalPal Logo" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
       </button>
@@ -40,7 +40,7 @@
     height: 70px;
   }
 
-  .calpal-logo-button{
+  .calpal-logo-button {
     background-color: transparent;
     border: none;
     outline: none;

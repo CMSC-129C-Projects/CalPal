@@ -92,7 +92,10 @@
           untitledString="Untitled Folder"
         />
       </div>
-      <button on:click={() => (folder.is_open = !folder.is_open)} class="borderless-button">
+      <button
+        on:click={() => (folder.is_open = !folder.is_open)}
+        class="borderless-button"
+      >
         {#if isOpen}
           <Icon name="chevron-up" style="margin-top: 0.45rem;" />
         {:else}
