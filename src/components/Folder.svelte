@@ -59,6 +59,16 @@
   }
 
   async function deleteFolder () {
+    await fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: $session.user_id,
+      }),
+    });
+
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
         return list;
