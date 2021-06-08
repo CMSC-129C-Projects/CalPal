@@ -110,6 +110,7 @@
         <div
           use:dndzone={{
             items: folder.cards,
+            dropFromOthersDisabled: $session.isDraggingFolder,
             dropTargetStyle: {
               outline: "rgba(0, 176, 240, 0.125) solid 2px",
             },
@@ -117,7 +118,7 @@
           }}
           on:consider={handleSort}
           on:finalize={handleSort}
-          class="list-dnd-zone"
+          class="folder-dnd-zone"
         >
           {#each folder.cards.filter((c) => {
             return !(typeof c.card_name === "undefined" || c.is_archived);
@@ -185,7 +186,7 @@
     transition: transform 0.05s;
   }
 
-  .list-dnd-zone {
+  .folder-dnd-zone {
     display: flex;
     flex-direction: column;
     gap: 0.5em;

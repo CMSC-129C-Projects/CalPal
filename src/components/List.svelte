@@ -1,7 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
   import { flip } from "svelte/animate";
-  import { dndzone } from "svelte-dnd-action";
+  import { dndzone, TRIGGERS } from "svelte-dnd-action";
   import {
     Button,
     Card,
@@ -81,7 +81,28 @@
     ];
   }
 
+  function handleConsider(e) {
+    const {
+      items,
+      info: { id, trigger },
+    } = e.detail;
+
+    if (trigger === TRIGGERS.DRAG_STARTED) {
+      const isFolder = (object) => {
+        return object?.folder_name != null ?? false;
+      };
+
+      const draggedItem = list.cards.find((e) => e._id === id);
+      if (isFolder(draggedItem)) {
+        $session.isDraggingFolder = true;
+      }
+    }
+
+    list.cards = items;
+  }
+
   function handleSort(e) {
+    $session.isDraggingFolder = false;
     list.cards = e.detail.items;
   }
 </script>
@@ -112,7 +133,7 @@
           },
           flipDurationMs,
         }}
-        on:consider={handleSort}
+        on:consider={handleConsider}
         on:finalize={handleSort}
         class="list-dnd-zone"
       >
