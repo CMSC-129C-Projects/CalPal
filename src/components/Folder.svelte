@@ -58,17 +58,17 @@
     ];
   }
 
-  const deleteFolder = (folderIdToDelete) => {
+  async function deleteFolder () {
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
         return list;
       }
       list.cards = list.cards.filter(
-        (folder) => folder._id !== folderIdToDelete
+        (f) => f._id !== folder._id
       );
       return list;
     });
-  };
+  }
 </script>
 
 <Card style="width: 100%;">
