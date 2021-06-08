@@ -1,5 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
+  import { flip } from "svelte/animate";
+  import { dndzone, TRIGGERS } from "svelte-dnd-action";
   import {
     Button,
     Card,
@@ -23,6 +25,7 @@
   import getObjectId from "../routes/util/_object-id.js";
 
   const { session } = stores();
+  const flipDurationMs = 100;
 
   export let list;
 
@@ -78,6 +81,31 @@
       },
     ];
   }
+
+  function handleConsider(e) {
+    const {
+      items,
+      info: { id, trigger },
+    } = e.detail;
+
+    if (trigger === TRIGGERS.DRAG_STARTED) {
+      const isFolder = (object) => {
+        return object?.folder_name != null ?? false;
+      };
+
+      const draggedItem = list.cards.find((e) => e._id === id);
+      if (isFolder(draggedItem)) {
+        $session.isDraggingFolder = true;
+      }
+    }
+
+    list.cards = items;
+  }
+
+  function handleSort(e) {
+    $session.isDraggingFolder = false;
+    list.cards = e.detail.items;
+  }
 </script>
 
 <div class="list-parent">
@@ -98,18 +126,28 @@
       </div>
     </CardHeader>
     <CardBody class="list-list-body">
-      {#each list.cards.filter((c) => {
-        if (c.card_name == null && c.folder_name == null) {
-          return false;
-        }
-        return true;
-      }) as listElement (listElement._id)}
-        {#if listElement.card_name != null}
-          <ViewCard bind:card={listElement} />
-        {:else}
-          <Folder bind:folder={listElement} bind:listId />
-        {/if}
-      {/each}
+      <div
+        use:dndzone={{
+          items: list.cards,
+          dropTargetStyle: {
+            outline: "rgba(0, 176, 240, 0.125) solid 2px",
+          },
+          flipDurationMs,
+        }}
+        on:consider={handleConsider}
+        on:finalize={handleSort}
+        class="list-dnd-zone"
+      >
+        {#each list.cards as listElement (listElement._id)}
+          <div animate:flip={{ duration: flipDurationMs }}>
+            {#if listElement.card_name != null}
+              <ViewCard bind:card={listElement} />
+            {:else}
+              <Folder bind:folder={listElement} bind:listId />
+            {/if}
+          </div>
+        {/each}
+      </div>
     </CardBody>
     <CardFooter class="list-list-footer">
       <button
@@ -167,11 +205,19 @@
   .list-parent :global(.list-list-body) {
     display: flex;
     flex-direction: column;
+    padding: 0em;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .list-dnd-zone {
+    display: flex;
+    flex-direction: column;
     gap: 0.5em;
     padding: 0.5em;
-    overflow-x: hidden;
-    overflow-y: auto;
+    min-height: 1.5rem;
     max-height: 100%;
+    overflow-y: auto;
   }
 
   .list-parent :global(.list-list-footer) {
