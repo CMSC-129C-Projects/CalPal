@@ -8,11 +8,11 @@
 <div class="header-parent">
   <Row class="header-header">
     <Col class="d-none d-sm-block">
-      <p class="overflow">
-        <img src="CalPal_logo.png" alt="CalPal Logo" />
+      <button class="calpal-logo-button" onClick="window.location.reload()">
+        <img src="CalPal_logo.png" alt="CalPal Logo"/>
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
-      </p>
+      </button>
     </Col>
     <Col class="d-block d-sm-none">
       <!-- TODO: Tweak the padding to make it match on `sm` and above devices -->
@@ -40,7 +40,14 @@
     height: 70px;
   }
 
-  .overflow {
+  .calpal-logo-button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    line-height: 0%;
+    padding: 1.5% 0% 1.5% 0%;
+    transition: transform 0.05s;
+    transform-origin: center center;
     white-space: nowrap;
   }
 

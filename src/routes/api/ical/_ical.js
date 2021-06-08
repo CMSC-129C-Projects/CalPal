@@ -4,6 +4,10 @@ export async function getCardsFromUrl(calendarUrl) {
   const events = await ical.async.fromURL(calendarUrl);
   const cardsFromEvents = Object.entries(events)
     .map(([_, e]) => {
+      if (!e.uid) {
+        return null;
+      }
+
       if (new Date(e.start) < new Date(Date.now())) {
         return null;
       }

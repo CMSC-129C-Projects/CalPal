@@ -41,14 +41,14 @@
     isModalOpen = !isModalOpen;
   };
 
-  const deleteList = (listIdToDelete) => {
+  function deleteList() {
     $session.lists = $session.lists.filter((l) => {
-      if (l._id === listIdToDelete) {
+      if (l._id === list._id) {
         return false;
       }
       return true;
     });
-  };
+  }
 
   async function addCard() {
     const objectId = await getObjectId();
@@ -76,6 +76,7 @@
       {
         _id: objectId,
         folder_name: "Untitled Folder",
+        is_open: false,
         cards: [],
       },
     ];
@@ -176,7 +177,7 @@
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" on:click={toggleModal}>Cancel</Button>
-        <Button color="danger" on:click={() => deleteList(list._id)}>
+        <Button color="danger" on:click={() => deleteList()}>
           <Icon name="trash" />
           Delete
         </Button>
