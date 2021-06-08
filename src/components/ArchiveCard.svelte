@@ -71,10 +71,10 @@
     );
   }
 
-  async function deleteCard() {
+  function deleteCard() {
     // Delete attachments of the card so that there are no stray
     // files left over.
-    await fetch(`/api/card/attachment/delete/card/${card._id}`, {
+    fetch(`/api/card/attachment/delete/card/${card._id}`, {
       method: "DELETE",
     });
 
