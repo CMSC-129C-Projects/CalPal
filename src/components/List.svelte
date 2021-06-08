@@ -129,6 +129,7 @@
       <div
         use:dndzone={{
           items: list.cards,
+          centreDraggedOnCursor: true,
           dropTargetStyle: {
             outline: "rgba(0, 176, 240, 0.125) solid 2px",
           },
