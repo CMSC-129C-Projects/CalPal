@@ -4,9 +4,8 @@ import compression from "compression";
 import * as sapper from "@sapper/server";
 import session from "express-session";
 import { json } from "body-parser";
-
-const { createServer } = require("https");
-const { readFileSync } = require("fs");
+import { createServer } from "https";
+import { readFileSync } from "fs";
 
 const { PORT, NODE_ENV, GOOGLE_OAUTH2_CLIENT_ID } = process.env;
 const dev = NODE_ENV === "development";
