@@ -130,6 +130,28 @@ export async function deleteAttachmentsOfCard(cardId) {
   return result;
 }
 
+//TODO: Find a way to make Mongo do the parsing and deleting work
+export async function deleteAttachmentsinFolder(userId, folderId) {
+  console.debug(userId);
+  const userCards = await getUserData(userId);
+  let folder;
+  console.debug(JSON.stringify(userCards, null, 2));
+
+  for (const list of userCards.lists) {
+    for (const element of list.cards) {
+      if (element._id === folderId) {
+        folder = element;
+      }
+    }
+  }
+
+  for (const card of folder.cards) {
+    deleteAttachmentsOfCard(card._id);
+  }
+
+  return;
+}
+
 export async function getCalendarsOfUser(userId) {
   const db = await getDb();
   const result = await db.collection("calendars").findOne({ user_id: userId });
