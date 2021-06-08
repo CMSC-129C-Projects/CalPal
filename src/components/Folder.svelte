@@ -42,12 +42,11 @@
     isModalOpen = !isModalOpen;
   };
 
-  async function addCard() {
-    const objectId = await getObjectId();
+  function addCard() {
     folder.cards = [
       ...folder.cards,
       {
-        _id: objectId,
+        _id: getObjectId(),
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",

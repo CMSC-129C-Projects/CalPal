@@ -14,6 +14,7 @@
     Label,
     Tooltip,
   } from "sveltestrap/src";
+  import getObjectId from "../routes/util/_object-id";
 
   const { session } = stores();
 
@@ -83,14 +84,11 @@
     insertCardsIntoFirstList(result);
   };
 
-  const addCalendar = async () => {
-    const res = await fetch(`/api/card/oid`);
-    const objectId = await res.text();
-
+  const addCalendar = () => {
     $session.calendars = [
       ...$session.calendars,
       {
-        _id: objectId,
+        _id: getObjectId(),
         name: calendarName,
         url: inputUrl,
       },
