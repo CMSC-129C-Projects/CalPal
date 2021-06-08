@@ -5,10 +5,13 @@ import * as sapper from "@sapper/server";
 import session from "express-session";
 import { json } from "body-parser";
 
+const { createServer } = require("https");
+const { readFileSync } = require("fs");
+
 const { PORT, NODE_ENV, GOOGLE_OAUTH2_CLIENT_ID } = process.env;
 const dev = NODE_ENV === "development";
 
-polka() // You can also use Express
+const server = polka() // You can also use Express
   .use(
     session({
       secret: "SuperSecretShouldNotBeCommitted",
@@ -33,7 +36,22 @@ polka() // You can also use Express
         GOOGLE_OAUTH2_CLIENT_ID,
       }),
     })
-  )
-  .listen(PORT, (err) => {
+  );
+
+if (dev) {
+  server.listen(PORT, (err) => {
     if (err) console.log("error", err);
   });
+} else {
+  const sslPort = 443;
+  const options = {
+    key: readFileSync("/etc/letsencrypt/live/calpal.upcebu.edu.ph/privkey.pem"),
+    cert: readFileSync(
+      "/etc/letsencrypt/live/calpal.upcebu.edu.ph/fullchain.pem"
+    ),
+  };
+
+  createServer(options, server.handler).listen(PORT, (_) => {
+    console.log(`> Running on https://localhost:${sslPort}`);
+  });
+}
