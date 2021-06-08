@@ -20,7 +20,7 @@
     ModalFooter,
   } from "sveltestrap";
 
-  import getObjectId from "../routes/_object-id.js";
+  import getObjectId from "../routes/util/_object-id.js";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
 
@@ -42,12 +42,11 @@
     isModalOpen = !isModalOpen;
   };
 
-  async function addCard() {
-    const objectId = await getObjectId();
+  function addCard() {
     folder.cards = [
       ...folder.cards,
       {
-        _id: objectId,
+        _id: getObjectId(),
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",

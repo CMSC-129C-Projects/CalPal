@@ -9,12 +9,11 @@
   const { session } = stores();
   const flipDurationMs = 100;
 
-  async function createNewList() {
-    const objectId = await getObjectId();
+  function createNewList() {
     $session.lists = [
       ...$session.lists,
       {
-        _id: objectId,
+        _id: getObjectId(),
         list_name: "Untitled List",
         cards: [],
       },

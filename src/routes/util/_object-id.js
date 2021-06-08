@@ -1,5 +1,6 @@
-export default async function getObjectId() {
-  const res = await fetch(`/api/card/oid`);
-  const result = await res.text();
-  return result;
+import ObjectID from "../../../node_modules/bson-objectid";
+
+export default function getObjectId() {
+  const result = new ObjectID();
+  return result.toHexString();
 }

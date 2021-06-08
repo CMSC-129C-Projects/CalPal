@@ -50,10 +50,9 @@
     error = false;
     function readAndPreview(file) {
       const reader = new FileReader();
-      reader.onload = async function (e) {
-        const attachmentId = await getObjectId();
+      reader.onload = function (e) {
         const newAttachment = {
-          _id: attachmentId,
+          _id: getObjectId(),
           card_id: cardId,
           data: {
             filename: file.name,

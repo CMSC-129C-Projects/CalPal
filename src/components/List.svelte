@@ -50,12 +50,11 @@
     });
   }
 
-  async function addCard() {
-    const objectId = await getObjectId();
+  function addCard() {
     list.cards = [
       ...list.cards,
       {
-        _id: objectId,
+        _id: getObjectId(),
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
@@ -69,12 +68,11 @@
     ];
   }
 
-  async function addFolder() {
-    const objectId = await getObjectId();
+  function addFolder() {
     list.cards = [
       ...list.cards,
       {
-        _id: objectId,
+        _id: getObjectId(),
         folder_name: "Untitled Folder",
         is_open: false,
         cards: [],
