@@ -14,6 +14,7 @@
     Label,
     Tooltip,
   } from "sveltestrap/src";
+  import getObjectId from "../routes/util/_object-id";
 
   const { session } = stores();
 
@@ -46,9 +47,6 @@
   }
 
   const getCardsFromUrl = async (url) => {
-    const encodedUrl = encodeURIComponent(url);
-    console.debug(`[index.svelte] encodedUrl: ${encodedUrl}`);
-
     const response = await fetch(`/api/ical/parse.json?url=${encodedUrl}`, {
       headers: {
         "Content-Type": "application/json",
@@ -83,14 +81,11 @@
     insertCardsIntoFirstList(result);
   };
 
-  const addCalendar = async () => {
-    const res = await fetch(`/api/card/oid`);
-    const objectId = await res.text();
-
+  const addCalendar = () => {
     $session.calendars = [
       ...$session.calendars,
       {
-        _id: objectId,
+        _id: getObjectId(),
         name: calendarName,
         url: inputUrl,
       },

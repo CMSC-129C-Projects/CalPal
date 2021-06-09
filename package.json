@@ -8,11 +8,12 @@
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
     "lint": "eslint --fix --quiet src --ext .js,.svelte",
-    "format": "prettier --write 'src/**'",
+    "format": "prettier --write src/**",
     "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bson-objectid": "^2.0.1",
     "compression": "^1.7.1",
     "express-session": "^1.17.1",
     "google-auth-library": "^7.0.4",
@@ -47,6 +48,7 @@
     "rollup-plugin-terser": "^7.0.0",
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
+    "svelte-dnd-action": "^0.9.8",
     "svelte-fullcalendar": "^1.1.0",
     "svelte-jester": "^1.6.0",
     "sveltestrap": "^5.1.1"

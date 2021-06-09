@@ -4,7 +4,7 @@
 
   export let value;
   export let untitledString = "";
-  export let disabled;
+  export let disabled = false;
 
   let inner;
   let isSelected = false;

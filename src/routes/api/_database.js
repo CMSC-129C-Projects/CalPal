@@ -31,10 +31,28 @@ export async function updateUserData(userId, lists, archived_cards, calendars) {
   const db = await getDb();
   const cards = db.collection("cards");
 
+  const removeAllInstancesOfField = (object, fieldName) => {
+    if (typeof object !== "object") {
+      return object;
+    }
+
+    if (object[fieldName] != null) {
+      delete object[fieldName];
+    }
+
+    for (let [field, value] of Object.entries(object)) {
+      object[field] = removeAllInstancesOfField(value, fieldName);
+    }
+
+    return object;
+  };
+
+  const cleanLists = removeAllInstancesOfField([...lists], "isDndShadowItem");
+
   const filter = { user_id: userId };
   const updatedDocument = {
     $set: {
-      lists: lists,
+      lists: cleanLists,
       archived_cards: archived_cards,
       calendars: calendars,
     },
