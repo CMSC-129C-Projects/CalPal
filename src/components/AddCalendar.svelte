@@ -47,9 +47,6 @@
   }
 
   const getCardsFromUrl = async (url) => {
-    const encodedUrl = encodeURIComponent(url);
-    console.debug(`[index.svelte] encodedUrl: ${encodedUrl}`);
-
     const response = await fetch(`/api/ical/parse.json?url=${encodedUrl}`, {
       headers: {
         "Content-Type": "application/json",

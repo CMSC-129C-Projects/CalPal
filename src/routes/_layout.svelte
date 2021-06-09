@@ -1,3 +1,13 @@
+<script context="module">
+  import { syncCards } from "./util/_sync";
+
+  export async function preload(_page, session) {
+    if (session.did_cards_load) {
+      await syncCards(session, this.fetch);
+    }
+  }
+</script>
+
 <script>
   import { overrideItemIdKeyNameBeforeInitialisingDndZones } from "svelte-dnd-action";
 
