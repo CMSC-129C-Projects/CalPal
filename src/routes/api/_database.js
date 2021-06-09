@@ -99,7 +99,20 @@ export async function createNewUser(userId) {
         cards: [],
       },
     ],
-    archived_cards: [],
+    archived_cards: [
+      {
+        _id: newObjectIdString(),
+        card_name: "I am an archived card!",
+        original_title: "",
+        original_date: "",
+        date_created: new Date(Date.now()),
+        due_date_time: "",
+        remind_date_time: "",
+        description:
+          "This is a card just like the other two in the board. The difference is that this card is archived. You can no longer edit a card that is archived. If you want to unarchive a card, click the unarchive button on the bottom right. If you want to permanently delete a card, click the delete button next to the unarchive button.",
+        color: "#ffffff",
+      },
+    ],
     calendars: [],
   });
 
