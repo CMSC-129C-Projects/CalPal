@@ -150,6 +150,24 @@ export async function deleteAttachmentsinFolder(userId, folderId) {
   return;
 }
 
+export async function deleteAttachmentsinList(userId, listId) {
+  const userCards = await getUserData(userId);
+
+  for (const list of userCards.lists) {
+    if (list._id === listId) {
+      for (const element of list.cards) {
+        if (element.card_name) {
+          deleteAttachmentsOfCard(element._id);
+        } else if (element.folder_name) {
+          deleteAttachmentsinFolder(userId, element._id);
+        }
+      }
+    }
+  }
+
+  return;
+}
+
 export async function getCalendarsOfUser(userId) {
   const db = await getDb();
   const result = await db.collection("calendars").findOne({ user_id: userId });
