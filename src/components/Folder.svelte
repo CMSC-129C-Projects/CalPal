@@ -60,7 +60,7 @@
     ];
   }
 
-  function deleteFolder () {
+  function deleteFolder() {
     fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
       method: "DELETE",
       headers: {
@@ -75,12 +75,10 @@
       if (list._id !== listId) {
         return list;
       }
-      list.cards = list.cards.filter(
-        (f) => f._id !== folder._id
-      );
+      list.cards = list.cards.filter((f) => f._id !== folder._id);
       return list;
     });
-  };
+  }
 
   function handleSort(e) {
     folder.cards = e.detail.items;
