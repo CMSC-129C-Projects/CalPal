@@ -65,7 +65,7 @@ export async function createNewUser(userId) {
             due_date_time: "",
             remind_date_time: "",
             description:
-              "Hello there, new user! Let's get you started with CalPal. \n What you are looking at right now is a card and its different card details. You can edit the different card details by clicking on their input fields and inputting your desired card detail. \n If you want to archive this card, you can click the archive card button on the bottom right of this card. If you want to access and archived card, click on the Menu button represented by the 3 vertical dots on page's header found on the top right corner. \n You can add lists, cards, and folders with their respective buttons. Lists can be dragged and dropped around the board. Cards can be dragged and dropped into lists and folders. Folders can be dragged and dropped into lists. You can add and sync calendars using the Add Calendar Button found on the page's header. You can switch between board and calendar view using the Switch View Button found on the page's header. \n That's all you need to know to get started. Enjoy and be productive!",
+              "Hello there, new user! Let's get you started with CalPal. \nWhat you are looking at right now is a card and its different card details. You can edit the different card details by clicking on their input fields and inputting your desired card detail. \nIf you want to archive this card, you can click the archive button on the bottom right of this card. If you want to access the archived card, click on the Menu button represented by the 3 vertical dots on page's header found on the top right corner. \nYou can add lists, cards, and folders with their respective buttons. Lists can be dragged and dropped around the board. Cards can be dragged and dropped into lists and folders. Folders can be dragged and dropped into lists. You can add and sync calendars using the Add Calendar Button found on the page's header. You can switch between board and calendar view using the Switch View Button found on the page's header. \nCheck out the folder below this card next!",
             color: "#ffffff",
           },
           {
@@ -81,7 +81,7 @@ export async function createNewUser(userId) {
                 due_date_time: "",
                 remind_date_time: "",
                 description:
-                  "Hello there! This is a card just like the one above! Try adding cards in the folder. You can also drag the folder to another list and drag cards in and out of the folder!",
+                  "Hello there! This is a card just like the one above! \nTry adding cards in the folder. You can also drag the folder to another list and drag cards in and out of the folder!",
                 color: "#ffffff",
               },
             ],
