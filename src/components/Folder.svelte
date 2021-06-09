@@ -58,8 +58,8 @@
     ];
   }
 
-  async function deleteFolder () {
-    await fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
+  function deleteFolder () {
+    fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
