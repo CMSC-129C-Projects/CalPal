@@ -80,13 +80,10 @@
       );
       return list;
     });
-<<<<<<< HEAD
-=======
   };
 
   function handleSort(e) {
     folder.cards = e.detail.items;
->>>>>>> origin/development
   }
 </script>
 
