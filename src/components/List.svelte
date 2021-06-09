@@ -51,6 +51,7 @@
         user_id: $session.user_id,
       }),
     });
+
     $session.lists = $session.lists.filter((l) => {
       if (l._id === list._id) {
         return false;

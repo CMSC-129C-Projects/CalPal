@@ -149,7 +149,7 @@ export async function deleteAttachmentsOfCard(cardId) {
 }
 
 //TODO: Find a way to make Mongo do the parsing and deleting work
-export async function deleteAttachmentsinFolder(userId, folderId) {
+export async function deleteAttachmentsInFolder(userId, folderId) {
   const userData = await getUserData(userId);
   let folder;
 
@@ -164,11 +164,9 @@ export async function deleteAttachmentsinFolder(userId, folderId) {
   for (const card of folder.cards) {
     deleteAttachmentsOfCard(card._id);
   }
-
-  return;
 }
 
-export async function deleteAttachmentsinList(userId, listId) {
+export async function deleteAttachmentsInList(userId, listId) {
   const userData = await getUserData(userId);
 
   for (const list of userData.lists) {
@@ -177,7 +175,7 @@ export async function deleteAttachmentsinList(userId, listId) {
         if (element.card_name) {
           deleteAttachmentsOfCard(element._id);
         } else if (element.folder_name) {
-          deleteAttachmentsinFolder(userId, element._id);
+          deleteAttachmentsInFolder(userId, element._id);
         }
       }
     }
