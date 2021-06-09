@@ -1,3 +1,8 @@
+/**
+ * Creates new cards from new iCal events.
+ * @param session - The session variable. On the Svelte side, this should be `$session`.
+ * @param fetch - The fetch function to use. In Sapper's `preload()`, this should be `this.fetch`.
+ */
 export async function syncCards(session, fetch) {
   if (session.calendars == null) {
     return;
