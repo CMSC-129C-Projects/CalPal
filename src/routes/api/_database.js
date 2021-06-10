@@ -50,9 +50,9 @@ export async function createNewUser(userId) {
 
   const introCardDescription =
     "Hello there, new user! Let's get you started with CalPal." +
-    "\n\nWhat you are looking at right now is a card and its different card details. You can edit the different card details by clicking on their input fields and inputting your desired card detail." +
-    "\n\nIf you want to archive this card, you can click the archive button on the bottom right of this card. If you want to access the archived card, click on the Menu button represented by the 3 vertical dots on page's header found on the top right corner." +
-    "\n\nYou can add lists, cards, and folders with their respective buttons. Lists can be dragged and dropped around the board. Cards can be dragged and dropped into lists and folders. Folders can be dragged and dropped into lists. You can add and sync calendars using the Add Calendar Button found on the page's header. You can switch between board and calendar view using the Switch View Button found on the page's header." +
+    "\n\nThis is a card and its different card details which can be edited." +
+    "\n\nCards can be archived, and archived cards can be found in the arvhiced cards menu found in the sidebar." +
+    "\n\nYou can add lists, cards, and folders into the board. List, cards, and folders can be rearranged by clicking and dragging them. You can add and sync calendars which will automatically turn events into cards. Finally, you can choose between board view and calendar view depending on how you want to see your cards." +
     "\n\nCheck out the folder below this card next!";
 
   const folderCardDescription =
