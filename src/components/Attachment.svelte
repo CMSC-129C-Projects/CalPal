@@ -22,6 +22,8 @@
     });
   }
 
+  let errorMessage = "";
+
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
     isImage(file.data.filename)
@@ -119,6 +121,9 @@
       {/each}
     </ul>
   {/if}
+  {#if errorMessage}
+    <p class="error-message">{errorMessage}</p>
+  {/if}
 </div>
 
 <style>
@@ -181,5 +186,9 @@
 
   .attachment-parent :global(.attachment-delete-button:active) {
     color: rgba(0, 0, 0, 1);
+  }
+
+  .error-message {
+    color: var(--bs-red);
   }
 </style>
