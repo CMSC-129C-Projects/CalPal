@@ -180,8 +180,6 @@ export async function deleteAttachmentsInList(userId, listId) {
       }
     }
   }
-
-  return;
 }
 
 export async function getCalendarsOfUser(userId) {
