@@ -60,17 +60,25 @@
     ];
   }
 
-  const deleteFolder = (folderIdToDelete) => {
+  function deleteFolder() {
+    fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: $session.user_id,
+      }),
+    });
+
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
         return list;
       }
-      list.cards = list.cards.filter(
-        (folder) => folder._id !== folderIdToDelete
-      );
+      list.cards = list.cards.filter((f) => f._id !== folder._id);
       return list;
     });
-  };
+  }
 
   function handleSort(e) {
     folder.cards = e.detail.items;

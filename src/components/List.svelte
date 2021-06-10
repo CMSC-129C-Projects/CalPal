@@ -42,6 +42,16 @@
   };
 
   function deleteList() {
+    fetch(`/api/card/attachment/delete/list/${list._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: $session.user_id,
+      }),
+    });
+
     $session.lists = $session.lists.filter((l) => {
       if (l._id === list._id) {
         return false;

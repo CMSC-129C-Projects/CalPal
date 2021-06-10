@@ -22,9 +22,9 @@ export async function getUserData(userId) {
   const db = await getDb();
   const cards = db.collection("cards");
 
-  const userCards = await cards.findOne({ user_id: userId });
+  const userData = await cards.findOne({ user_id: userId });
 
-  return userCards;
+  return userData;
 }
 
 export async function updateUserData(userId, lists, archived_cards, calendars) {
@@ -146,6 +146,40 @@ export async function deleteAttachmentsOfCard(cardId) {
     .deleteMany({ card_id: cardId });
 
   return result;
+}
+
+//TODO: Find a way to make Mongo do the parsing and deleting work
+export async function deleteAttachmentsInFolder(userId, folderId) {
+  const userData = await getUserData(userId);
+  let folder;
+
+  for (const list of userData.lists) {
+    for (const element of list.cards) {
+      if (element._id === folderId) {
+        folder = element;
+      }
+    }
+  }
+
+  for (const card of folder.cards) {
+    deleteAttachmentsOfCard(card._id);
+  }
+}
+
+export async function deleteAttachmentsInList(userId, listId) {
+  const userData = await getUserData(userId);
+
+  for (const list of userData.lists) {
+    if (list._id === listId) {
+      for (const element of list.cards) {
+        if (element.card_name) {
+          deleteAttachmentsOfCard(element._id);
+        } else if (element.folder_name) {
+          deleteAttachmentsInFolder(userId, element._id);
+        }
+      }
+    }
+  }
 }
 
 export async function getCalendarsOfUser(userId) {
