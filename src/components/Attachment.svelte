@@ -52,9 +52,10 @@
     error = false;
     function readAndPreview(file) {
       errorMessage = "";
-      
+
       if (file.size > 5000000) {
-        errorMessage = "The attachment size exceeds 5 MB and cannot be uploaded."
+        errorMessage =
+          "The attachment size exceeds 5 MB and cannot be uploaded.";
         return;
       }
 
