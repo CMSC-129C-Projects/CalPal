@@ -38,4 +38,8 @@
   button:hover {
     opacity: 0.75;
   }
+
+  button:active {
+    opacity: 1;
+  }
 </style>
