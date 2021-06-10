@@ -66,6 +66,19 @@ export async function createNewUser(userId) {
   const db = await getDb();
   const cards = db.collection("cards");
 
+  const introCardDescription =
+    "Hello there, new user! Let's get you started with CalPal." +
+    "\n\nThis is a card and its different card details which can be edited." +
+    "\n\nCards can be archived, and archived cards can be found in the archived cards menu found in the sidebar." +
+    "\n\nYou can add lists, cards, and folders into the board. List, cards, and folders can be rearranged by clicking and dragging them." +
+    "\n\nYou can add and sync calendars which will automatically turn events into cards." +
+    "\n\nFinally, you can switch between board view and calendar view to see when your cards are due." +
+    "\n\nCheck out the folder below this card next!";
+
+  const folderCardDescription =
+    "Hello there! This is a card just like the one above!" +
+    "\n\nTry adding cards in the folder. You can also drag the folder to another list and drag cards in and out of the folder!";
+
   const result = await cards.insertOne({
     user_id: userId,
     lists: [
@@ -73,17 +86,33 @@ export async function createNewUser(userId) {
         _id: newObjectIdString(),
         list_name: "Not started",
         cards: [
-          // TODO: Put a description to introduce CalPal.
           {
             _id: newObjectIdString(),
-            card_name: "Welcome to CalPal!",
+            card_name: "Welcome to CalPal! Click me to get started!",
             original_title: "",
             original_date: "",
             date_created: new Date(Date.now()),
             due_date_time: "",
             remind_date_time: "",
-            description: "Hello world.",
+            description: introCardDescription,
             color: "#ffffff",
+          },
+          {
+            _id: newObjectIdString(),
+            folder_name: "I am a folder! Open me too!",
+            cards: [
+              {
+                _id: newObjectIdString(),
+                card_name: "Hello! I am card inside a folder!",
+                original_title: "",
+                original_date: "",
+                date_created: new Date(Date.now()),
+                due_date_time: "",
+                remind_date_time: "",
+                description: folderCardDescription,
+                color: "#ffffff",
+              },
+            ],
           },
         ],
       },
@@ -98,7 +127,20 @@ export async function createNewUser(userId) {
         cards: [],
       },
     ],
-    archived_cards: [],
+    archived_cards: [
+      {
+        _id: newObjectIdString(),
+        card_name: "I am an archived card!",
+        original_title: "",
+        original_date: "",
+        date_created: new Date(Date.now()),
+        due_date_time: "",
+        remind_date_time: "",
+        description:
+          "This is a card just like the other two in the board. The difference is that this card is archived. You can no longer edit a card that is archived. If you want to unarchive a card, click the unarchive button on the bottom right. If you want to permanently delete a card, click the delete button next to the unarchive button.",
+        color: "#ffffff",
+      },
+    ],
     calendars: [],
   });
 
