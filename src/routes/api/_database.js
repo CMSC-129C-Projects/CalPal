@@ -51,8 +51,10 @@ export async function createNewUser(userId) {
   const introCardDescription =
     "Hello there, new user! Let's get you started with CalPal." +
     "\n\nThis is a card and its different card details which can be edited." +
-    "\n\nCards can be archived, and archived cards can be found in the arvhiced cards menu found in the sidebar." +
-    "\n\nYou can add lists, cards, and folders into the board. List, cards, and folders can be rearranged by clicking and dragging them. You can add and sync calendars which will automatically turn events into cards. Finally, you can choose between board view and calendar view depending on how you want to see your cards." +
+    "\n\nCards can be archived, and archived cards can be found in the archived cards menu found in the sidebar." +
+    "\n\nYou can add lists, cards, and folders into the board. List, cards, and folders can be rearranged by clicking and dragging them." +
+    "\n\nYou can add and sync calendars which will automatically turn events into cards." +
+    "\n\nFinally, you can choose between board view and calendar view depending on how you want to see your cards." +
     "\n\nCheck out the folder below this card next!";
 
   const folderCardDescription =
