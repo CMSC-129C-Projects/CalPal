@@ -148,6 +148,11 @@
       <Button
         color="primary"
         on:click={async () => {
+          if (!calendarName || !inputUrl) {
+            errorMessage = "Both fields are required.";
+            return;
+          }
+
           try {
             await getCardsFromUrl(inputUrl);
             await addCalendar();
