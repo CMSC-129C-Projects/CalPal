@@ -54,7 +54,7 @@ export async function createNewUser(userId) {
     "\n\nCards can be archived, and archived cards can be found in the archived cards menu found in the sidebar." +
     "\n\nYou can add lists, cards, and folders into the board. List, cards, and folders can be rearranged by clicking and dragging them." +
     "\n\nYou can add and sync calendars which will automatically turn events into cards." +
-    "\n\nFinally, you can choose between board view and calendar view depending on how you want to see your cards." +
+    "\n\nFinally, you can switch between board view and calendar view to see when your cards are due." +
     "\n\nCheck out the folder below this card next!";
 
   const folderCardDescription =
