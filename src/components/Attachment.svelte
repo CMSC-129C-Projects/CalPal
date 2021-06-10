@@ -49,6 +49,13 @@
   function previewFiles(e) {
     error = false;
     function readAndPreview(file) {
+      errorMessage = "";
+      
+      if (file.size > 5000000) {
+        errorMessage = "The attachment size exceeds 5 MB and cannot be uploaded."
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = function (e) {
         const newAttachment = {
