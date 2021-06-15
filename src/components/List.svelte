@@ -196,10 +196,6 @@
 </div>
 
 <style>
-  .list-parent {
-    height: 100%;
-  }
-
   .list-parent :global(.list-list) {
     width: 272px;
     min-width: 272px;

@@ -25,51 +25,46 @@
   }
 </script>
 
-<div class="board-flex-box-container">
-  <div>
-    <section
-      use:dndzone={{
-        items: $session.lists,
-        type: "list",
-        dropTargetStyle: {
-          outline: "rgba(0, 0, 0, 0)",
-        },
-        flipDurationMs,
-      }}
-      on:consider={handleSort}
-      on:finalize={handleSort}
-      class="board-section"
-    >
-      {#if $session.lists && $session.lists.length > 0}
-        {#each $session.lists as list (list._id)}
-          <div animate:flip={{ duration: flipDurationMs }}>
-            <List bind:list />
-          </div>
-        {/each}
-      {/if}
-    </section>
-  </div>
+<section
+  use:dndzone={{
+    items: $session.lists,
+    type: "list",
+    dropTargetStyle: {
+      outline: "rgba(0, 0, 0, 0)",
+    },
+    flipDurationMs,
+  }}
+  on:consider={handleSort}
+  on:finalize={handleSort}
+  class="board-section"
+>
+  {#if $session.lists && $session.lists.length > 0}
+    {#each $session.lists as list (list._id)}
+      <div
+        animate:flip={{ duration: flipDurationMs }}
+        style="flex: 0 1 auto; display: flex; max-height: 100%;"
+      >
+        <List bind:list />
+      </div>
+    {/each}
+  {/if}
   <AddListButton
     onClick={() => {
       createNewList();
     }}
   />
-</div>
+</section>
 
 <style>
-  .board-flex-box-container {
+  .board-section {
     flex: 1;
     display: flex;
     flex-direction: row;
-    overflow-x: auto;
+    align-items: flex-start;
+    overflow: auto;
     padding: 0.5rem;
     gap: 0.5rem;
-  }
-
-  .board-section {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0.5rem;
+    height: 100%;
+    width: 100%;
   }
 </style>
