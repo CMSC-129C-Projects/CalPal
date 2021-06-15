@@ -12,7 +12,7 @@ export async function syncCards(session, fetch) {
   for (const calendar of session.calendars) {
     calendarFetches = [
       ...calendarFetches,
-      fetch(`/api/ical/parse.json?url=${calendar.url}`),
+      fetch(`/api/ical/parse.json?src=${calendar.src}`),
     ];
   }
 

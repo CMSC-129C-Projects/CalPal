@@ -90,7 +90,7 @@
                 </CardHeader>
                 <CardBody>
                   <code>
-                    {calendar.url}
+                    {calendar.src}
                   </code>
                 </CardBody>
               </Card>

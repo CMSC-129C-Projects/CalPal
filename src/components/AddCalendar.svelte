@@ -27,7 +27,7 @@
 
   let open = false;
   let calendarName = "";
-  let inputUrl = "";
+  let inputSrc = "";
   let errorMessage = "";
 
   const toggle = () => {
@@ -36,7 +36,7 @@
 
   const clearFields = () => {
     calendarName = "";
-    inputUrl = "";
+    inputSrc = "";
   };
 
   $: {
@@ -46,8 +46,8 @@
     }
   }
 
-  const getCardsFromUrl = async (url) => {
-    const response = await fetch(`/api/ical/parse.json?url=${url}`, {
+  const getCardsFromUrl = async (src) => {
+    const response = await fetch(`/api/ical/parse.json?src=${src}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -87,7 +87,7 @@
       {
         _id: getObjectId(),
         name: calendarName,
-        url: inputUrl,
+        src: inputSrc,
       },
     ];
   };
@@ -133,7 +133,7 @@
                 name="url"
                 id="add-calendar-url"
                 placeholder="Calendar URL"
-                bind:value={inputUrl}
+                bind:value={inputSrc}
               />
             </FormGroup>
             {#if errorMessage}
@@ -148,13 +148,13 @@
       <Button
         color="primary"
         on:click={async () => {
-          if (!calendarName || !inputUrl) {
+          if (!calendarName || !inputSrc) {
             errorMessage = "Both fields are required.";
             return;
           }
 
           try {
-            await getCardsFromUrl(inputUrl);
+            await getCardsFromUrl(inputSrc);
             await addCalendar();
             toggle();
             clearFields();

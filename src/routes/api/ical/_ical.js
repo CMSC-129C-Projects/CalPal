@@ -1,7 +1,7 @@
 const ical = require("node-ical");
 
-export async function getCardsFromUrl(calendarUrl) {
-  const events = await ical.async.fromURL(calendarUrl);
+export async function getCardsFromUrl(calendarSrc) {
+  const events = await ical.async.fromURL(calendarSrc);
   const cardsFromEvents = Object.entries(events)
     .map(([_, e]) => {
       if (!e.uid) {
@@ -16,7 +16,7 @@ export async function getCardsFromUrl(calendarUrl) {
         _id: e.uid,
         card_name: e.summary,
         original_title: e.summary,
-        original_calendar: calendarUrl,
+        original_calendar: calendarSrc,
         original_date: e.start,
         date_created: new Date(Date.now()),
         due_date_time: "",

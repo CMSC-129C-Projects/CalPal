@@ -18,13 +18,13 @@ export async function get(req, res, next) {
   //
   //       For now, we hackishly put the rest of the `query` back
   //       together with the calendar URL.
-  let calendarUrl = req.query.url;
+  let calendarSrc = req.query.src;
   for (const [key, value] of Object.entries(req.query).slice(1)) {
-    calendarUrl += `&${key}=${value}`;
+    calendarSrc += `&${key}=${value}`;
   }
+  console.debug(`[/api/ical/parse.json] calendarSrc: ${calendarSrc}`);
 
-  console.debug(`[/api/ical/parse.json] calendarUrl: ${calendarUrl}`);
-  const cards = await getCardsFromUrl(calendarUrl);
+  const cards = await getCardsFromUrl(calendarSrc);
 
   if (cards !== null) {
     res.writeHead(200, {
@@ -34,7 +34,7 @@ export async function get(req, res, next) {
     });
     res.end(JSON.stringify(cards));
   } else {
-    console.error(`Could not get cards from ${calendarUrl}`);
+    console.error(`Could not get cards from ${calendarSrc}`);
     next();
   }
 }
