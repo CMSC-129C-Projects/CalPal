@@ -3,7 +3,21 @@
 
   export async function preload(_page, session) {
     if (session.did_cards_load) {
-      await syncCards(session, this.fetch);
+      try {
+        const res = await this.fetch(`/api/card/${session.user_id}.json`);
+        if (!res.ok) {
+          throw new Error("Could not retrieve user data");
+        }
+
+        const userData = await res.json();
+        for (const key in userData) {
+          session[key] = userData[key];
+        }
+
+        await syncCards(session, this.fetch);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 </script>
