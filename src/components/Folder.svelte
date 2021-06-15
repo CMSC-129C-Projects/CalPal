@@ -121,6 +121,7 @@
           use:dndzone={{
             items: folder.cards,
             dropFromOthersDisabled: $session.isDraggingFolder,
+            centreDraggedOnCursor: true,
             dropTargetStyle: {
               outline: "rgba(0, 176, 240, 0.125) solid 2px",
             },
