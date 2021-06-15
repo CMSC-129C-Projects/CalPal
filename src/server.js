@@ -32,6 +32,7 @@ const server = polka() // You can also use Express
         lists: req.session.lists,
         archived_cards: req.session.archived_cards,
         calendars: req.session.calendars,
+        access_token: req.session.access_token,
         GOOGLE_OAUTH2_CLIENT_ID,
       }),
     })

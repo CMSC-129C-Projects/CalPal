@@ -6,7 +6,7 @@
 
   const { session } = stores();
 
-  const initializeUserSession = async (idToken) => {
+  const initializeUserSession = async (idToken, accessToken) => {
     // Verify ID token and get the corresponding user ID.
     let res = await fetch(`/api/user/idtoken`, {
       method: "POST",
@@ -28,6 +28,18 @@
       }),
     });
     $session.user_id = userId;
+
+    // Save the access token to the session, which can be used for
+    // accessing Google APIs like the Google Calendar API.
+    res = await fetch(`/api/session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        access_token: accessToken,
+      }),
+    });
 
     // Retrieve the user's cards.
     res = await fetch(`/api/card/${userId}.json`, {
@@ -75,8 +87,8 @@
     gapi.signin2.render("g-sign-in", {
       longtitle: true,
       onsuccess: async (googleUser) => {
-        const id_token = googleUser.getAuthResponse().id_token;
-        await initializeUserSession(id_token);
+        const { id_token, access_token } = googleUser.getAuthResponse(true);
+        await initializeUserSession(id_token, access_token);
       },
     });
   };
