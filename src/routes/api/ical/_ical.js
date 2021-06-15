@@ -1,4 +1,7 @@
 const ical = require("node-ical");
+const { google } = require("googleapis");
+
+const { GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_SECRET } = process.env;
 
 export async function getCardsFromUrl(calendarSrc) {
   const events = await ical.async.fromURL(calendarSrc);
@@ -25,7 +28,61 @@ export async function getCardsFromUrl(calendarSrc) {
         color: "#ffffff",
       };
     })
-    .filter((c) => c);
+    .filter((c) => !!c);
 
   return cardsFromEvents;
+}
+
+export async function getCardsFromGoogleCalendarId(calendarSrc, accessToken) {
+  const oAuth2Client = new google.auth.OAuth2(
+    GOOGLE_OAUTH2_CLIENT_ID,
+    GOOGLE_OAUTH2_CLIENT_SECRET
+  );
+  oAuth2Client.setCredentials({
+    access_token: accessToken,
+  });
+
+  const calendar = google.calendar({
+    version: "v3",
+    auth: oAuth2Client,
+  });
+
+  try {
+    const res = await calendar.events.list({
+      calendarId: calendarSrc,
+      timeMin: new Date(Date.now()),
+    });
+    const cardsFromEvents = Object.entries(res.data.items)
+      .map(([_, e]) => {
+        if (!e.id) {
+          return null;
+        }
+
+        let startDate;
+        if (e.start.date != null) {
+          startDate = new Date(e.start.date);
+        } else if (e.start.dateTime) {
+          startDate = new Date(e.start.dateTime);
+        }
+
+        return {
+          _id: e.id,
+          card_name: e.summary,
+          original_title: e.summary,
+          original_calendar: calendarSrc,
+          original_date: startDate,
+          date_created: new Date(Date.now()),
+          due_date_time: "",
+          remind_date_time: "",
+          description: e.description,
+          color: "#ffffff",
+        };
+      })
+      .filter((e) => !!e);
+
+    return cardsFromEvents;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }

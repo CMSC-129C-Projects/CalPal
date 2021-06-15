@@ -1,4 +1,4 @@
-import { getCardsFromUrl } from "./_ical.js";
+import { getCardsFromUrl, getCardsFromGoogleCalendarId } from "./_ical.js";
 
 export async function get(req, res, next) {
   // TODO: Make this feel less like a hack.
@@ -24,7 +24,18 @@ export async function get(req, res, next) {
   }
   console.debug(`[/api/ical/parse.json] calendarSrc: ${calendarSrc}`);
 
-  const cards = await getCardsFromUrl(calendarSrc);
+  const googleCalendarIdRegex = /calendar.google.com$/i;
+  const isGoogleCalendarId = googleCalendarIdRegex.test(calendarSrc);
+
+  let cards;
+  if (isGoogleCalendarId) {
+    cards = await getCardsFromGoogleCalendarId(
+      calendarSrc,
+      req.session.access_token
+    );
+  } else {
+    cards = await getCardsFromUrl(calendarSrc);
+  }
 
   if (cards !== null) {
     res.writeHead(200, {

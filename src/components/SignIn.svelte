@@ -83,8 +83,14 @@
   let googleApiScript;
 
   const renderSignInButton = () => {
+    const scopes = [
+      "profile",
+      "https://www.googleapis.com/auth/calendar.events.readonly",
+    ];
+
     /*global gapi*/
     gapi.signin2.render("g-sign-in", {
+      scope: scopes.join(" "),
       longtitle: true,
       onsuccess: async (googleUser) => {
         const { id_token, access_token } = googleUser.getAuthResponse(true);
