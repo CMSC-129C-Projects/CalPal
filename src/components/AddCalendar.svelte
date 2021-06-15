@@ -47,7 +47,8 @@
   }
 
   const getCardsFromUrl = async (src) => {
-    const response = await fetch(`/api/ical/parse.json?src=${src}`, {
+    const encodedSrc = encodeURIComponent(src);
+    const response = await fetch(`/api/ical/parse.json?src=${encodedSrc}`, {
       headers: {
         "Content-Type": "application/json",
       },
