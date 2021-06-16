@@ -7,7 +7,7 @@
   export let attachments = [],
     name = "attachments",
     accept =
-      ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav",
+      ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav, .zip, .rar",
     error = false,
     multiple = "true",
     disabled = false;
@@ -39,6 +39,8 @@
     "text/html",
     "audio/mpeg",
     "audio/wav",
+    "application/zip",
+    "application/vnd.rar",
   ];
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
