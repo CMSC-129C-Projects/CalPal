@@ -6,7 +6,8 @@
   export let cardId;
   export let attachments = [],
     name = "attachments",
-    accept = ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav",
+    accept =
+      ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav",
     error = false,
     multiple = "true",
     disabled = false;
@@ -25,7 +26,20 @@
   let errorMessage = "";
 
   const maxFileSize = 5000000;
-  const acceptedFileTypes = ["image/svg+xml","image/jpeg","image/png","image/gif","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","text/plain","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","text/javascript","text/html","audio/mpeg","audio/wav"];
+  const acceptedFileTypes = [
+    "image/svg+xml",
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/pdf",
+    "text/plain",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "text/javascript",
+    "text/html",
+    "audio/mpeg",
+    "audio/wav",
+  ];
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
@@ -62,7 +76,7 @@
         return;
       }
 
-      if (!acceptedFileTypes.includes(file.type)){
+      if (!acceptedFileTypes.includes(file.type)) {
         errorMessage =
           "The attachment type is unsupported and cannot be uploaded";
         return;
