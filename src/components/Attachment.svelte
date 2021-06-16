@@ -24,7 +24,8 @@
 
   let errorMessage = "";
 
-  const maxFileSize = 5000000
+  const maxFileSize = 5000000;
+  const acceptedFileTypes = ["image/svg+xml","image/jpeg","image/png","image/gif","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf","text/plain","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","text/javascript","text/html","audio/mpeg","audio/wav"];
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
