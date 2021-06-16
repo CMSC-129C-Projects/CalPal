@@ -6,7 +6,7 @@
   export let cardId;
   export let attachments = [],
     name = "attachments",
-    accept = ".svg, .jpg, .png, .gif, .doc, .docx, .pdf, .txt",
+    accept = ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav",
     error = false,
     multiple = "true",
     disabled = false;
