@@ -24,8 +24,8 @@ export async function get(req, res, next) {
   }
   console.debug(`[/api/ical/parse.json] calendarSrc: ${calendarSrc}`);
 
-  const googleCalendarIdRegex = /calendar.google.com$/i;
-  const isGoogleCalendarId = googleCalendarIdRegex.test(calendarSrc);
+  const iCalUrlRegex = /^http/i;
+  const isGoogleCalendarId = !iCalUrlRegex.test(calendarSrc);
 
   let cards;
   if (isGoogleCalendarId) {
