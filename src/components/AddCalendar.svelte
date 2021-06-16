@@ -18,6 +18,10 @@
 
   const { session } = stores();
 
+  const urlErrorMessage = "Could not read the URL. Did you enter it correctly?";
+  const googleCalendarIdErrorMessage =
+    "Could not read the Google Calendar ID. Did you enter it correctly?";
+
   class ICalURLParseError extends Error {
     constructor(message) {
       super(message);
@@ -29,6 +33,14 @@
   let calendarName = "";
   let inputSrc = "";
   let errorMessage = "";
+  let calendarSourceType = "url";
+
+  $: calendarSourcePlaceholder =
+    calendarSourceType === "url"
+      ? "https://examplecalendar.com/calendar.ics"
+      : "abcdef12345@group.calendar.google.com";
+
+  $: isGoogleCalendarId = !/^http/i.test(inputSrc);
 
   const toggle = () => {
     open = !open;
@@ -47,39 +59,44 @@
   }
 
   const getCardsFromUrl = async (src) => {
-    const encodedSrc = encodeURIComponent(src);
-    const response = await fetch(`/api/ical/parse.json?src=${encodedSrc}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new ICalURLParseError("Could not parse calendar URL");
-    }
-    const result = await response.json();
+    try {
+      const encodedSrc = encodeURIComponent(src);
+      const response = await fetch(`/api/ical/parse.json?src=${encodedSrc}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new ICalURLParseError("Could not parse calendar URL");
+      }
+      const result = await response.json();
 
-    const insertCardsIntoFirstList = (cards) => {
-      const isCardAlreadyInLists = (card) => {
-        for (const list of $session.lists) {
-          if (list.cards.find((c) => c._id === card._id)) {
+      const insertCardsIntoFirstList = (cards) => {
+        const isCardAlreadyInLists = (card) => {
+          for (const list of $session.lists) {
+            if (list.cards.find((c) => c._id === card._id)) {
+              return true;
+            }
+          }
+
+          if ($session.archived_cards.find((c) => c._id === card._id)) {
             return true;
           }
-        }
 
-        if ($session.archived_cards.find((c) => c._id === card._id)) {
-          return true;
-        }
+          return false;
+        };
 
-        return false;
+        cards = cards.filter((c) => !isCardAlreadyInLists(c));
+        if ($session.lists && $session.lists.length > 0) {
+          $session.lists[0].cards = [...$session.lists[0].cards, ...cards];
+        }
       };
 
-      cards = cards.filter((c) => !isCardAlreadyInLists(c));
-      if ($session.lists && $session.lists.length > 0) {
-        $session.lists[0].cards = [...$session.lists[0].cards, ...cards];
-      }
-    };
-
-    insertCardsIntoFirstList(result);
+      insertCardsIntoFirstList(result);
+    } catch (err) {
+      console.error(err);
+      throw new ICalURLParseError("Could not parse calendar URL");
+    }
   };
 
   const addCalendar = () => {
@@ -119,7 +136,7 @@
                 type="plaintext"
                 name="calendar-name"
                 id="add-calendar-name"
-                placeholder="e.g. My Google Calendar"
+                placeholder="My Calendar"
                 bind:value={calendarName}
               />
             </FormGroup>
@@ -128,18 +145,38 @@
         <Row>
           <Col>
             <FormGroup>
-              <Label for="add-calendar-link">URL</Label>
+              <Label for="add-calendar-link">Calendar Source</Label>
               <Input
                 type="url"
                 name="url"
                 id="add-calendar-url"
-                placeholder="Calendar URL"
+                placeholder={calendarSourcePlaceholder}
                 bind:value={inputSrc}
               />
             </FormGroup>
             {#if errorMessage}
               <p class="error-message">{errorMessage}</p>
             {/if}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FormGroup>
+              <Input
+                id="r1"
+                type="radio"
+                bind:group={calendarSourceType}
+                value="url"
+                label="iCal URL"
+              />
+              <Input
+                id="r2"
+                type="radio"
+                bind:group={calendarSourceType}
+                value="google-calendar-id"
+                label="Google Calendar ID"
+              />
+            </FormGroup>
           </Col>
         </Row>
       </Container>
@@ -154,6 +191,17 @@
             return;
           }
 
+          if (calendarSourceType === "url" && isGoogleCalendarId) {
+            errorMessage = urlErrorMessage;
+            return;
+          } else if (
+            calendarSourceType === "google-calendar-id" &&
+            !isGoogleCalendarId
+          ) {
+            errorMessage = googleCalendarIdErrorMessage;
+            return;
+          }
+
           try {
             await getCardsFromUrl(inputSrc);
             await addCalendar();
@@ -161,8 +209,11 @@
             clearFields();
           } catch (err) {
             console.debug(err);
-            errorMessage =
-              "Could not read the URL. Did you enter it correctly?";
+            if (calendarSourceType === "url") {
+              errorMessage = urlErrorMessage;
+            } else {
+              errorMessage = googleCalendarIdErrorMessage;
+            }
           }
         }}
       >
