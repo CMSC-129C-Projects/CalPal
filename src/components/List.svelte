@@ -280,12 +280,28 @@
     color: #f58f29;
   }
 
+  .list-parent :global(.list-new-folder:hover) {
+    transform: scale(1.05);
+  }
+
   .list-parent :global(.list-plus-icon:active) {
     color: #f58f29;
   }
 
+  .list-parent :global(.list-plus-icon:hover) {
+    transform: scale(1.05);
+  }
+
   .list-parent :global(.list-add-card:active) {
     color: #f58f29;
+  }
+
+  .list-parent :global(.list-add-card:hover) {
+    transform: scale(1.05);
+  }
+
+  .list-parent :global(.list-drop-down-button:hover) {
+    transform: scale(1.05);
   }
 
   .list-parent :global(.list-is-open) {
