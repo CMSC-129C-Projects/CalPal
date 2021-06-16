@@ -24,6 +24,8 @@
 
   let errorMessage = "";
 
+  const maxFileSize = 5000000
+
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
     isImage(file.data.filename)
@@ -53,7 +55,7 @@
     function readAndPreview(file) {
       errorMessage = "";
 
-      if (file.size > 5000000) {
+      if (file.size > maxFileSize) {
         errorMessage =
           "The attachment size exceeds 5 MB and cannot be uploaded.";
         return;
