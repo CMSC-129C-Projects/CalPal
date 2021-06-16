@@ -62,6 +62,12 @@
         return;
       }
 
+      if (!acceptedFileTypes.includes(file.type)){
+        errorMessage =
+          "The attachment type is unsupported and cannot be uploaded";
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = function (e) {
         const newAttachment = {
