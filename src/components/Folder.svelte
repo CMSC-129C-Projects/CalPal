@@ -1,5 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
+  import { flip } from "svelte/animate";
+  import { dndzone } from "svelte-dnd-action";
   import {
     Card,
     CardHeader,
@@ -18,11 +20,12 @@
     ModalFooter,
   } from "sveltestrap";
 
-  import getObjectId from "../routes/_object-id.js";
+  import getObjectId from "../routes/util/_object-id.js";
   import Title from "./Title.svelte";
   import ViewCard from "./ViewCard.svelte";
 
   const { session } = stores();
+  const flipDurationMs = 100;
 
   export let folder;
   export let listId;
@@ -39,12 +42,11 @@
     isModalOpen = !isModalOpen;
   };
 
-  async function addCard() {
-    const objectId = await getObjectId();
+  function addCard() {
     folder.cards = [
       ...folder.cards,
       {
-        _id: objectId,
+        _id: getObjectId(),
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
@@ -58,21 +60,33 @@
     ];
   }
 
-  const deleteFolder = (folderIdToDelete) => {
+  function deleteFolder() {
+    fetch(`/api/card/attachment/delete/folder/${folder._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: $session.user_id,
+      }),
+    });
+
     $session.lists = $session.lists.map((list) => {
       if (list._id !== listId) {
         return list;
       }
-      list.cards = list.cards.filter(
-        (folder) => folder._id !== folderIdToDelete
-      );
+      list.cards = list.cards.filter((f) => f._id !== folder._id);
       return list;
     });
-  };
+  }
+
+  function handleSort(e) {
+    folder.cards = e.detail.items;
+  }
 </script>
 
 <div class="parent-folder">
-  <Card class="folder-folder" style="width: 100%;">
+  <Card style="width: 100%;">
     <CardHeader style="background-color: rgba(0, 0, 0, 0.02);">
       <div
         style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 0.5em;"
@@ -86,7 +100,10 @@
             untitledString="Untitled Folder"
           />
         </div>
-        <button on:click={() => (folder.is_open = !folder.is_open)} class="borderless-button">
+        <button
+          on:click={() => (folder.is_open = !folder.is_open)}
+          class="borderless-button"
+        >
           {#if isOpen}
             <Icon name="chevron-up" style="margin-top: 0.45rem;" />
           {:else}
@@ -101,11 +118,28 @@
           style="display: flex; flex-direction: column; gap: 0.5em;"
           {isOpen}
         >
-          {#each folder.cards.filter((c) => {
-            return !(typeof c.card_name === "undefined" || c.is_archived);
-          }) as card (card._id)}
-            <ViewCard bind:card />
-          {/each}
+          <div
+            use:dndzone={{
+              items: folder.cards,
+              dropFromOthersDisabled: $session.isDraggingFolder,
+              centreDraggedOnCursor: true,
+              dropTargetStyle: {
+                outline: "rgba(0, 176, 240, 0.125) solid 2px",
+              },
+              flipDurationMs,
+            }}
+            on:consider={handleSort}
+            on:finalize={handleSort}
+            class="folder-dnd-zone"
+          >
+            {#each folder.cards.filter((c) => {
+              return !(typeof c.card_name === "undefined" || c.is_archived);
+            }) as card (card._id)}
+              <div animate:flip={{ duration: flipDurationMs }}>
+                <ViewCard bind:card />
+              </div>
+            {/each}
+          </div>
         </Collapse>
       </CardBody>
       <CardFooter
@@ -165,7 +199,17 @@
     transition: transform 0.05s;
   }
 
-  .parent-folder :global(.folder-drop-down-button:hover){
+  .parent-folder :global(.folder-drop-down-button:hover) {
     transform: scale(1.05);
+  }
+
+  .folder-dnd-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0.5em;
+    min-height: 2rem;
+    max-height: 100%;
+    overflow-y: auto;
   }
 </style>

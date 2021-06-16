@@ -14,6 +14,10 @@
       card.due_date_time !== "" ? card.due_date_time : card.original_date
     );
 
+    if (start.toString() === "Invalid Date") {
+      return null;
+    }
+
     // NOTE: By default, FullCalendar lets the duration of an event without
     //       an end time to be one hour long. This means that events after
     //       11:00 PM spill over into the next day.
@@ -40,10 +44,16 @@
       list.cards.forEach((listElement) => {
         if (listElement.folder_name != null) {
           listElement.cards.forEach((card) => {
-            events = [...events, eventFromCard(card)];
+            const event = eventFromCard(card);
+            if (event) {
+              events = [...events, event];
+            }
           });
         } else {
-          events = [...events, eventFromCard(listElement)];
+          const event = eventFromCard(listElement);
+          if (event) {
+            events = [...events, event];
+          }
         }
       });
     });
@@ -51,19 +61,65 @@
     return events;
   };
 
-  $: events = eventsFromCards();
+  let events = eventsFromCards();
+  let options;
+  let plugins;
 
-  let plugins = [];
+  $: {
+    const updateCard = (id) => {
+      const isFolder = (el) => {
+        if (el.folder_name != null) {
+          return true;
+        }
+        return false;
+      };
 
-  onMount(async () => {
-    plugins = [(await import("@fullcalendar/daygrid")).default];
-  });
+      for (const list of $session.lists) {
+        for (let listElement of list.cards) {
+          if (isFolder(listElement)) {
+            for (let card of listElement.cards) {
+              if (card._id === id) {
+                card = $selectedCard;
+                return;
+              }
+            }
+          } else {
+            if (listElement._id === id) {
+              listElement = $selectedCard;
+              return;
+            }
+          }
+        }
+      }
 
-  $: options = {
-    initialView: "dayGridMonth",
-    plugins: plugins,
-    events: events,
-    eventClick: (eventClickInfo) => {
+      return null;
+    };
+
+    if ($selectedCard) {
+      updateCard($selectedCard._id);
+
+      // NOTE: Whenever something in the Calendar component changes, it
+      //       doesn't seem to call `preload()` of the parent route for
+      //       some reason.
+      //       This results in super laggy performance if you're editing
+      //       a Card from the Calendar.
+      //       For now, we manually update the session and database.
+      fetch(`/api/card/update?user=${$session.user_id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lists: $session.lists,
+          archived_cards: $session.archived_cards,
+          calendars: $session.calendars,
+        }),
+      });
+
+      events = eventsFromCards();
+    }
+
+    const eventClick = (eventClickInfo) => {
       for (const list of $session.lists) {
         let result = list.cards.find((c) => c._id === eventClickInfo.event.id);
         if (result) {
@@ -84,13 +140,24 @@
           $selectedCard = null;
         }
       }
-    },
-    dayMaxEventRows: true,
-    height: "100%",
-    eventTextColor: "#000000",
-    eventDisplay: "block",
-    displayEventTime: false,
-  };
+    };
+
+    options = {
+      initialView: "dayGridMonth",
+      plugins,
+      events,
+      eventClick,
+      dayMaxEventRows: true,
+      height: "100%",
+      eventTextColor: "#000000",
+      eventDisplay: "block",
+      displayEventTime: false,
+    };
+  }
+
+  onMount(async () => {
+    plugins = [(await import("@fullcalendar/daygrid")).default];
+  });
 </script>
 
 <div class="calendar-flex-box-container">

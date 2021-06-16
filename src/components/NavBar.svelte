@@ -18,11 +18,11 @@
       class="scale-on-hover borderless-button"
       on:click={handleViewButton}
     >
-    {#if isBoardShown}
-      <img src="switch_calendar_view.png" alt="Switch to calendar view" />
-    {:else}
-      <img src="switch_board_view.png" alt="Switch to board view" />
-    {/if}
+      {#if isBoardShown}
+        <img src="switch_calendar_view.png" alt="Switch to calendar view" />
+      {:else}
+        <img src="switch_board_view.png" alt="Switch to board view" />
+      {/if}
     </button>
     <Tooltip target="switch-view-button" placement="bottom">
       {#if isBoardShown}

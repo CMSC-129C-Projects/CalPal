@@ -46,7 +46,7 @@
   <div class="alert-area">
     <div class="alert-flexbox-container">
       {#if $session.lists && $session.lists.length > 0}
-        {#each $session.lists as list, i (i)}
+        {#each $session.lists as list (list._id)}
           {#each list.cards.filter((c) => {
             return !(typeof c.card_name === "undefined" || c.is_archived);
           }) as card (card._id)}

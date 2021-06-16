@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { stores, goto } from "@sapper/app";
   import { Col, Container, Row, Spinner } from "sveltestrap/src";
+  import { syncCards } from "../routes/util/_sync";
 
   const { session } = stores();
 
@@ -28,7 +29,7 @@
     });
     $session.user_id = userId;
 
-    // Retrieve the user's cards and insert into the `session`.
+    // Retrieve the user's cards.
     res = await fetch(`/api/card/${userId}.json`, {
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +41,10 @@
       $session[key] = userData[key];
     }
 
+    // Sync any new cards from the user's calendars.
+    await syncCards($session, fetch);
+
+    // Insert the user's data into `session`.
     res = await fetch(`/api/session`, {
       method: "POST",
       headers: {
