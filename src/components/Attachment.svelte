@@ -6,7 +6,8 @@
   export let cardId;
   export let attachments = [],
     name = "attachments",
-    accept = ".svg, .jpg, .png, .gif, .doc, .docx, .pdf, .txt",
+    accept =
+      ".svg, .jpg, .jpeg, .png, .gif, .docx, .pdf, .txt, .py, .xlsx, .js, .htm, .html, .mp3, .wav, .zip, .rar",
     error = false,
     multiple = "true",
     disabled = false;
@@ -21,6 +22,26 @@
       attachments = await res.json();
     });
   }
+
+  let errorMessage = "";
+
+  const maxFileSize = 5000000;
+  const acceptedFileTypes = [
+    "image/svg+xml",
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/pdf",
+    "text/plain",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "text/javascript",
+    "text/html",
+    "audio/mpeg",
+    "audio/wav",
+    "application/zip",
+    "application/vnd.rar",
+  ];
 
   const isImage = (string) => /\.(jpe?g|pn?g|gi?f|sv?g)$/i.test(string);
   const imagePreviewStyle = (file) =>
@@ -49,6 +70,20 @@
   function previewFiles(e) {
     error = false;
     function readAndPreview(file) {
+      errorMessage = "";
+
+      if (file.size > maxFileSize) {
+        errorMessage =
+          "The attachment size exceeds 5 MB and cannot be uploaded.";
+        return;
+      }
+
+      if (!acceptedFileTypes.includes(file.type)) {
+        errorMessage =
+          "The attachment type is unsupported and cannot be uploaded";
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = function (e) {
         const newAttachment = {
@@ -112,6 +147,9 @@
       {/each}
     </ul>
   {/if}
+  {#if errorMessage}
+    <p class="error-message">{errorMessage}</p>
+  {/if}
 </div>
 
 <style>
@@ -174,5 +212,9 @@
 
   .attachment-parent :global(.attachment-delete-button:active) {
     color: rgba(0, 0, 0, 1);
+  }
+
+  .error-message {
+    color: var(--bs-red);
   }
 </style>
