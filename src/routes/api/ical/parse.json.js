@@ -28,16 +28,20 @@ export async function get(req, res, next) {
   const isGoogleCalendarId = !iCalUrlRegex.test(calendarSrc);
 
   let cards;
-  if (isGoogleCalendarId) {
-    cards = await getCardsFromGoogleCalendarId(
-      calendarSrc,
-      req.session.access_token
-    );
-  } else {
-    cards = await getCardsFromUrl(calendarSrc);
+  try {
+    if (isGoogleCalendarId) {
+      cards = await getCardsFromGoogleCalendarId(
+        calendarSrc,
+        req.session.access_token
+      );
+    } else {
+      cards = await getCardsFromUrl(calendarSrc);
+    }
+  } catch (err) {
+    console.error(err);
   }
 
-  if (cards !== null) {
+  if (cards != null) {
     res.writeHead(200, {
       headers: {
         "Content-Type": "application/json",

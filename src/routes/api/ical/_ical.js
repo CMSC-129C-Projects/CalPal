@@ -1,36 +1,58 @@
+const fetch = require("node-fetch");
 const ical = require("node-ical");
 const { google } = require("googleapis");
 
 const { GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_SECRET } = process.env;
 
 export async function getCardsFromUrl(calendarSrc) {
-  const events = await ical.async.fromURL(calendarSrc);
-  const cardsFromEvents = Object.entries(events)
-    .map(([_, e]) => {
-      if (!e.uid) {
-        return null;
-      }
+  try {
+    // NOTE: We check first if `calendarSrc` is actually an iCal URL, and
+    //       not just a regular website. This means that we have to fetch
+    //       once to check if its `Content-Type` is `text/calendar`. Then,
+    //       we fetch again to actually parse the iCal data.
+    //       There doesn't seem to be a way to do this in one go, but it
+    //       works for now.
+    const res = await fetch(calendarSrc, {
+      method: "HEAD",
+    });
+    if (!res.ok) {
+      throw new Error("Could not parse iCal URL");
+    }
+    if (!res.headers.get("Content-Type").includes("text/calendar")) {
+      throw new Error("The URL is not an iCal URL");
+    }
 
-      if (new Date(e.start) < new Date(Date.now())) {
-        return null;
-      }
+    const events = await ical.async.fromURL(calendarSrc);
+    const cardsFromEvents = Object.entries(events)
+      .map(([_, e]) => {
+        if (!e.uid) {
+          return null;
+        }
 
-      return {
-        _id: e.uid,
-        card_name: e.summary,
-        original_title: e.summary,
-        original_calendar: calendarSrc,
-        original_date: e.start,
-        date_created: new Date(Date.now()),
-        due_date_time: "",
-        remind_date_time: "",
-        description: e.description,
-        color: "#ffffff",
-      };
-    })
-    .filter((c) => !!c);
+        if (new Date(e.start) < new Date(Date.now())) {
+          return null;
+        }
 
-  return cardsFromEvents;
+        return {
+          _id: e.uid,
+          card_name: e.summary,
+          original_title: e.summary,
+          original_calendar: calendarSrc,
+          original_date: e.start,
+          date_created: new Date(Date.now()),
+          due_date_time: "",
+          remind_date_time: "",
+          description: e.description,
+          color: "#ffffff",
+        };
+      })
+      .filter((c) => !!c);
+
+    return cardsFromEvents;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }
 
 export async function getCardsFromGoogleCalendarId(calendarSrc, accessToken) {
