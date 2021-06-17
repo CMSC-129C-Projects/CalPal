@@ -2,25 +2,40 @@
   import { Col, Row } from "sveltestrap";
   import NavBar from "./NavBar.svelte";
 
-  export let isBoardShown;
+  export let isBoardShown = true;
+  export let disableNavBar = false;
+
+  const onLogoClick = async () => {
+    isBoardShown = true;
+  };
 </script>
 
 <div class="header-parent">
   <Row class="header-header">
     <Col class="d-none d-sm-block">
-      <button class="calpal-logo-button" onClick="window.location.reload()">
-        <img src="CalPal_logo.png" alt="CalPal Logo" />
+      <a
+        class="calpal-logo-button"
+        href="/board"
+        on:click={() => onLogoClick()}
+      >
+        <img src="CalPal_logo.png" alt="CalPal" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
-      </button>
+      </a>
     </Col>
     <Col class="d-block d-sm-none">
       <!-- TODO: Tweak the padding to make it match on `sm` and above devices -->
-      <p class="overflow" style="padding-top: 0.75rem;">
-        <img src="CalPal_logo.png" alt="CalPal Logo" />
-      </p>
+      <a
+        class="calpal-logo-button"
+        href="/board"
+        on:click={() => onLogoClick()}
+      >
+        <img src="CalPal_logo.png" alt="CalPal" />
+      </a>
     </Col>
-    <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
+    {#if !disableNavBar}
+      <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
+    {/if}
   </Row>
 </div>
 
@@ -41,11 +56,12 @@
   }
 
   .calpal-logo-button {
+    color: unset;
+    text-decoration: unset;
     background-color: transparent;
     border: none;
     outline: none;
     line-height: 0%;
-    padding: 1.5% 0% 1.5% 0%;
     transition: transform 0.05s;
     transform-origin: center center;
     white-space: nowrap;
