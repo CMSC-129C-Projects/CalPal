@@ -112,8 +112,7 @@
 
   const isCalendarAdded = () => {
     for (const calendar of $session.calendars) {
-      if (calendar.src === inputSrc)
-        return true;
+      if (calendar.src === inputSrc) return true;
     }
     return false;
   };
