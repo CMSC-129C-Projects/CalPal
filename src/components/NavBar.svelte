@@ -1,14 +1,38 @@
 <script>
-  import { Icon } from "sveltestrap/src";
+  import { Tooltip } from "sveltestrap";
+  import AddCalendar from "./AddCalendar.svelte";
+  import MenuSidebar from "./MenuSidebar.svelte";
+
+  export let isBoardShown;
+
+  function handleViewButton() {
+    isBoardShown = !isBoardShown;
+  }
 </script>
 
 <div class="parent">
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="calendar" name="calendar3" /></button
-  >
-  <button class="scaleOnHover borderlessButton"
-    ><Icon class="plus" name="plus-square-dotted" /></button
-  >
+  <AddCalendar />
+  <div>
+    <button
+      id="switch-view-button"
+      class="scale-on-hover borderless-button"
+      on:click={handleViewButton}
+    >
+      {#if isBoardShown}
+        <img src="switch_calendar_view.png" alt="Switch to calendar view" />
+      {:else}
+        <img src="switch_board_view.png" alt="Switch to board view" />
+      {/if}
+    </button>
+    <Tooltip target="switch-view-button" placement="bottom">
+      {#if isBoardShown}
+        Switch to Calendar
+      {:else}
+        Switch to Board
+      {/if}
+    </Tooltip>
+  </div>
+  <MenuSidebar />
 </div>
 
 <style>
@@ -19,10 +43,9 @@
     align-items: center;
     justify-content: flex-end;
     gap: 1em;
-    /* margin-top: -0.3em; */
   }
 
-  .borderlessButton {
+  .borderless-button {
     background-color: transparent;
     border: none;
     outline: none;
@@ -33,23 +56,12 @@
     transform-origin: center center;
   }
 
-  .scaleOnHover:hover {
+  .scale-on-hover:hover {
     transform: scale(1.1);
   }
 
-  .parent :global(.calendar) {
-    color: #40415a;
-  }
-
-  .parent :global(.plus) {
-    color: #40415a;
-  }
-
-  .parent :global(.calendar:active) {
-    color: #f58f29;
-  }
-
-  .parent :global(.plus:active) {
-    color: #f58f29;
+  img {
+    width: 45px;
+    height: 45px;
   }
 </style>

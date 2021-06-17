@@ -1,6 +1,5 @@
 <script>
   import {
-    Button,
     Modal,
     ModalBody,
     ModalFooter,
@@ -8,123 +7,178 @@
     FormGroup,
     Input,
     Label,
-    Icon,
-    CustomInput,
     Col,
     Container,
     Row,
-  } from "sveltestrap/src";
-  //import Title from "./Title.svelte";
-  import CardTitle from "./CardTitle.svelte";
+  } from "sveltestrap";
+  import Card from "./Card.svelte";
+  import Title from "./Title.svelte";
+  import ColorPicker from "./ColorPicker.svelte";
+  import ArchiveCard from "./ArchiveCard.svelte";
+  import Attachment from "./Attachment.svelte";
+  import {
+    formattedDate,
+    getDateAndTimeStringsFromDate,
+  } from "../routes/util/_date-format.js";
 
   export let card;
-  export let id;
+  export let isArchived = false;
+  export let showCard = true;
 
   let open = false;
-  const toggle = () => (open = !open);
+  let toggle = () => (open = !open);
 
-  //let cardColor = "#FF69B4";
-  $: cardColor = card.color;
+  if (!showCard) {
+    open = true;
+    toggle = () => {
+      open = false;
+    };
+  }
 
-  //$: cssVarStyles = `--card-color:${cardColor}`;
+  let cardColor;
+  $: {
+    cardColor = card.color;
+    if (isArchived) {
+      cardColor = "#AAAAAA";
+    }
+  }
 
-  import ArchiveCard from "./ArchiveCard.svelte";
+  let dueDateTime = getDateAndTimeStringsFromDate(new Date(card.due_date_time));
+  let remindDateTime = getDateAndTimeStringsFromDate(
+    new Date(card.remind_date_time)
+  );
+
+  $: {
+    if (dueDateTime.date === "") {
+      dueDateTime.time = "";
+      remindDateTime.date = "";
+      remindDateTime.time = "";
+      card.due_date_time = "";
+      card.remind_date_time = "";
+    } else {
+      card.due_date_time = new Date(
+        `${dueDateTime.date} ${dueDateTime.time}`.trim()
+      );
+    }
+
+    if (remindDateTime.date === "") {
+      remindDateTime.time = "";
+      card.remind_date_time = "";
+    } else {
+      card.remind_date_time = new Date(
+        `${remindDateTime.date} ${remindDateTime.time}`.trim()
+      );
+    }
+  }
 </script>
 
-<div class="parent" style="--card-color: {cardColor}">
-  <Button color="danger" on:click={toggle}>Open Modal</Button>
-  <Modal isOpen={open} {toggle}>
-    <ModalHeader class="cardLabel" {toggle}>
-      <CardTitle
+<div class="view-card-parent">
+  {#if showCard}
+    <Card {card} {isArchived} on:click={toggle} />
+  {/if}
+  <Modal isOpen={open} {toggle} on:opening on:open on:closing on:close>
+    <ModalHeader style="background-color: {cardColor};" {toggle}>
+      <Title
         bind:value={card.card_name}
-        {id}
-        untitledString="Untitled Card"
+        disabled={isArchived}
+        untitledString={card.original_title
+          ? card.original_title
+          : "Untitled Card"}
       />
     </ModalHeader>
     <ModalBody>
-      <div class="cardTitle">{card.original_title}</div>
-      <div class="eventDate">{new Date(card.original_date)}</div>
-      <FormGroup class="cardNotes">
-        <Label for="cardNotes">NOTES</Label>
-        <Input
-          type="textarea"
-          name="text"
-          id="cardNotes"
-          bind:value={card.description}
-        />
-      </FormGroup>
-      <FormGroup class="cardAttachments">
-        <Label for="attachements">
-          <Icon class="paperClip" name="paperclip" />
-          Attachments
-        </Label>
-        <CustomInput type="file" id="attachments" name="customFile" />
-      </FormGroup>
-      <Container class="container">
+      <Container>
+        <div>{card.original_title}</div>
+        <div>
+          {#if !card.original_date}
+            {formattedDate(new Date(card.due_date_time))}
+          {:else}
+            {formattedDate(new Date(card.original_date))}
+          {/if}
+        </div>
+        <FormGroup>
+          <Label for="cardNotes">NOTES</Label>
+          <Input
+            type="textarea"
+            name="text"
+            id="cardNotes"
+            bind:value={card.description}
+            disabled={isArchived}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Attachment cardId={card._id} disabled={isArchived} />
+        </FormGroup>
+      </Container>
+      <Container>
         <Row>
-          <Col class="leftHalf" xs="6">
-            <FormGroup class="dueDate">
+          <Col xs="6">
+            <FormGroup>
               <Label for="dueDate">Due Date</Label>
               <Input
                 type="date"
                 name="dueDate"
                 id="dueDate"
-                bind:value={card.due_date_time}
+                bind:value={dueDateTime.date}
+                disabled={isArchived}
               />
             </FormGroup>
           </Col>
-          <Col class="rightHalf" xs="6">
-            <FormGroup class="reminderSet">
-              <Label for="reminderSet">Reminder Set</Label>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="dueTime">Time</Label>
+              <Input
+                type="time"
+                name="dueTime"
+                id="dueTime"
+                bind:value={dueDateTime.time}
+                disabled={dueDateTime.date === "" || isArchived}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="reminderDate">Reminder</Label>
               <Input
                 type="date"
-                name="reminderSet"
-                id="reminderSet"
-                bind:value={card.remind_date_time}
-                disabled={card.due_date_time === ""}
+                name="reminderDate"
+                id="reminderDate"
+                bind:value={remindDateTime.date}
+                disabled={dueDateTime.date === "" || isArchived}
+              />
+            </FormGroup>
+          </Col>
+          <Col xs="6">
+            <FormGroup>
+              <Label for="reminderTime">Time</Label>
+              <Input
+                type="time"
+                name="reminderTime"
+                id="reminderTime"
+                bind:value={remindDateTime.time}
+                disabled={remindDateTime.date === "" || isArchived}
               />
             </FormGroup>
           </Col>
         </Row>
       </Container>
-      <FormGroup class="cardColor">
-        <Label for="cardColor">Color</Label>
-        <Input
-          type="color"
-          name="cardColor"
-          class="colorBar"
-          id="cardColor"
-          placeholder="#ffffff"
-          bind:value={card.color}
-        />
-      </FormGroup>
     </ModalBody>
     <ModalFooter>
-      <ArchiveCard bind:is_archived={card.is_archived} />
+      <Container>
+        <Row>
+          {#if !isArchived}
+            <Col>
+              <ColorPicker bind:color={card.color} />
+            </Col>
+          {/if}
+          <!-- TODO: Find out why we can't use `:global()` with Sveltestrap 5 -->
+          <Col style="display: flex; justify-content: flex-end;">
+            <ArchiveCard bind:card {isArchived} />
+          </Col>
+        </Row>
+      </Container>
     </ModalFooter>
   </Modal>
 </div>
-
-<style>
-  .parent :global(.cardLabel) {
-    background-color: var(--card-color, transparent);
-  }
-
-  .parent :global(.archiveCard) {
-    background-color: transparent;
-    color: black;
-  }
-
-  .cardTitle {
-    /* background-color: lightyellow; */
-  }
-
-  .eventDate {
-    /* background-color: lightseagreen; */
-  }
-
-  .parent :global(.colorBar) {
-    //background-color: teal;
-    width: 50px;
-  }
-</style>

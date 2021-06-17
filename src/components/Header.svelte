@@ -1,46 +1,53 @@
 <script>
-  // JS here
-  import { Col, Row } from "sveltestrap/src";
+  import { Col, Row } from "sveltestrap";
   import NavBar from "./NavBar.svelte";
+
+  export let isBoardShown = true;
+  export let disableNavBar = false;
+
+  const onLogoClick = async () => {
+    isBoardShown = true;
+  };
 </script>
 
-<!-- HTML here -->
-<div class="parent">
-  <Row class="header">
-    <Col class="col1" xs="4">
-      <p class="overflow">
-        <img src="CalPal_Logo.png" alt="CalPal_Logo.png" />
+<div class="header-parent">
+  <Row class="header-header">
+    <Col class="d-none d-sm-block">
+      <a
+        class="calpal-logo-button"
+        href="/board"
+        on:click={() => onLogoClick()}
+      >
+        <img src="CalPal_logo.png" alt="CalPal" />
         <span class="calpal cal">Cal</span>
         <span class="calpal pal">Pal</span>
-      </p>
+      </a>
     </Col>
-    <Col class="col2" xs="4" />
-    <!-- <Col lg="8"></Col> -->
-    <Col class="col3" xs="4"><NavBar /></Col>
+    <Col class="d-block d-sm-none">
+      <!-- TODO: Tweak the padding to make it match on `sm` and above devices -->
+      <a
+        class="calpal-logo-button"
+        href="/board"
+        on:click={() => onLogoClick()}
+      >
+        <img src="CalPal_logo.png" alt="CalPal" />
+      </a>
+    </Col>
+    {#if !disableNavBar}
+      <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
+    {/if}
   </Row>
 </div>
 
 <style>
-  .parent {
+  .header-parent {
     background-color: #78c0e0;
   }
 
-  .parent :global(.header) {
+  .header-parent :global(.header-header) {
     margin-left: 1.5em;
     margin-right: 1.5em;
     padding: 0;
-  }
-
-  .parent :global(.col1) {
-    /* background-color: red; */
-  }
-
-  .parent :global(.col2) {
-    /* background-color: blue; */
-  }
-
-  .parent :global(.col3) {
-    /* background-color: yellow; */
   }
 
   img {
@@ -48,7 +55,15 @@
     height: 70px;
   }
 
-  .overflow {
+  .calpal-logo-button {
+    color: unset;
+    text-decoration: unset;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    line-height: 0%;
+    transition: transform 0.05s;
+    transform-origin: center center;
     white-space: nowrap;
   }
 

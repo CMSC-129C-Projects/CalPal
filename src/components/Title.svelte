@@ -1,60 +1,71 @@
 <script>
   import { tick } from "svelte";
-  import { Input } from "sveltestrap/src";
+  import { Input } from "sveltestrap";
 
   export let value;
-  export let id;
   export let untitledString = "";
+  export let disabled = false;
 
+  let inner;
   let isSelected = false;
 
   $: isUntitled = value === untitledString;
 
-  async function handleOnClick(event) {
+  async function handleOnClick(_event) {
+    if (disabled) {
+      return;
+    }
     isSelected = true;
     await tick();
 
-    const inputElement = document.getElementById(id);
-    inputElement.focus();
+    inner.focus();
+    inner.select();
   }
 
-  async function handleKeydown(event) {
+  const handleKeydown = async (event) => {
     if (event.key === "Enter") {
       await onBlur();
     }
-  }
+  };
 
-  async function onFocus() {
+  const onFocus = () => {
     isSelected = true;
     if (value === untitledString) {
       value = "";
     }
-  }
+    resize();
+  };
 
-  async function onBlur() {
+  const onBlur = async () => {
     isSelected = false;
     value = value.trim();
     if (value === "") {
       value = untitledString;
     }
-  }
+  };
+
+  const resize = () => {
+    inner.style.height = "auto";
+    inner.style.height = `${4 + inner.scrollHeight}px`;
+  };
 </script>
 
-<div class="parent">
+<div class="title-parent">
   {#if isSelected}
     <Input
-      {id}
-      class="title {isUntitled ? 'untitled' : ''}"
+      class="title-title {isUntitled ? 'title-untitled' : ''}"
       type="textarea"
       maxlength="64"
       bind:value
+      bind:inner
       on:focus={() => onFocus()}
       on:blur={() => onBlur()}
       on:keydown={(e) => handleKeydown(e)}
+      on:input={() => resize()}
     />
   {:else}
     <div
-      class="title {isUntitled ? 'untitled' : ''}"
+      class="title-title {isUntitled ? 'title-untitled' : ''}"
       on:click={(e) => handleOnClick(e)}
     >
       {value}
@@ -63,12 +74,11 @@
 </div>
 
 <style>
-  .parent :global(.untitled) {
-    color: #aaa;
+  .title-parent :global(.title-untitled) {
+    color: rgba(0, 0, 0, 0.5);
   }
 
-  .parent :global(.title) {
-    font-family: Arial, Helvetica, sans-serif;
+  .title-parent :global(.title-title) {
     font-weight: bold;
     font-size: 1.25em;
     margin: 0px 0px 0px 0px;

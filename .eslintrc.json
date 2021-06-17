@@ -13,8 +13,12 @@
     }
   ],
   "parserOptions": {
-    "ecmaVersion": 2019,
+    "ecmaVersion": 2021,
     "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "import/no-unresolved": [2, { "ignore": ["^@sapper"] }]
   },
   "plugins": ["import", "svelte3"]
 }

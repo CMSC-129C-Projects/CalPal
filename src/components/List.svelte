@@ -1,167 +1,245 @@
 <script>
+  import { stores } from "@sapper/app";
+  import { flip } from "svelte/animate";
+  import { dndzone, TRIGGERS } from "svelte-dnd-action";
   import {
+    Button,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     CardTitle,
     Icon,
-    Col,
-    Container,
-    Row,
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-  } from "sveltestrap/src";
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+  } from "sveltestrap";
   import Title from "./Title.svelte";
-  import CalPalCard from "./Card.svelte";
+  import ViewCard from "./ViewCard.svelte";
+  import Folder from "./Folder.svelte";
+  import getObjectId from "../routes/util/_object-id.js";
 
-  let isOpen = false;
+  const { session } = stores();
+  const flipDurationMs = 100;
 
   export let list;
-  export let id;
 
-  function onArchiveClicked() {
-    alert("Archive list?");
+  let isDropdownOpen = false;
+  let isModalOpen = false;
+  let listId = list._id;
+
+  const toggleDropdown = () => {
+    isDropdownOpen = !isDropdownOpen;
+  };
+
+  const toggleModal = () => {
+    isModalOpen = !isModalOpen;
+  };
+
+  function deleteList() {
+    fetch(`/api/card/attachment/delete/list/${list._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: $session.user_id,
+      }),
+    });
+
+    $session.lists = $session.lists.filter((l) => {
+      if (l._id === list._id) {
+        return false;
+      }
+      return true;
+    });
   }
 
   function addCard() {
     list.cards = [
       ...list.cards,
       {
+        _id: getObjectId(),
         card_name: "Untitled Card",
         original_title: "",
         original_calendar: "",
         original_date: "",
-        date_created: "",
+        date_created: new Date(Date.now()),
         due_date_time: "",
         remind_date_time: "",
         description: "",
         color: "#ffffff",
-        is_archived: false,
       },
     ];
   }
+
+  function addFolder() {
+    list.cards = [
+      ...list.cards,
+      {
+        _id: getObjectId(),
+        folder_name: "Untitled Folder",
+        is_open: false,
+        cards: [],
+      },
+    ];
+  }
+
+  function handleConsider(e) {
+    const {
+      items,
+      info: { id, trigger },
+    } = e.detail;
+
+    if (trigger === TRIGGERS.DRAG_STARTED) {
+      const isFolder = (object) => {
+        return object?.folder_name != null ?? false;
+      };
+
+      const draggedItem = list.cards.find((e) => e._id === id);
+      if (isFolder(draggedItem)) {
+        $session.isDraggingFolder = true;
+      }
+    }
+
+    list.cards = items;
+  }
+
+  function handleSort(e) {
+    $session.isDraggingFolder = false;
+    list.cards = e.detail.items;
+  }
 </script>
 
-<div class="parent">
-  <Card class="list">
-    <CardHeader class="listHeader">
-      <Container class="container">
-        <Row>
-          <Col class="leftHalf">
-            <CardTitle class="cardTitleContainer">
-              <Title
-                bind:value={list.list_name}
-                {id}
-                untitledString="Untitled List"
-              />
-            </CardTitle>
-          </Col>
-          <Col class="rightHalf" xs="2">
-            <button class="borderlessButton newFolder">
-              <Icon class="newFolder" name="folder-plus" />
-            </button>
-          </Col>
-        </Row>
-      </Container>
+<div class="list-parent">
+  <Card class="list-list">
+    <CardHeader>
+      <div
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5em;"
+      >
+        <CardTitle class="card-card-title-container">
+          <Title bind:value={list.list_name} untitledString="Untitled List" />
+        </CardTitle>
+        <button
+          class="borderless-button list-new-folder"
+          on:click={() => addFolder()}
+        >
+          <Icon class="list-new-folder" name="folder-plus" />
+        </button>
+      </div>
     </CardHeader>
-    <CardBody class="listBody">
-      {#each list.cards.filter((c) => {
-        return !(typeof c.card_name === "undefined" || c.is_archived);
-      }) as card, i (card)}
-        <CalPalCard bind:card id="{id}-card-{i}" />
-      {/each}
+    <CardBody class="list-list-body">
+      <div
+        use:dndzone={{
+          items: list.cards,
+          centreDraggedOnCursor: true,
+          dropTargetStyle: {
+            outline: "rgba(0, 176, 240, 0.125) solid 2px",
+          },
+          flipDurationMs,
+        }}
+        on:consider={handleConsider}
+        on:finalize={handleSort}
+        class="list-dnd-zone"
+      >
+        {#each list.cards as listElement (listElement._id)}
+          <div animate:flip={{ duration: flipDurationMs }}>
+            {#if listElement.card_name != null}
+              <ViewCard bind:card={listElement} />
+            {:else}
+              <Folder bind:folder={listElement} bind:listId />
+            {/if}
+          </div>
+        {/each}
+      </div>
     </CardBody>
-    <CardFooter class="listFooter">
-      <Row>
-        <Col class="leftHalf">
-          <button class="borderlessButton addCard" on:click={() => addCard()}>
-            <Icon class="plusIcon" name="plus" />
-            Add Card
-          </button>
-        </Col>
-        <Col class="rightHalf" xs="2">
-          <Dropdown {isOpen} toggle={() => (isOpen = !isOpen)}>
-            <DropdownToggle caret class="dropDownButton">
-              <!-- <Icon class="threeDots" name="three-dots" /> -->
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem on:click={onArchiveClicked}>
-                Archive List
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </Col>
-      </Row>
+    <CardFooter class="list-list-footer">
+      <button
+        class="borderless-button list-add-card"
+        on:click={() => addCard()}
+      >
+        <Icon class="list-plus-icon" name="plus" />
+        Add Card
+      </button>
+      <Dropdown
+        isOpen={isDropdownOpen}
+        class={isDropdownOpen ? "list-is-open" : ""}
+        toggle={toggleDropdown}
+      >
+        <DropdownToggle class="list-drop-down-button">
+          <Icon name="three-dots" />
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem on:click={toggleModal}>Delete List</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </CardFooter>
+    <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <ModalHeader toggle={toggleModal}>Deleting list</ModalHeader>
+      <ModalBody>
+        Are you sure you want to delete "{list.list_name}"?
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+        <Button color="danger" on:click={() => deleteList()}>
+          <Icon name="trash" />
+          Delete
+        </Button>
+      </ModalFooter>
+    </Modal>
   </Card>
 </div>
 
 <style>
-  .flexBoxContainer {
-    /* background-color: lightskyblue; */
-    flex-direction: column;
-    justify-content: space-evenly;
+  .list-parent :global(.list-list) {
+    width: 272px;
+    min-width: 272px;
+    max-height: 100%;
   }
 
-  .parent {
-    /* margin: 10px 10px 10px 10px; */
-  }
-
-  .parent :global(.container) {
-    /* background-color: lightseagreen; */
-  }
-
-  .parent :global(.list) {
-    /* background-color: lightgray; */
-    width: 250px;
-    min-width: 250px;
-  }
-
-  .parent :global(.cardTitleContainer) {
+  .list-parent :global(.card-card-title-container) {
     margin: 0px 0px 0px 0px;
     padding: 0%;
   }
 
-  .parent :global(.leftHalf) {
-    text-align: left;
-    padding: 0;
+  .list-parent :global(.list-list-body) {
     display: flex;
-    /* background-color: red; */
+    flex-direction: column;
+    padding: 0em;
+    max-height: 100%;
+    overflow: hidden;
   }
 
-  .parent :global(.rightHalf) {
-    text-align: right;
-    padding: 0;
+  .list-dnd-zone {
     display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    /* background-color: blue; */
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0.5em;
+    min-height: 1.5rem;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
-  .parent :global(.listBody) {
-    padding: 0%;
-    margin-top: 10px;
-  }
-
-  .parent :global(.listFooter) {
+  .list-parent :global(.list-list-footer) {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0;
+    padding-bottom: 0;
     text-align: center;
     vertical-align: middle;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    padding-left: 2em;
-    padding-right: 2em;
     font-size: medium;
   }
 
-  .borderlessButton {
+  .borderless-button {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    /* background-color: lightcoral; */
     vertical-align: middle;
     border: none;
     outline: none;
@@ -170,12 +248,13 @@
     transition: transform 0.05s;
   }
 
-  .parent :global(.addCard) {
+  .list-parent :global(.list-add-card) {
     color: #40415a;
+    margin: -0.3em;
     font-size: 15px;
   }
 
-  .parent :global(.dropDownButton) {
+  .list-parent :global(.list-drop-down-button) {
     background-color: transparent;
     color: #40415a;
     vertical-align: middle;
@@ -186,30 +265,46 @@
     font-size: 1.5em;
   }
 
-  .parent :global(.plusIcon) {
+  .list-parent :global(.list-plus-icon) {
     color: #40415a;
     font-size: 1.5em;
   }
 
-  .parent :global(.newFolder) {
+  .list-parent :global(.list-new-folder) {
     color: #40415a;
     margin-top: 0.08em;
     font-size: 1.2em;
   }
 
-  .parent :global(.newFolder:active) {
+  .list-parent :global(.list-new-folder:active) {
     color: #f58f29;
   }
 
-  .parent :global(.plusIcon:active) {
+  .list-parent :global(.list-new-folder:hover) {
+    transform: scale(1.05);
+  }
+
+  .list-parent :global(.list-plus-icon:active) {
     color: #f58f29;
   }
 
-  .parent :global(.addCard:active) {
+  .list-parent :global(.list-plus-icon:hover) {
+    transform: scale(1.05);
+  }
+
+  .list-parent :global(.list-add-card:active) {
     color: #f58f29;
   }
 
-  .parent :global(.isOpen) {
+  .list-parent :global(.list-add-card:hover) {
+    transform: scale(1.05);
+  }
+
+  .list-parent :global(.list-drop-down-button:hover) {
+    transform: scale(1.05);
+  }
+
+  .list-parent :global(.list-is-open) {
     outline: none;
   }
 </style>

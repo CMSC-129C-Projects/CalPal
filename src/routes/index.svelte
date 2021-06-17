@@ -1,83 +1,28 @@
-<script context="module">
-  export async function preload(page, session) {
-    const userId = 1;
-    if (session.did_cards_load) {
-      await this.fetch(`cards/${userId}-update.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          lists: session.lists,
-        }),
-      }).then((res) => {
-        if (res.ok) {
-          if (res.modifiedCount > 0) {
-            console.debug(`[index.svelte] Successfully updated lists!`);
-          } else {
-            console.debug(`[index.svelte] No changes were made.`);
-          }
-        }
-      });
-    }
-  }
-</script>
-
 <script>
-  import { stores } from "@sapper/app";
-  import Board from "../components/Board.svelte";
-
-  const { session } = stores();
+  import SignIn from "../components/SignIn.svelte";
 </script>
 
 <svelte:head>
   <title>CalPal</title>
 </svelte:head>
 
-<div class="parent">
-  {#if $session}
-    <Board />
-  {:else}
-    <p>Could not get cards.</p>
-  {/if}
+<div class="index-parent">
+  <div class="index-sign-in">
+    <SignIn />
+  </div>
 </div>
 
 <style>
-  .parent {
+  .index-parent {
+    display: flex;
+    flex-direction: column;
     height: inherit;
   }
 
-  h1,
-  figure,
-  p {
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-  }
-
-  figure {
-    margin: 0 0 1em 0;
-  }
-
-  img {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 0 1em 0;
-  }
-
-  p {
-    margin: 1em auto;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
-    }
+  .index-sign-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
   }
 </style>

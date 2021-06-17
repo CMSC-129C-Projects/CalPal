@@ -1,53 +1,35 @@
 <script context="module">
-  export async function preload(page, session) {
-    session.did_cards_load = false;
+  import { syncCards } from "./util/_sync";
 
-    console.debug(`[index.svelte] preload() called!`);
-    const userId = "1";
-    const userData = await this.fetch(`cards/${userId}.json`)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          this.error(res.status, res.json().message);
+  export async function preload(_page, session) {
+    if (session.did_cards_load) {
+      try {
+        const res = await this.fetch(`/api/card/${session.user_id}.json`);
+        if (!res.ok) {
+          throw new Error("Could not retrieve user data");
         }
-      })
-      .catch((err) => {
-        this.error(err);
-      });
 
-    await this.fetch(`cards/${userId}.json`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    }).then((post_res) => {
-      if (post_res.ok) {
-        console.debug(`[index.svelte] POST success!`);
-        session.user_id = userData.user_id;
-        session.lists = userData.lists;
-      } else {
-        console.debug(`[index.svelte] POST failed.`);
-        this.error(post_res.status, post_res.message);
-        // throw new Error(`POST response failed: ${JSON.stringify(r)}`);
+        const userData = await res.json();
+        for (const key in userData) {
+          session[key] = userData[key];
+        }
+
+        await syncCards(session, this.fetch);
+      } catch (err) {
+        console.error(err);
       }
-    });
-
-    session.did_cards_load = true;
+    }
   }
 </script>
 
 <script>
-  import Header from "../components/Header.svelte";
-  export let segment;
+  import { overrideItemIdKeyNameBeforeInitialisingDndZones } from "svelte-dnd-action";
+
+  overrideItemIdKeyNameBeforeInitialisingDndZones("_id");
 </script>
 
 <main>
-  <div class="fill">
-    <Header />
-    <slot />
-  </div>
+  <slot />
 </main>
 
 <style>
@@ -59,14 +41,4 @@
     box-sizing: border-box;
     height: 100vh;
   }
-
-  .fill {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  /* slot {
-    height: 100%;
-  } */
 </style>
