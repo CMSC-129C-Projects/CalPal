@@ -1,5 +1,5 @@
 <script>
-  import { Offcanvas, Row, Col, Tooltip } from "sveltestrap";
+  import { Offcanvas, Row, Col, Tooltip, Button, Icon } from "sveltestrap";
   import ArchiveSidebar from "./ArchiveSidebar.svelte";
   import SyncedCalendarsSidebar from "./SyncedCalendarsSidebar.svelte";
   import SettingsSidebar from "./SettingsSidebar.svelte";
@@ -25,6 +25,13 @@
         <ArchiveSidebar bind:isSidebarOpen />
         <br />
         <SyncedCalendarsSidebar bind:isSidebarOpen />
+        <br />
+        <a href="/help" target="_blank">
+          <Button outline secondary style="width: 100%; color: black;">
+            <Icon name="question-circle-fill" />
+            Help
+          </Button>
+        </a>
       </div>
       <div>
         <Row>
@@ -64,6 +71,11 @@
 
   .scale-on-hover:hover {
     transform: scale(1.1);
+  }
+
+  a {
+    color: unset;
+    text-decoration: unset;
   }
 
   img {
