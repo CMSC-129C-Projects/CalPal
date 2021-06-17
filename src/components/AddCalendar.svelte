@@ -109,6 +109,14 @@
       },
     ];
   };
+
+  const isCalendarAdded = () => {
+    for (const calendar of $session.calendars) {
+      if (calendar.src === inputSrc)
+        return true;
+    }
+    return false;
+  };
 </script>
 
 <div class="add-calendar-parent">
@@ -188,6 +196,10 @@
         on:click={async () => {
           if (!calendarName || !inputSrc) {
             errorMessage = "Both fields are required.";
+            return;
+          }
+          if (isCalendarAdded()) {
+            errorMessage = "Calendar has already been added.";
             return;
           }
 
