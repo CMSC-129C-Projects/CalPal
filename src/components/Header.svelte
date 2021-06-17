@@ -3,6 +3,8 @@
   import NavBar from "./NavBar.svelte";
 
   export let isBoardShown = true;
+  export let disableNavBar = false;
+
   const onLogoClick = async () => {
     isBoardShown = true;
   };
@@ -31,7 +33,9 @@
         <img src="CalPal_logo.png" alt="CalPal" />
       </a>
     </Col>
-    <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
+    {#if !disableNavBar}
+      <Col class="d-xs-block"><NavBar bind:isBoardShown /></Col>
+    {/if}
   </Row>
 </div>
 
