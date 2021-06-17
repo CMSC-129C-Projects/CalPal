@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@polka/redirect": "^1.0.0-next.0",
     "body-parser": "^1.19.0",
     "bson-objectid": "^2.0.1",
     "compression": "^1.7.1",
